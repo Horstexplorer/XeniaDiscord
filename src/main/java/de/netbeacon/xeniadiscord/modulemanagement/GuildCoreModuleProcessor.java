@@ -52,7 +52,7 @@ public class GuildCoreModuleProcessor {
                 // check if permission() -> true
                 if((Boolean) result_permission){
                     // execute module
-                    Method method_exec = classToLoad.getDeclaredMethod("execute", GuildMessageReceivedEvent.class, Member.class); // MessageReceivedEvent event, int currentpermission
+                    Method method_exec = classToLoad.getDeclaredMethod("guild_execute", GuildMessageReceivedEvent.class, Member.class); // MessageReceivedEvent event, int currentpermission
                     Object instance_exec = classToLoad.getConstructor().newInstance();
                     Object result_exec = method_exec.invoke(instance_exec, event, event.getMember());
 
