@@ -4,6 +4,8 @@
 /build/
 /out/
 /classes/
+/modules/
+/coremodule/
 /*.config
 /*.storage
 /*.txt

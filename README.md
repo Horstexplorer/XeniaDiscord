@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.1.1
+> Current Version: 1.0.1.2
 
 > Using  
 > - net.dv8tion JDA - 4.ALPHA.0_76  
@@ -61,7 +61,7 @@ The main class could look something like this:
 public class YourModule {
 
     public boolean permission(Member member){
-        return (permission > 0);    // return true if user isnt blocked
+        return member.hasPermission(Permission);    // return true if has permission
     }
     public boolean guild_execute(GuildMessageReceivedEvent event, Member member){
         // process the event
@@ -85,7 +85,7 @@ The main class could look something like this:
 public class YourCoreModule {
 
    public boolean permission(Member member){
-        return (permission > 0);    // return true if user isnt blocked
+        return member.hasPermission(Permission);    // return true if has permission
    }
    public boolean guild_execute(GuildMessageReceivedEvent event, Member member){
         // process the event   
@@ -108,6 +108,10 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.1.2
+```
+- fixed GuildCoreModuleProcessor
+```
 ##### 1.0.1.1
 ```
 - config query process optimized
