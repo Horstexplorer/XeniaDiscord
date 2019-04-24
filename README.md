@@ -61,7 +61,7 @@ The main class could look something like this:
 public class YourModule {
 
     public boolean permission(Member member){
-        return (permission > 0);    // return true if user isnt blocked
+        return member.hasPermission(Permission);    // return true if has permission
     }
     public boolean guild_execute(GuildMessageReceivedEvent event, Member member){
         // process the event
@@ -85,7 +85,7 @@ The main class could look something like this:
 public class YourCoreModule {
 
    public boolean permission(Member member){
-        return (permission > 0);    // return true if user isnt blocked
+        return member.hasPermission(Permission);    // return true if has permission
    }
    public boolean guild_execute(GuildMessageReceivedEvent event, Member member){
         // process the event   
