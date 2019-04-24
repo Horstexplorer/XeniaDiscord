@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.1.0
+> Current Version: 1.0.1.1
 
 > Using  
 > - net.dv8tion JDA - 4.ALPHA.0_76  
@@ -108,6 +108,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.1.1
+```
+- config query process optimized
+- minor improvements
+```
 ##### 1.0.1.0
 ```
 - added blacklist feature
