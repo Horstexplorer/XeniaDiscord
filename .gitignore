@@ -5,4 +5,5 @@
 /out/
 /classes/
 /*.config
+/*.storage
 /*.txt
