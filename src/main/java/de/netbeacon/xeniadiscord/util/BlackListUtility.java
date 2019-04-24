@@ -18,7 +18,7 @@ public class BlackListUtility {
     private void initblacklist(){
         try{
             // check if blackist.txt exists
-            File blacklistfile = new File("blacklist.txt");
+            File blacklistfile = new File("blacklist.storage");
             if (!blacklistfile.exists()) {
                 //Create the file
                 blacklistfile.createNewFile();
