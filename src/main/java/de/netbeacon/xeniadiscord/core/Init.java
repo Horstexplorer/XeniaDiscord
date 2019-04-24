@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.core;
 
+import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
 
 public class Init {
@@ -10,6 +11,7 @@ public class Init {
 
         //prepare all files
         Config config = new Config();
+        new BlackListUtility();
 
         if(Boolean.parseBoolean(config.load("activated"))){
             new Thread(new XCore()).start();

@@ -8,13 +8,37 @@ import java.util.Properties;
 
 public class Config {
 
+    private static Properties properties;
+
     public Config(){
+        // init blacklist if it hasn't happened before
+        if(properties == null){
+            System.out.println("[INFO] Init config");
+            if(!initproperties()){
+                System.out.println("[INFO] Init config failed");
+            }
+        }
+    }
+
+    private boolean initproperties(){
         //Check if config file exist
         File configfile = new File("sys.config");
         if (!configfile.exists()) {
             //Create the file
             createconfigfile();
         }
+        // load properties
+        properties = new Properties();
+        InputStream input;
+        try {
+            input = new FileInputStream("sys.config");
+            properties.load(input);
+            input.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private void createconfigfile(){
@@ -41,14 +65,9 @@ public class Config {
 
     public String load(String  property) {
         //get value from property
-        Properties prop = new Properties();
-        InputStream input;
         String result = "";
         try {
-            input = new FileInputStream("sys.config");
-            prop.load(input);
-            result = prop.getProperty(property);
-            input.close();
+            result = properties.getProperty(property);
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -56,8 +75,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.1.0";
-        String build = "2304192317";
+        String vers= "1.0.1.1";
+        String build = "2404190810";
         return vers+"-"+build;
     }
 }
