@@ -23,7 +23,7 @@ public class Help implements PrivateCommand {
                     "Running Xenia v "+ new Config().version()+"\n"+
                     "Ping: "+event.getJDA().getGatewayPing()+"\n"+
                     "Used by "+event.getJDA().getGuilds().size()+" guilds\n"+
-                    "Add to your guild: https://discordapp.com/oauth2/authorize?client_id=509065864763408385&scope=bot \n";
+                    "More information: https://xenia.netbeacon.de \n";
             event.getChannel().sendMessage(msg).queue();
         }
         //commands
