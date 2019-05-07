@@ -17,6 +17,7 @@ bot_activate_coremodule=false               // use priority module
 bot_activate_coremodule_onstart=false       // execute onstartup() in coremodule once after starting the bot
 bot_status=<status>                         // activity to display
 bot_admin_id=<id>                           // userid for bot-admin features
+bot_sayhellotonew=true                      // bot welcomes every user who joins guild (private chat)
 ```
 
 ### Commands
@@ -108,6 +109,10 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.1.4
+```
+- bot may now greet every user who joins a guild
+```
 ##### 1.0.1.3
 ```
 - minor changes
