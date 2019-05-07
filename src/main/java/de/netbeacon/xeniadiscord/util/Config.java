@@ -54,6 +54,7 @@ public class Config {
             prop.setProperty("bot_activate_coremodule_backgroundtask", "false");
             prop.setProperty("bot_status", "with humans");
             prop.setProperty("bot_admin_id", "");
+            prop.setProperty("bot_sayhellotonew", "true");
 
 
             prop.store(new FileOutputStream("sys.config"), null);
@@ -75,8 +76,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.1.3";
-        String build = "2504192148";
+        String vers= "1.0.1.4";
+        String build = "0705192227";
         return vers+"-"+build;
     }
 }

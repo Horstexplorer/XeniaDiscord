@@ -1,9 +1,6 @@
 package de.netbeacon.xeniadiscord.core;
 
-import de.netbeacon.xeniadiscord.listeners.GuildCommandListener;
-import de.netbeacon.xeniadiscord.listeners.GuildMessageListener;
-import de.netbeacon.xeniadiscord.listeners.PrivateCommandListener;
-import de.netbeacon.xeniadiscord.listeners.PrivateMessageListener;
+import de.netbeacon.xeniadiscord.listeners.*;
 import de.netbeacon.xeniadiscord.modulemanagement.GuildCoreModuleProcessor;
 import de.netbeacon.xeniadiscord.util.Config;
 import net.dv8tion.jda.api.AccountType;
@@ -50,6 +47,7 @@ public class XCore implements Runnable{
         jdaBuilder.addEventListeners(new PrivateCommandListener());
         jdaBuilder.addEventListeners(new GuildMessageListener());
         jdaBuilder.addEventListeners(new GuildCommandListener());
+        jdaBuilder.addEventListeners(new GuildMemberJoinListener());
     }
 
     private void startBTM(){
