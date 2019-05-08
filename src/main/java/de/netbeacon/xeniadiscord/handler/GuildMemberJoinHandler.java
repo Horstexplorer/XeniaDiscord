@@ -22,7 +22,7 @@ public class GuildMemberJoinHandler implements Runnable{
                         "Hey, "+event.getUser().getName()+" and welcome on "+ event.getGuild().getName()+"."+"\n"+"Have a nice day and a lot of fun on the server!"+"\n"+"With kind regards, Xenia."+"\n",
                         "Hello "+event.getUser().getName()+" nice to meet you."+"\n"+"Glad you made it to "+ event.getGuild().getName() +"\n"+"Have a nice time here!"+"\n"+"Sincerely, Xenia."+"\n",
                         "Hi "+event.getUser().getName()+"!"+"\n"+"Nice to see you here on "+event.getGuild().getName()+"."+"\n"+"Best regards, Xenia."+"\n",
-                        "Welcome to "+event.getUser().getName()+" "+event.getMember().getNickname()+"!"+"With kind regards, Xenia."+"\n"
+                        "Welcome to "+event.getGuild().getName()+", "+event.getUser().getName()+"!"+"\n"+"With kind regards, Xenia."+"\n"
                 };
                 // send message
                 channel.sendMessage(messages[new Random().nextInt(messages.length)]).queue();
