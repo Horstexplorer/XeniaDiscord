@@ -35,12 +35,10 @@ public class Admin implements PrivateCommand {
                 }
                 // force blacklist save
                 if(args[1].toLowerCase().equals("blacklistforcesave")){
-                    if (args.length>2){
-                        if(!new BlackListUtility().writetofile()){
-                            event.getChannel().sendMessage("Saving blacklist failed.").queue();
-                        }else{
-                            event.getChannel().sendMessage("Blacklist saved sucessfully").queue();
-                        }
+                    if(!new BlackListUtility().writetofile()){
+                        event.getChannel().sendMessage("Saving blacklist failed.").queue();
+                    }else{
+                        event.getChannel().sendMessage("Blacklist saved sucessfully").queue();
                     }
                 }
                 // update config property values
