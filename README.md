@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.1.4
+> Current Version: 1.0.2.0
 
 > Using  
 > - net.dv8tion JDA - 4.ALPHA.0_82 
@@ -116,6 +116,15 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.2.0
+```
+- switched to 4.ALPHA.0_82 
+- some bug fixes
+- admin commands now start with admin
+- sys properties can now be updated via admin command
+- config adds missing entries
+- added more welcome messages
+```
 ##### 1.0.1.4
 ```
 - bot may now greet every user who joins a guild
