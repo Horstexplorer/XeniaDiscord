@@ -119,7 +119,7 @@ public class YourCoreModule {
 ##### 1.0.2.0
 ```
 - switched to 4.ALPHA.0_82 
-- some bug fixes
+- fixed several bugs
 - admin commands now start with admin
 - sys properties can now be updated via admin command
 - config adds missing entries
