@@ -39,8 +39,7 @@ public class PrivateCommandHandler implements Runnable {
         commands.put("help", new Help());
         commands.put("info", new Help());
         commands.put("commands", new Help());
-        commands.put("shutdown", new Admin());
-        commands.put("onlinestatus", new Admin());
+        commands.put("admin", new Admin());
 
     }
 
