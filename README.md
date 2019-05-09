@@ -45,6 +45,13 @@ shuffle                                     || Shuffle queue
 info                                        || Displaying information about the current song
 off                                         || Disconnect from voice channel
 ```
+Commands limited to admin user (bot_admin_id)
+```
+admin shutdown                              || 
+admin onlinestatus <dnd/idle/on>            || 
+admin blacklistforcesave                    || 
+admin updateconfig                          || 
+```
 
 ### Modules
 The functionality of the bot can be extended with modules. These can react to any interactions as long as they do not start with "bot_command_indicator"  
