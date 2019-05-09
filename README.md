@@ -3,7 +3,7 @@
 > Current Version: 1.0.1.4
 
 > Using  
-> - net.dv8tion JDA - 4.ALPHA.0_76  
+> - net.dv8tion JDA - 4.ALPHA.0_82 
 > - lavaplayer - 1.3.11
 
 ### Configuration
