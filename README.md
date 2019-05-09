@@ -47,10 +47,10 @@ off                                         || Disconnect from voice channel
 ```
 Commands limited to admin user (bot_admin_id)
 ```
-admin shutdown                              || 
-admin onlinestatus <dnd/idle/on>            || 
-admin blacklistforcesave                    || 
-admin updateconfig                          || 
+admin shutdown                              || shutdown bot
+admin onlinestatus <dnd/idle/on>            || set inlinestatus to dnd, idle or online
+admin blacklistforcesave                    || force saving the blacklist
+admin updateconfig <prop> <val>             || update config property to value
 ```
 
 ### Modules
