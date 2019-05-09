@@ -1,9 +1,9 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.1.4
+> Current Version: 1.0.2.0
 
 > Using  
-> - net.dv8tion JDA - 4.ALPHA.0_76  
+> - net.dv8tion JDA - 4.ALPHA.0_82 
 > - lavaplayer - 1.3.11
 
 ### Configuration
@@ -44,6 +44,13 @@ skip                                        || Same as next
 shuffle                                     || Shuffle queue
 info                                        || Displaying information about the current song
 off                                         || Disconnect from voice channel
+```
+Commands limited to admin user (bot_admin_id)
+```
+admin shutdown                              || shutdown bot
+admin onlinestatus <dnd/idle/on>            || set inlinestatus to dnd, idle or online
+admin blacklistforcesave                    || force saving the blacklist
+admin updateconfig <prop> <val>             || update config property to value
 ```
 
 ### Modules
@@ -109,6 +116,15 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.2.0
+```
+- switched to 4.ALPHA.0_82 
+- fixed several bugs
+- admin commands now start with admin
+- sys properties can now be updated via admin command
+- config adds missing entries
+- added more welcome messages
+```
 ##### 1.0.1.4
 ```
 - bot may now greet every user who joins a guild

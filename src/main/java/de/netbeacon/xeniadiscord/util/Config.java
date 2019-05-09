@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class Config {
@@ -17,6 +19,8 @@ public class Config {
             if(!initproperties()){
                 System.out.println("[INFO] Init config failed");
             }
+            // try updating config
+            updateconfig();
         }
     }
 
@@ -44,21 +48,63 @@ public class Config {
     private void createconfigfile(){
         Properties prop = new Properties();
 
-        try {
-            prop.setProperty("activated", "false");
+        prop.setProperty("activated", "false");
+        prop.setProperty("bot_token", "");
+        prop.setProperty("bot_command_indicator", "x!");
+        prop.setProperty("bot_activate_modules", "false");
+        prop.setProperty("bot_activate_coremodule", "false");
+        prop.setProperty("bot_activate_coremodule_backgroundtask", "false");
+        prop.setProperty("bot_status", "with humans");
+        prop.setProperty("bot_admin_id", "");
+        prop.setProperty("bot_sayhellotonew", "true");
 
-            prop.setProperty("bot_token", "");
-            prop.setProperty("bot_command_indicator", "x!");
-            prop.setProperty("bot_activate_modules", "false");
-            prop.setProperty("bot_activate_coremodule", "false");
-            prop.setProperty("bot_activate_coremodule_backgroundtask", "false");
-            prop.setProperty("bot_status", "with humans");
-            prop.setProperty("bot_admin_id", "");
-            prop.setProperty("bot_sayhellotonew", "true");
+        writetofile();
+    }
 
+    private void updateconfig(){
+        // check if our config is updated to the latest version
+        // ( all properties should be included, add them if not )
 
-            prop.store(new FileOutputStream("sys.config"), null);
-        }catch(Exception e) {
+        // create list containing all properties
+        HashMap<String, String> propcheck = new HashMap<String, String>();
+        // add properies and values
+        propcheck.put("activated","false");
+        propcheck.put("bot_token","");
+        propcheck.put("bot_command_indicator","x!");
+        propcheck.put("bot_activate_modules","false");
+        propcheck.put("bot_activate_coremodule","false");
+        propcheck.put("bot_activate_coremodule_backgroundtask","false");
+        propcheck.put("bot_status","with humans");
+        propcheck.put("bot_admin_id","");
+        propcheck.put("bot_sayhellotonew","true");
+        // check if the properties from the list are in our config.
+        for(Map.Entry<String, String> entry : propcheck.entrySet()){
+            if(properties.getProperty(entry.getKey()) == null){
+                // add property to properties
+                properties.setProperty(entry.getKey(), entry.getValue());
+            }
+        }
+        // write to file
+        writetofile();
+    }
+
+    public boolean updateproperties(String property, String value){
+        // Update property
+
+        // check if property exists
+        if(properties.getProperty(property) != null){
+            // property exists
+            properties.setProperty(property, value);
+            // write to file
+            writetofile();
+        }
+        return false;
+    }
+
+    private void writetofile(){
+        try{
+            properties.store(new FileOutputStream("sys.config"), null);
+        }catch (Exception e){
             e.printStackTrace();
             System.exit(-1); //should quit; something is definitely wrong here
         }
@@ -76,8 +122,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.1.4";
-        String build = "0705192227";
+        String vers= "1.0.2.0";
+        String build = "1005190108";
         return vers+"-"+build;
     }
 }
