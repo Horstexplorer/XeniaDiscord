@@ -11,7 +11,6 @@ public class Init {
 
         //prepare all files
         Config config = new Config();
-        config.updateconfig();
         new BlackListUtility();
 
         if(Boolean.parseBoolean(config.load("activated"))){

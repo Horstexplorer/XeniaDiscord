@@ -42,6 +42,17 @@ public class Admin implements PrivateCommand {
                     }
                 }
             }
+            // update config property values
+            // force blacklist save
+            if(args[0].toLowerCase().equals("config")){
+                if (args.length>2){
+                    if(new Config().updateproperties(args[1].toLowerCase(), args[2])){
+                        event.getChannel().sendMessage("Value updated successfull.").queue();
+                    }else{
+                        event.getChannel().sendMessage("Update failed. Please check property name").queue();
+                    }
+                }
+            }
         }
     }
 }

@@ -19,6 +19,8 @@ public class Config {
             if(!initproperties()){
                 System.out.println("[INFO] Init config failed");
             }
+            // try updating config
+            updateconfig();
         }
     }
 
@@ -59,7 +61,7 @@ public class Config {
         writetofile();
     }
 
-    public void updateconfig(){
+    private void updateconfig(){
         // check if our config is updated to the latest version
         // ( all properties should be included, add them if not )
 
@@ -86,7 +88,20 @@ public class Config {
         writetofile();
     }
 
-    public void writetofile(){
+    public boolean updateproperties(String property, String value){
+        // Update property
+
+        // check if property exists
+        if(properties.getProperty(property) != null){
+            // property exists
+            properties.setProperty(property, value);
+            // write to file
+            writetofile();
+        }
+        return false;
+    }
+
+    private void writetofile(){
         try{
             properties.store(new FileOutputStream("sys.config"), null);
         }catch (Exception e){
@@ -107,8 +122,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.1.4";
-        String build = "0705192227";
+        String vers= "1.0.2.0";
+        String build = "0905191249";
         return vers+"-"+build;
     }
 }
