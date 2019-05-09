@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.2.0
+> Current Version: 1.0.2.1
 
 > Using  
 > - net.dv8tion JDA - 4.ALPHA.0_82 
@@ -116,6 +116,10 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.2.1
+```
+- fixed a bug where creating the configuration file did not work
+```
 ##### 1.0.2.0
 ```
 - switched to 4.ALPHA.0_82 
