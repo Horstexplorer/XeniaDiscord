@@ -46,17 +46,17 @@ public class Config {
     }
 
     private void createconfigfile(){
-        Properties prop = new Properties();
+        properties = new Properties();
 
-        prop.setProperty("activated", "false");
-        prop.setProperty("bot_token", "");
-        prop.setProperty("bot_command_indicator", "x!");
-        prop.setProperty("bot_activate_modules", "false");
-        prop.setProperty("bot_activate_coremodule", "false");
-        prop.setProperty("bot_activate_coremodule_backgroundtask", "false");
-        prop.setProperty("bot_status", "with humans");
-        prop.setProperty("bot_admin_id", "");
-        prop.setProperty("bot_sayhellotonew", "true");
+        properties.setProperty("activated", "false");
+        properties.setProperty("bot_token", "");
+        properties.setProperty("bot_command_indicator", "x!");
+        properties.setProperty("bot_activate_modules", "false");
+        properties.setProperty("bot_activate_coremodule", "false");
+        properties.setProperty("bot_activate_coremodule_backgroundtask", "false");
+        properties.setProperty("bot_status", "with humans");
+        properties.setProperty("bot_admin_id", "");
+        properties.setProperty("bot_sayhellotonew", "true");
 
         writetofile();
     }
