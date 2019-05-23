@@ -116,6 +116,12 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.2.2
+```
+- minor improvements
+- fixed admin command
+- added broadcast command to admin
+```
 ##### 1.0.2.1
 ```
 - fixed a bug where creating the configuration file did not work
