@@ -1,10 +1,11 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.2.2
+> Current Version: 1.0.2.3
 
 > Using  
-> - net.dv8tion JDA - 4.ALPHA.0_82 
-> - lavaplayer - 1.3.11
+> - net.dv8tion JDA - 4.ALPHA.0_87 
+> - lavaplayer - 1.3.17
+> - slf4j-simple - 1.7.26
 
 ### Configuration
 All settings are stored in the file sys.config. This file will be created automatically at first start.
@@ -116,6 +117,13 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.2.3
+```
+- bot should only process the message from guild chat if it has the permission to respond
+    (modules must check this individually)
+- updated dependencies
+- added another activity
+```
 ##### 1.0.2.2
 ```
 - minor improvements
