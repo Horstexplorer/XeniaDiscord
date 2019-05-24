@@ -121,6 +121,8 @@ public class YourCoreModule {
 ```
 - bot should only process the message from guild chat if it has the permission to respond
     (modules must check this individually)
+- updated dependencies
+- added another activity
 ```
 ##### 1.0.2.2
 ```
