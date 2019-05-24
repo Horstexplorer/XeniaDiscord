@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.2.2
+> Current Version: 1.0.2.3
 
 > Using  
 > - net.dv8tion JDA - 4.ALPHA.0_82 
@@ -116,6 +116,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.2.3
+```
+- bot should only process the message from guild chat if it has the permission to respond
+    (modules must check this individually)
+```
 ##### 1.0.2.2
 ```
 - minor improvements
