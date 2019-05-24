@@ -3,8 +3,9 @@
 > Current Version: 1.0.2.3
 
 > Using  
-> - net.dv8tion JDA - 4.ALPHA.0_82 
-> - lavaplayer - 1.3.11
+> - net.dv8tion JDA - 4.ALPHA.0_87 
+> - lavaplayer - 1.3.17
+> - slf4j-simple - 1.7.26
 
 ### Configuration
 All settings are stored in the file sys.config. This file will be created automatically at first start.
