@@ -18,7 +18,7 @@ public class UserManagement implements GuildCommand {
             if(args.length > 1){
                 String userid = args[1].replaceAll("[^0-9]", "").trim();
                 if(event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)){    // bot needs permission
-                    event.getGuild().getController().kick(userid).queue();
+                    event.getGuild().kick(userid).queue();
                 }else{
                     event.getChannel().sendMessage("I cant't do that.");
                 }
@@ -35,7 +35,7 @@ public class UserManagement implements GuildCommand {
                     deldays = Integer.parseInt(args[2]);
                 }catch (Exception ignore){}
                 if(event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)){
-                    event.getGuild().getController().ban(userid, deldays).queue();
+                    event.getGuild().ban(userid, deldays).queue();
                 }else{
                     event.getChannel().sendMessage("I cant't do that.");
                 }
