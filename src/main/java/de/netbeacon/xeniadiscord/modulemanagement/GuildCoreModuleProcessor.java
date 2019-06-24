@@ -16,18 +16,38 @@ public class GuildCoreModuleProcessor {
 
     private GuildMessageReceivedEvent event;
     private Boolean active = false;
+    //
+    private static String mainclass;
+    private static URLClassLoader urlcl;
 
     public GuildCoreModuleProcessor(GuildMessageReceivedEvent event){
-        this.event = event;
-        //Check if dir exists
-        File dir = new File("./coremodule/");
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        //Check if cmod exists
-        File cmod = new File("./coremodule/coremodule.jar");
-        if (cmod.exists()) {
-            active = true;
+        if(urlcl == null){
+            this.event = event;
+            //Check if dir exists
+            File dir = new File("./coremodule/");
+            if(!dir.exists()){
+                dir.mkdirs();
+            }
+            //Check if cmod exists
+            File cmod = new File("./coremodule/coremodule.jar");
+            if (cmod.exists()) {
+                active = true;
+            }
+            // create urlcl
+            if(active){
+                try{
+                    //Get main class from file
+                    JarFile jfile = new JarFile("./coremodule/coremodule.jar");
+                    Manifest mf = jfile.getManifest();
+                    Attributes atr = mf.getMainAttributes();
+                    mainclass = atr.getValue("Main-Class");
+                    jfile.close();
+
+                    urlcl = new URLClassLoader(new URL[]{new URL("file:./coremodule/coremodule.jar")}, this.getClass().getClassLoader());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -35,15 +55,7 @@ public class GuildCoreModuleProcessor {
         boolean handled = false;
         if(active){
             try{
-                //Get main class from file
-                JarFile jfile = new JarFile("./coremodule/coremodule.jar");
-                Manifest mf = jfile.getManifest();
-                Attributes atr = mf.getMainAttributes();
-                String maincp = atr.getValue("Main-Class");
-
-                URL[] clu = new URL[]{new URL("file:./coremodule/coremodule.jar")};
-                URLClassLoader child = new URLClassLoader(clu, this.getClass().getClassLoader());
-                Class<?> classToLoad = Class.forName(maincp, true, child);
+                Class<?> classToLoad = Class.forName(mainclass, true, urlcl);
 
                 // execute permission() -> bool
                 Method method_permission = classToLoad.getDeclaredMethod("permission", Member.class); // Permission lvl to module
@@ -62,10 +74,6 @@ public class GuildCoreModuleProcessor {
                     }
                 }
 
-                //close
-                jfile.close();
-                child.close();
-
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -76,22 +84,11 @@ public class GuildCoreModuleProcessor {
     public void startbackgroundtask(JDA jda){
         if(active) {
             try {
-                //Get main class from file
-                JarFile jfile = new JarFile("./coremodule/coremodule.jar");
-                Manifest mf = jfile.getManifest();
-                Attributes atr = mf.getMainAttributes();
-                String maincp = atr.getValue("Main-Class");
-
                 //Do magic
-                URL[] clu = new URL[]{new URL("file:./coremodule/coremodule.jar")};
-                URLClassLoader child = new URLClassLoader(clu, this.getClass().getClassLoader());
-                Class<?> classToLoad = Class.forName(maincp, true, child);
+                Class<?> classToLoad = Class.forName(mainclass, true, urlcl);
                 Method method = classToLoad.getDeclaredMethod("onstart", JDA.class);
                 Object instance = classToLoad.getConstructor().newInstance();
                 method.invoke(instance, jda);   //ignore result
-
-                //close
-                jfile.close();
 
             } catch (Exception e) {
                 System.out.println("[ERROR] " + e);

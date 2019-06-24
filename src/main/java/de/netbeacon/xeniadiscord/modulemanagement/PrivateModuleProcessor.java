@@ -1,12 +1,16 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -15,35 +19,54 @@ import java.util.regex.Pattern;
 public class PrivateModuleProcessor {
 
     private PrivateMessageReceivedEvent event;
-    private String[] modules;
-    private boolean modex = false;
+    private static boolean modex = false;
+    private List<String> modules = new ArrayList<String>();
+    //
+    private static URLClassLoader urlcl;
+    private static List<String> classname = new ArrayList<String>();
 
     public PrivateModuleProcessor(PrivateMessageReceivedEvent event){
         this.event = event;
-        //Check if dir exists
-        File directory = new File("./modules/");
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-        //Check if module exist, if load into array
-        File[] listOfFiles = directory.listFiles();
-        if(listOfFiles != null && listOfFiles.length > 0){
-            int x = 0;
-            for (File f: listOfFiles){
-                if(f.getName().endsWith(".jar")){  // just find .jar files
-                    x++;
-                }
+
+        // check if urlcl is not null
+        if(urlcl == null){
+            //get files
+            //Check if dir exists
+            File directory = new File("./modules/");
+            if (!directory.exists()) {
+                directory.mkdir();
             }
-            if(x != 0){
+            //Check if module exist, if load into array
+            File[] listOfFiles = directory.listFiles();
+            if(listOfFiles != null && listOfFiles.length > 0){
                 modex = true;
-                int y = 0;
-                modules = new String[x];
+                int x = 0;
                 for (File f: listOfFiles){
-                    if(f.getName().endsWith(".jar")){
-                        modules[y] = f.getName();
-                        y++;
+                    if(f.getName().endsWith(".jar")){  // just find .jar files
+                        modules.add(f.getName());
                     }
                 }
+            }
+            // create array of urls
+            if(modex){
+                List<URL> urllist = new ArrayList<URL>();
+                for(String module : modules){
+                    try{
+                        //Get main class from file
+                        JarFile jfile = new JarFile("./modules/"+module);
+                        Manifest mf = jfile.getManifest();
+                        Attributes atr = mf.getMainAttributes();
+                        String maincp = atr.getValue("Main-Class");
+                        jfile.close();
+                        //add to list
+                        classname.add(maincp);
+                        //get url
+                        urllist.add(new URL("file:./modules/"+module));
+                    }catch (Exception ignore){}
+                }
+                //create urlclassloader
+                URL[] urls = urllist.toArray(new URL[urllist.size()]);
+                urlcl = new URLClassLoader(urls, this.getClass().getClassLoader());
             }
         }
     }
@@ -52,34 +75,19 @@ public class PrivateModuleProcessor {
         boolean handled = false;
         if(modex){
             try{
-                int x = 0;
-                while(x < modules.length && !handled){
-
-                    //Get main class from file
-                    JarFile jfile = new JarFile("./modules/"+modules[x]);
-                    Manifest mf = jfile.getManifest();
-                    Attributes atr = mf.getMainAttributes();
-                    String maincp = atr.getValue("Main-Class");
-
-                    URL[] clu = new URL[]{new URL("file:./modules/"+modules[x])};
-                    URLClassLoader child = new URLClassLoader(clu, this.getClass().getClassLoader());
-                    Class<?> classToLoad = Class.forName(maincp, true, child);
-
+                for(String name : classname){
+                    if(handled){
+                        break;
+                    }
+                    Class<?> classToLoad = Class.forName(name, true, urlcl);
                     // execute module
-                    Method method_exec = classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class); // MessageReceivedEvent event, int currentpermission
+                    Method method_exec = classToLoad.getDeclaredMethod("guild_execute", PrivateMessageReceivedEvent.class); // MessageReceivedEvent event, int currentpermission
                     Object instance_exec = classToLoad.getConstructor().newInstance();
                     Object result_exec = method_exec.invoke(instance_exec, event);
 
                     if(result_exec != null){
                         handled = (boolean) result_exec;
                     }
-
-                    //Increase for next turn
-                    x++;
-
-                    //close
-                    jfile.close();
-                    child.close();
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -90,6 +98,6 @@ public class PrivateModuleProcessor {
 
     public String listmodules(){
         //list modules
-        return Arrays.toString(modules);
+        return ""; //Arrays.toString(modules);
     }
 }
