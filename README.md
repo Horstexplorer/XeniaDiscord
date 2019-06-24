@@ -121,7 +121,7 @@ public class YourCoreModule {
 ```
 - switched to 4.ALPHA.0_108
 - minor improvements
-- fixed memory leak
+- improved module processors
 ```
 ##### 1.0.2.3
 ```

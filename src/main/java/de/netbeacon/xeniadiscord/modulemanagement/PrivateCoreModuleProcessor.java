@@ -14,18 +14,38 @@ public class PrivateCoreModuleProcessor {
 
     private PrivateMessageReceivedEvent event;
     private Boolean active = false;
+    //
+    private static String mainclass;
+    private static URLClassLoader urlcl;
 
     public PrivateCoreModuleProcessor(PrivateMessageReceivedEvent event){
-        this.event = event;
-        //Check if dir exists
-        File dir = new File("./coremodule/");
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        //Check if cmod exists
-        File cmod = new File("./coremodule/coremodule.jar");
-        if (cmod.exists()) {
-            active = true;
+        if(urlcl == null){
+            this.event = event;
+            //Check if dir exists
+            File dir = new File("./coremodule/");
+            if(!dir.exists()){
+                dir.mkdirs();
+            }
+            //Check if cmod exists
+            File cmod = new File("./coremodule/coremodule.jar");
+            if (cmod.exists()) {
+                active = true;
+            }
+            // create urlcl
+            if(active){
+                try{
+                    //Get main class from file
+                    JarFile jfile = new JarFile("./coremodule/coremodule.jar");
+                    Manifest mf = jfile.getManifest();
+                    Attributes atr = mf.getMainAttributes();
+                    mainclass = atr.getValue("Main-Class");
+                    jfile.close();
+
+                    urlcl = new URLClassLoader(new URL[]{new URL("file:./coremodule/coremodule.jar")}, this.getClass().getClassLoader());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -33,16 +53,7 @@ public class PrivateCoreModuleProcessor {
         boolean handled = false;
         if(active){
             try{
-                //Get main class from file
-                JarFile jfile = new JarFile("./coremodule/coremodule.jar");
-                Manifest mf = jfile.getManifest();
-                Attributes atr = mf.getMainAttributes();
-                String maincp = atr.getValue("Main-Class");
-
-                URL[] clu = new URL[]{new URL("file:./coremodule/coremodule.jar")};
-                URLClassLoader child = new URLClassLoader(clu, this.getClass().getClassLoader());
-                Class<?> classToLoad = Class.forName(maincp, true, child);
-
+                Class<?> classToLoad = Class.forName(mainclass, true, urlcl);
                 // execute module
                 Method method_exec = classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class); // MessageReceivedEvent event, int currentpermission
                 Object instance_exec = classToLoad.getConstructor().newInstance();
@@ -51,10 +62,6 @@ public class PrivateCoreModuleProcessor {
                 if(result_exec != null){
                     handled = (boolean) result_exec;
                 }
-
-                //close
-                jfile.close();
-                child.close();
 
             }catch (Exception e){
                 e.printStackTrace();
