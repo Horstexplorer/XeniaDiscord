@@ -49,6 +49,7 @@ public class GuildCoreModuleProcessor {
                 Method method_permission = classToLoad.getDeclaredMethod("permission", Member.class); // Permission lvl to module
                 Object instance_permission = classToLoad.getConstructor().newInstance();
                 Object result_permission = method_permission.invoke(instance_permission, event.getMember());
+
                 // check if permission() -> true
                 if((Boolean) result_permission){
                     // execute module
@@ -60,6 +61,11 @@ public class GuildCoreModuleProcessor {
                         handled = (boolean) result_exec;
                     }
                 }
+
+                //close
+                jfile.close();
+                child.close();
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -84,6 +90,9 @@ public class GuildCoreModuleProcessor {
                 Object instance = classToLoad.getConstructor().newInstance();
                 method.invoke(instance, jda);   //ignore result
 
+                //close
+                jfile.close();
+                child.close();
             } catch (Exception e) {
                 System.out.println("[ERROR] " + e);
             }

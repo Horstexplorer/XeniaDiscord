@@ -29,7 +29,7 @@ public class GuildModuleProcessor {
         if(listOfFiles != null && listOfFiles.length > 0){
             int x = 0;
             for (File f: listOfFiles){
-                if(f.getName().matches(".*jar$")){  // just find .jar files
+                if(f.getName().endsWith(".jar")){  // just find .jar files
                     x++;
                 }
             }
@@ -38,7 +38,7 @@ public class GuildModuleProcessor {
                 int y = 0;
                 modules = new String[x];
                 for (File f: listOfFiles){
-                    if(f.getName().matches(".*jar$")){
+                    if(f.getName().endsWith(".jar")){
                         modules[y] = f.getName();
                         y++;
                     }
@@ -79,8 +79,13 @@ public class GuildModuleProcessor {
                             handled = (boolean) result_exec;
                         }
                     }
+
                     //Increase for next turn
                     x++;
+
+                    //close
+                    jfile.close();
+                    child.close();
                 }
             }catch(Exception e){
                 e.printStackTrace();

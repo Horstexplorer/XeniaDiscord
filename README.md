@@ -119,7 +119,9 @@ public class YourCoreModule {
 ### Changelog
 ##### 1.0.2.4
 ```
-- switched to 4.ALPHA.0_108 
+- switched to 4.ALPHA.0_108
+- minor improvements
+- fixed memory leak
 ```
 ##### 1.0.2.3
 ```
