@@ -53,6 +53,7 @@ public class GuildCommandHandler implements Runnable {
         commands.put("ban", new UserManagement());
         commands.put("ghost", new Ghost());
         commands.put("blacklist", new Blacklist());
+        commands.put("twitchhook", new TwitchHook());
 
     }
 
