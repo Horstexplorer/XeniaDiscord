@@ -95,9 +95,4 @@ public class PrivateModuleProcessor {
         }
         return handled;
     }
-
-    public String listmodules(){
-        //list modules
-        return ""; //Arrays.toString(modules);
-    }
 }

@@ -13,14 +13,15 @@ import java.util.jar.Manifest;
 public class PrivateCoreModuleProcessor {
 
     private PrivateMessageReceivedEvent event;
-    private Boolean active = false;
+    private static Boolean active = false;
     //
     private static String mainclass;
     private static URLClassLoader urlcl;
 
     public PrivateCoreModuleProcessor(PrivateMessageReceivedEvent event){
+        this.event = event;
+
         if(urlcl == null){
-            this.event = event;
             //Check if dir exists
             File dir = new File("./coremodule/");
             if(!dir.exists()){

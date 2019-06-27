@@ -99,8 +99,8 @@ public class GuildModuleProcessor {
         return handled;
     }
 
-    public String listmodules(){
+    public String listmodules(){    // not used
         //list modules
-        return ""; //Arrays.toString(modules);
+        return String.join(", ", modules);
     }
 }
