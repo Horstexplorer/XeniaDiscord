@@ -121,6 +121,7 @@ public class YourCoreModule {
 ```
 - switched to JDA 4.BETA.0_10
 - minor changes
+- fixed CoreModuleProcessors
 ```
 ##### 1.0.2.4
 ```
