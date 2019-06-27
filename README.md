@@ -120,6 +120,7 @@ public class YourCoreModule {
 ##### 1.0.2.5
 ```
 - minor changes
+- fixed CoreModuleProcessors
 ```
 ##### 1.0.2.4
 ```
