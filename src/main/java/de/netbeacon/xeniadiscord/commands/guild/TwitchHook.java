@@ -20,10 +20,6 @@ public class TwitchHook implements GuildCommand {
                 if(args[1].toLowerCase().equals("list")){
                     // return list of hooks in this channel
                     event.getChannel().sendMessage(new TwitchHookManagement(event.getJDA()).list(event.getChannel().getId())).queue();
-                }else if(args[1].toLowerCase().equals("forceupdate")){
-                    // return list of hooks in this channel
-                    new TwitchHookManagement(event.getJDA()).update();
-                    event.getChannel().sendMessage("Success!").queue();
                 }else if(args.length > 2){
                     // add
                     if(args[1].toLowerCase().equals("add")){

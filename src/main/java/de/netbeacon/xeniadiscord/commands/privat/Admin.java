@@ -2,6 +2,7 @@ package de.netbeacon.xeniadiscord.commands.privat;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -41,6 +42,14 @@ public class Admin implements PrivateCommand {
                 // force blacklist save
                 if(args[1].toLowerCase().equals("blacklistforcesave")){
                     if(!new BlackListUtility().writetofile()){
+                        event.getChannel().sendMessage("Saving blacklist failed.").queue();
+                    }else{
+                        event.getChannel().sendMessage("Blacklist saved sucessfully").queue();
+                    }
+                }
+                // force webhooks save
+                if(args[1].toLowerCase().equals("twitchhookforcesave")){
+                    if(!new TwitchHookManagement(event.getJDA()).writetofile()){
                         event.getChannel().sendMessage("Saving blacklist failed.").queue();
                     }else{
                         event.getChannel().sendMessage("Blacklist saved sucessfully").queue();

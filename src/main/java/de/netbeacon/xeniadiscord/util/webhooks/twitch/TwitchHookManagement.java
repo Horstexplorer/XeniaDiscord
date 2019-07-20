@@ -28,7 +28,7 @@ public class TwitchHookManagement {
         }
     }
 
-    boolean loadfromfile(){
+    private boolean loadfromfile(){
         try{
             // check if file exists
             File twitchhookfile = new File("twitchhooks.storage");
@@ -68,7 +68,7 @@ public class TwitchHookManagement {
         }
     }
 
-    boolean writetofile(){
+    public boolean writetofile(){
         try{
             File twitchhookfile = new File("twitchhooks.storage");
             // delete to clear
