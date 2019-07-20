@@ -150,7 +150,12 @@ public class TwitchHookManagement {
                                             TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                             haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
                                             if(haspermission){
-                                                jda.getTextChannelById(textChannel.getId()).sendMessage(thos.getChannelName() + " is now live on twitch!" +"\n"+ "https://twitch.tv/"+thos.getChannelName()).queue();
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage(
+                                                        "Hey @everyone !"+"\n"+
+                                                                thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch!" +"\n"+
+                                                                "Let's drop in!"+"\n"+
+                                                                "https://twitch.tv/"+thos.getChannelName()
+                                                ).queue();
                                             }else{
                                                 toremove.add(thos);
                                             }
@@ -185,6 +190,8 @@ public class TwitchHookManagement {
             String channelid = new TwitchAPIWrap().getChannelid(twitchname);
             if(channelid != null){
                 twitchHookObjekts.add(new TwitchHookObjekt(guildchannelid, twitchname, channelid));
+            }else{
+                return false;
             }
         }catch (Exception e){
             return false;
@@ -206,11 +213,11 @@ public class TwitchHookManagement {
         String list = "";
         for(TwitchHookObjekt tho : twitchHookObjekts){
             if(tho.getGuildChannel().equals(guildchannelid)){
-                list += "> "+tho.getChannelName()+"\n";
+                list += "> "+tho.getChannelName().substring(0, 1).toUpperCase() + tho.getChannelName().substring(1)+"\n";
             }
         }
         if(list.equals("")){
-            list = "No webhooks found here";
+            list = "No webhooks found here!";
         }
         return list;
     }

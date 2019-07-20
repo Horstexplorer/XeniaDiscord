@@ -25,18 +25,18 @@ public class TwitchHook implements GuildCommand {
                     if(args[1].toLowerCase().equals("add")){
                         // add hook to this channel
                         if(!new TwitchHookManagement(event.getJDA()).add(event.getChannel().getId(),args[2])){
-                            event.getChannel().sendMessage("Failed to add").queue();
+                            event.getChannel().sendMessage("Failed to add!").queue();
                         }else{
-                            event.getChannel().sendMessage("Success!").queue();
+                            event.getChannel().sendMessage("Successfully added!").queue();
                         }
                     }
                     // remove
                     if(args[1].toLowerCase().equals("remove")){
                         // remove hook from this channel
                         if(!new TwitchHookManagement(event.getJDA()).remove(event.getChannel().getId(),args[2])){
-                            event.getChannel().sendMessage("Failed to remove").queue();
+                            event.getChannel().sendMessage("Failed to remove!").queue();
                         }else{
-                            event.getChannel().sendMessage("Success!").queue();
+                            event.getChannel().sendMessage("Successfully removed!").queue();
                         }
                     }
                 }else {
