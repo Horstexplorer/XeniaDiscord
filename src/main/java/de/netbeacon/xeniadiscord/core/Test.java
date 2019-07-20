@@ -7,7 +7,9 @@ public class Test {
 
     public static void main(String[]args){
         try{
-            System.out.println(new TwitchAPIWrap().getChannelid(""));
+
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
