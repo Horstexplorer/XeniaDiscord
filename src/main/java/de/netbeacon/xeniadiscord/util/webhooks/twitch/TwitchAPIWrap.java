@@ -31,7 +31,6 @@ public class TwitchAPIWrap {
             StringBuffer content = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
-                System.out.println(inputLine);
             }
             in.close();
             con.disconnect();
@@ -54,7 +53,7 @@ public class TwitchAPIWrap {
                 Map.Entry pair = (Map.Entry)iterator.next();
                 usernames += pair.getKey(); // add value
                 if(iterator.hasNext()){
-                    usernames += ", ";  // add delimiter
+                    usernames += "&login=";  // add delimiter
                 }
             }
 
@@ -100,7 +99,6 @@ public class TwitchAPIWrap {
             StringBuffer content = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
-                System.out.println(inputLine);
             }
             in.close();
             con.disconnect();
@@ -123,7 +121,7 @@ public class TwitchAPIWrap {
                 Map.Entry pair = (Map.Entry)iterator.next();
                 channelidsS += pair.getKey(); // add value
                 if(iterator.hasNext()){
-                    channelidsS += ", ";  // add delimiter
+                    channelidsS += "&user_id=";  // add delimiter
                 }
             }
 
