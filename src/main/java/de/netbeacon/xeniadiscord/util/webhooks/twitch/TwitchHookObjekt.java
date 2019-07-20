@@ -1,31 +1,31 @@
 package de.netbeacon.xeniadiscord.util.webhooks.twitch;
 
-import net.dv8tion.jda.api.entities.GuildChannel;
-
 public class TwitchHookObjekt {
 
-    private GuildChannel channel;
+    private String guildchannelid;
     private String channelname;
     private String channelid;
     private String status;
 
-    TwitchHookObjekt(GuildChannel channel, String channelname, String channelid){
-        this.channel = channel;
+    TwitchHookObjekt(String guildchannelid, String channelname, String channelid){
+        this.guildchannelid = guildchannelid;
         this.channelname = channelname;
         this.channelid = channelid;
-        this.status = "null";
+        this.status = "offline";
     }
+
+    String getGuildChannel(){return this.guildchannelid;}
 
     String getChannelName(){
         return this.channelname;
     }
 
     String getChannelID(){
-        return this.getChannelID();
+        return this.channelid;
     }
 
     String getStatus(){
-        return this.getStatus();
+        return this.status;
     }
 
     void setStatus(String status){
