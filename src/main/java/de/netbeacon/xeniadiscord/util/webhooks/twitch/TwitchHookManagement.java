@@ -167,8 +167,8 @@ public class TwitchHookManagement {
                             }
                             twitchHookObjekts.removeAll(toremove);
                         }
-                        hashMap.clear();
                     }
+                    hashMap.clear();
                 }
                 // update file
                 writetofile();
