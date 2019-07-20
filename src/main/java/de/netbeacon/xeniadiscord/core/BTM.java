@@ -2,7 +2,7 @@ package de.netbeacon.xeniadiscord.core;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
-import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookHandler;
+import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
@@ -42,9 +42,7 @@ public class BTM implements Runnable{
         TimerTask update_twitchhooks = new TimerTask() {
             @Override
             public void run() {
-                if(!new TwitchHookHandler().update()){
-                    System.err.println("Updating twitch-hooks failed.");
-                }
+                new TwitchHookManagement(jda).update();
             }
         };
         // schedule tasks

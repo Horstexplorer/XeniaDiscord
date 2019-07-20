@@ -91,7 +91,7 @@ public class TwitchHookManagement {
         }
     }
 
-    void update(){
+    public void update(){
 
         try{
 
@@ -176,7 +176,7 @@ public class TwitchHookManagement {
 
     }
 
-    boolean add(String guildchannelid, String twitchname){
+    public boolean add(String guildchannelid, String twitchname){
         for(TwitchHookObjekt tho : twitchHookObjekts){
             if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
                 return false;
@@ -193,7 +193,7 @@ public class TwitchHookManagement {
         return true;
     }
 
-    boolean remove(String guildchannelid, String twitchname){
+    public boolean remove(String guildchannelid, String twitchname){
         for(TwitchHookObjekt tho : twitchHookObjekts){
             if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
                 twitchHookObjekts.remove(tho);
