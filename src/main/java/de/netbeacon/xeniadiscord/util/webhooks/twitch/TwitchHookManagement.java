@@ -135,6 +135,7 @@ public class TwitchHookManagement {
 
                         // if status == live we need to check if it was live before (we do nothing) or if it wasnt ( we need to check & send a notification )
                         if(result.getValue().toLowerCase().equals("live")){
+                            List<TwitchHookObjekt> toremove = new ArrayList<TwitchHookObjekt>();
                             // find each twitchhookobject with the channelid
                             for(TwitchHookObjekt thos : twitchHookObjekts){
                                 if(result.getKey().equals(thos.getChannelID())){
@@ -145,29 +146,27 @@ public class TwitchHookManagement {
                                         boolean haspermission = false;
                                         // check permissions
                                         try{
-                                            Guild guild = jda.getGuildChannelById(thos.getChannelID()).getGuild();
-                                            TextChannel textChannel = guild.getTextChannelById(thos.getChannelID());
+                                            Guild guild = jda.getGuildChannelById(thos.getGuildChannel()).getGuild();
+                                            TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                             haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
+                                            if(haspermission){
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage(thos.getChannelName() + " is now live on twitch!" +"\n"+ "https://twitch.tv/"+thos.getChannelName()).queue();
+                                            }else{
+                                                toremove.add(thos);
+                                            }
                                         }catch (Exception e){
-                                            haspermission = false;
+                                            e.printStackTrace();
                                         }
-
-                                        if(haspermission){
-                                            // send message
-                                            try{
-                                                jda.getGuildChannelById(thos.getChannelID()).getGuild().getTextChannelById(thos.getChannelID()).sendMessage(thos.getChannelName() + " is now live on twitch!" +"\n"+ "https://twitch.tv/"+thos.getChannelName()).queue();
-                                            }catch (Exception ignore){}
-                                        }else{
-                                            // delete this hook object
-                                            twitchHookObjekts.remove(thos);
-                                        }
-
                                     }// nothing to do
                                 }
                             }
+                            twitchHookObjekts.removeAll(toremove);
                         }
+                        hashMap.clear();
                     }
                 }
+                // update file
+                writetofile();
             }
 
         }catch (Exception e){
@@ -201,6 +200,19 @@ public class TwitchHookManagement {
             }
         }
         return false;
+    }
+
+    public String list(String guildchannelid){
+        String list = "";
+        for(TwitchHookObjekt tho : twitchHookObjekts){
+            if(tho.getGuildChannel().equals(guildchannelid)){
+                list += "> "+tho.getChannelName()+"\n";
+            }
+        }
+        if(list.equals("")){
+            list = "No webhooks found here";
+        }
+        return list;
     }
 }
 

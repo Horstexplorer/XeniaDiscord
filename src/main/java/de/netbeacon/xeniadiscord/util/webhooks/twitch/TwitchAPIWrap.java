@@ -126,7 +126,7 @@ public class TwitchAPIWrap {
             }
 
             // get values from api
-            URL url = new URL("https://api.twitch.tv/helix/streams?user_id="+channelids);
+            URL url = new URL("https://api.twitch.tv/helix/streams?user_id="+channelidsS);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Client-ID", twitchid);
