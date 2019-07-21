@@ -13,7 +13,7 @@ public class Help implements PrivateCommand {
         //help
         if(args[0].toLowerCase().equals("help")){
             String msg = "Hey, I'm Xenia.\n"+
-                    "I'm not sure how I can help you but you may want to try out one of the commands below for more information."+
+                    "I'm not sure how I can help you but you may want to try out one of the commands below for more information.\n"+
                     "info - Provides some information about me :3\n";
             event.getChannel().sendMessage(msg).queue();
         }
