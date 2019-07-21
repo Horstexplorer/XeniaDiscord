@@ -166,6 +166,7 @@ public class TwitchHookManagement {
                                 }
                             }
                             twitchHookObjekts.removeAll(toremove);
+                            toremove.clear();
                         }
                     }
                     hashMap.clear();
