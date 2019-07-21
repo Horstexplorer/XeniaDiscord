@@ -125,6 +125,7 @@ public class YourCoreModule {
 - Added webhooks for twitch
 - switched to JDA 4.BETA.0_24
 - various minor changes
+- improved hints for faulty commands
 ```
 ##### 1.0.2.5
 ```

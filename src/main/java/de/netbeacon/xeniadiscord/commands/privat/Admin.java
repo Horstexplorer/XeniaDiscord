@@ -99,6 +99,8 @@ public class Admin implements PrivateCommand {
                                     "Twitchhooks: "+new TwitchHookManagement(event.getJDA()).count()+"\n"
                     ).queue();
                 }
+            }else{
+                event.getChannel().sendMessage("View the README.md file for avaible admin commands.").queue();
             }
         }
     }
