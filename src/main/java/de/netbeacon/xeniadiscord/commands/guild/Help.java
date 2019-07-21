@@ -19,7 +19,8 @@ public class Help implements GuildCommand {
         //help
         if(args[0].toLowerCase().equals("help")){
             String msg = "Hey, I'm Xenia.\n"+
-                    "info - Provides information about me\n"+
+                    "I'm not sure how I can help you but you may want to try out one of the commands below for more information."+
+                    "info - Provides some information about me :3\n"+
                     "commands - Shows a list of known commands ( Modules not included )\n";
             event.getChannel().sendMessage(msg).queue();
         }

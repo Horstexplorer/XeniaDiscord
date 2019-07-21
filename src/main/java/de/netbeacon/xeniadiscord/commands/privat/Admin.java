@@ -89,6 +89,18 @@ public class Admin implements PrivateCommand {
                        event.getChannel().sendMessage("Broadcast : [OK] "+success+" [FAILED] "+failed).queue();
                    }
                 }
+                // status
+                if(args[1].toLowerCase().equals("status")){
+                    if (args.length>2){
+                        event.getChannel().sendMessage(
+                        "Running Xenia v "+ new Config().version()+"\n"+
+                                "Ping: "+event.getJDA().getGatewayPing()+"\n"+
+                                "Used by "+event.getJDA().getGuilds().size()+" guilds\n"+
+                                "Blacklisted channels: "+new BlackListUtility().count()+"\n"+
+                                "Twitchhooks: "+new TwitchHookManagement(event.getJDA()).count()+"\n"
+                        ).queue();
+                    }
+                }
             }
         }
     }

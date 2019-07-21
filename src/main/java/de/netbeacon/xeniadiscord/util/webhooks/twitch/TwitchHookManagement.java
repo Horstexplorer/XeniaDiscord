@@ -221,5 +221,9 @@ public class TwitchHookManagement {
         }
         return list;
     }
+
+    public int count(){
+        return twitchHookObjekts.size();
+    }
 }
 

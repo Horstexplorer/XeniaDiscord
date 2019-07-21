@@ -49,6 +49,7 @@ off                                         || Disconnect from voice channel
 ```
 Commands limited to admin user (bot_admin_id)
 ```
+admin status                                || advanced status
 admin shutdown                              || shutdown bot
 admin onlinestatus <dnd/idle/on>            || set inlinestatus to dnd, idle or online
 admin blacklistforcesave                    || force saving the blacklist
@@ -123,6 +124,7 @@ public class YourCoreModule {
 ```
 - Added webhooks for twitch
 - switched to JDA 4.BETA.0_24
+- various minor changes
 ```
 ##### 1.0.2.5
 ```

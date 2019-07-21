@@ -78,4 +78,8 @@ public class BlackListUtility {
         }
         return true;
     }
+
+    public int count(){
+        return blacklist.size();
+    }
 }
