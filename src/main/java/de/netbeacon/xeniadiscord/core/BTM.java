@@ -2,6 +2,7 @@ package de.netbeacon.xeniadiscord.core;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
@@ -38,9 +39,16 @@ public class BTM implements Runnable{
                 }
             }
         };
-        // shedule tasks
+        TimerTask update_twitchhooks = new TimerTask() {
+            @Override
+            public void run() {
+                new TwitchHookManagement(jda).update();
+            }
+        };
+        // schedule tasks
         time.schedule(update_status,1000*60,1000*60);            // wait 1 minute then update every minute
         time.schedule(save_blacklist, 1000*60*60, 1000*60*60);    // wait 1h then update every h
+        time.schedule(update_twitchhooks,1000*60*5,1000*60*5);            // wait 5 minutes then update every 5 minutes
     }
 
     private int user_count(){

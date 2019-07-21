@@ -2,6 +2,7 @@ package de.netbeacon.xeniadiscord.commands.privat;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -17,6 +18,8 @@ public class Admin implements PrivateCommand {
             if(args[0].toLowerCase().equals("admin") && args.length > 1){
                 // shutdown bot
                 if(args[1].toLowerCase().equals("shutdown")){
+                    new BlackListUtility().writetofile();
+                    new TwitchHookManagement(event.getJDA()).writetofile();
                     event.getJDA().shutdownNow();
                     System.exit(0);
                 }
@@ -44,6 +47,14 @@ public class Admin implements PrivateCommand {
                         event.getChannel().sendMessage("Saving blacklist failed.").queue();
                     }else{
                         event.getChannel().sendMessage("Blacklist saved sucessfully").queue();
+                    }
+                }
+                // force webhooks save
+                if(args[1].toLowerCase().equals("twitchhookforcesave")){
+                    if(!new TwitchHookManagement(event.getJDA()).writetofile()){
+                        event.getChannel().sendMessage("Saving twitchhooks failed.").queue();
+                    }else{
+                        event.getChannel().sendMessage("Twitchhooks saved sucessfully").queue();
                     }
                 }
                 // update config property values
@@ -78,6 +89,18 @@ public class Admin implements PrivateCommand {
                        event.getChannel().sendMessage("Broadcast : [OK] "+success+" [FAILED] "+failed).queue();
                    }
                 }
+                // status
+                if(args[1].toLowerCase().equals("status")){
+                    event.getChannel().sendMessage(
+                            "Running Xenia v "+ new Config().version()+"\n"+
+                                    "Ping: "+event.getJDA().getGatewayPing()+"\n"+
+                                    "Used by "+event.getJDA().getGuilds().size()+" guilds\n"+
+                                    "Blacklisted channels: "+new BlackListUtility().count()+"\n"+
+                                    "Twitchhooks: "+new TwitchHookManagement(event.getJDA()).count()+"\n"
+                    ).queue();
+                }
+            }else{
+                event.getChannel().sendMessage("View the README.md file for avaible admin commands.").queue();
             }
         }
     }

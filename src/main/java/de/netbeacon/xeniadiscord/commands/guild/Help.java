@@ -19,7 +19,8 @@ public class Help implements GuildCommand {
         //help
         if(args[0].toLowerCase().equals("help")){
             String msg = "Hey, I'm Xenia.\n"+
-                    "info - Provides information about me\n"+
+                    "I'm not sure how I can help you but you may want to try out one of the commands below for more information.\n"+
+                    "info - Provides some information about me :3\n"+
                     "commands - Shows a list of known commands ( Modules not included )\n";
             event.getChannel().sendMessage(msg).queue();
         }
@@ -42,7 +43,9 @@ public class Help implements GuildCommand {
                     "ban <user>                                  // Permission.BAN_MEMBERS       // Bans the user from the server\n" +
                     "music <command>                             // Permission.VOICE_CONNECT     // See 'Music Commands'\n" +
                     "ghost <channel> <msg>                       // Permission.MANAGE_CHANNEL    // Send <msg> as bot to <channel>\n"+
-                    "blacklist <add/remove> <channel>            // Permission.MANAGE_CHANNEL    // Add <channel> to blacklist so that Xenia neither listen nor respond there\n";
+                    "blacklist <add/remove> <channel>            // Permission.MANAGE_CHANNEL    // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
+                    "twitchhook <list|add/remove> <username>     || Permission.MANAGE_CHANNEL    || Add a webhook for a specific twitch channel to your textchannel\n";
+
             String music_commands = "**Music Commands:** \n" +
                     "Command                                     // Description\n" +
                     "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n" +

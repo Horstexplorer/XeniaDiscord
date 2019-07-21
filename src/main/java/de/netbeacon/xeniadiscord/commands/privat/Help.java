@@ -13,8 +13,8 @@ public class Help implements PrivateCommand {
         //help
         if(args[0].toLowerCase().equals("help")){
             String msg = "Hey, I'm Xenia.\n"+
-                    "info - Provides information about me\n"+
-                    "commands - Shows a list of known commands ( Modules not included )\n";
+                    "I'm not sure how I can help you but you may want to try out one of the commands below for more information.\n"+
+                    "info - Provides some information about me :3\n";
             event.getChannel().sendMessage(msg).queue();
         }
         //info
@@ -25,10 +25,6 @@ public class Help implements PrivateCommand {
                     "Used by "+event.getJDA().getGuilds().size()+" guilds\n"+
                     "More information: https://xenia.netbeacon.de \n";
             event.getChannel().sendMessage(msg).queue();
-        }
-        //commands
-        if(args[0].toLowerCase().equals("commands")) {
-            event.getChannel().sendMessage("Sorry, commands are not avaible ").queue();
         }
     }
 }

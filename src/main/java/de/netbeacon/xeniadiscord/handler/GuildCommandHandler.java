@@ -39,6 +39,9 @@ public class GuildCommandHandler implements Runnable {
                 }else{
                     event.getChannel().sendMessage("You're not authorized to do that.").queue();
                 }
+            }else{
+                // unknown command
+                event.getChannel().sendMessage("Unknown command. \n Try "+config.load("bot_command_indicator")+"commands for a list of some commands.").queue();
             }
         }
     }
@@ -53,6 +56,7 @@ public class GuildCommandHandler implements Runnable {
         commands.put("ban", new UserManagement());
         commands.put("ghost", new Ghost());
         commands.put("blacklist", new Blacklist());
+        commands.put("twitchhook", new TwitchHook());
 
     }
 

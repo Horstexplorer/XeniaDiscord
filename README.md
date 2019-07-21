@@ -1,9 +1,9 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.2.5
+> Current Version: 1.0.3.0
 
 > Using  
-> - net.dv8tion JDA -  4.BETA.0_10
+> - net.dv8tion JDA -  4.BETA.0_24
 > - lavaplayer - 1.3.17
 > - slf4j-simple - 1.7.26
 
@@ -32,6 +32,7 @@ ban <user>                                  || Permission.BAN_MEMBERS       || B
 music <command>                             || Permission.VOICE_CONNECT     || See 'Music Commands
 ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Send <msg> as bot to <channel>
 blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Add <channel> to blacklist so that Xenia neither listen nor respond there
+twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Add a webhook for a specific twitch channel to your textchannel
                     
 ```
 Commands to control music functions:
@@ -48,9 +49,11 @@ off                                         || Disconnect from voice channel
 ```
 Commands limited to admin user (bot_admin_id)
 ```
+admin status                                || advanced status
 admin shutdown                              || shutdown bot
 admin onlinestatus <dnd/idle/on>            || set inlinestatus to dnd, idle or online
 admin blacklistforcesave                    || force saving the blacklist
+admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
 ```
 
@@ -117,6 +120,13 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.3.0
+```
+- Added webhooks for twitch
+- switched to JDA 4.BETA.0_24
+- various minor changes
+- improved hints for faulty commands
+```
 ##### 1.0.2.5
 ```
 - switched to JDA 4.BETA.0_10

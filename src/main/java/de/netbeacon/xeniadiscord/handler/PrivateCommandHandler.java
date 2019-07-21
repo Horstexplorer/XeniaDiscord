@@ -31,6 +31,9 @@ public class PrivateCommandHandler implements Runnable {
         if(commands.containsKey(args[0])){
             //execute command
             commands.get(args[0]).execute(event,args);
+        }else{
+            // show error
+            event.getChannel().sendMessage("Unknown command.").queue();
         }
     }
 
