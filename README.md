@@ -120,6 +120,14 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.3.1
+```
+- online status changes behaviour of the bot
+    | online - everything should work
+    | idle   - ignore guild chats
+    | dnd    - ignore everything
+
+```
 ##### 1.0.3.0
 ```
 - Added webhooks for twitch
