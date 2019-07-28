@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.3.0
+> Current Version: 1.0.3.2
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -51,7 +51,7 @@ Commands limited to admin user (bot_admin_id)
 ```
 admin status                                || advanced status
 admin shutdown                              || shutdown bot
-admin onlinestatus <dnd/idle/on>            || set inlinestatus to dnd, idle or online
+admin onlinestatus <idle/on>                || set onlinestatus to dnd, idle or online
 admin blacklistforcesave                    || force saving the blacklist
 admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
@@ -120,6 +120,19 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.3.2
+```
+- improved notifications for twitch webhooks
+- twitch api limitations should now be considered
+```
+##### 1.0.3.1
+```
+- online status changes behaviour of the bot
+    | online - everything should work
+    | idle   - ignore guild chats
+    | dnd    - ignore everything
+
+```
 ##### 1.0.3.0
 ```
 - Added webhooks for twitch

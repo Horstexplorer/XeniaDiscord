@@ -45,10 +45,17 @@ public class BTM implements Runnable{
                 new TwitchHookManagement(jda).update();
             }
         };
+        TimerTask reset_apicallcounter = new TimerTask() {
+            @Override
+            public void run() {
+                new TwitchHookManagement(jda).resetapicalls();
+            }
+        };
         // schedule tasks
-        time.schedule(update_status,1000*60,1000*60);            // wait 1 minute then update every minute
-        time.schedule(save_blacklist, 1000*60*60, 1000*60*60);    // wait 1h then update every h
-        time.schedule(update_twitchhooks,1000*60*5,1000*60*5);            // wait 5 minutes then update every 5 minutes
+        time.schedule(update_status,1000*60,1000*60);               // wait 1 minute then update every minute
+        time.schedule(save_blacklist, 1000*60*60, 1000*60*60);      // wait 1h then update every h
+        time.schedule(update_twitchhooks,1000*30*5,1000*30*5);      // wait 5 minutes then update every 5 minutes
+        time.schedule(reset_apicallcounter, 1000*60, 1000*60);      // wait 1 minute then update every minute
     }
 
     private int user_count(){

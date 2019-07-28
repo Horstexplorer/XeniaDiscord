@@ -27,10 +27,6 @@ public class Admin implements PrivateCommand {
                 if(args[1].toLowerCase().equals("onlinestatus")){
                     if (args.length>2){
                         switch (args[2].toLowerCase()){
-                            case "dnd":
-                                event.getJDA().getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
-                                break;
-
                             case "idle":
                                 event.getJDA().getPresence().setStatus(OnlineStatus.IDLE);
                                 break;
