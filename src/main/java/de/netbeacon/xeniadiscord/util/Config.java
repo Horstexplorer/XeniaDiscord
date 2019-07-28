@@ -92,7 +92,6 @@ public class Config {
 
     public boolean updateproperties(String property, String value){
         // Update property
-
         // check if property exists
         if(properties.getProperty(property) != null){
             // property exists
@@ -124,8 +123,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.3.1";
-        String build = "1907270001";
+        String vers= "1.0.3.2";
+        String build = "1907282138";
         return vers+"-"+build;
     }
 }
