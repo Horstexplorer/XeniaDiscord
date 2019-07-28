@@ -25,7 +25,7 @@ public class TwitchHook implements GuildCommand {
                     if(args[1].toLowerCase().equals("add")){
                         // add hook to this channel
                         if(!new TwitchHookManagement(event.getJDA()).add(event.getChannel().getId(),args[2])){
-                            event.getChannel().sendMessage("Failed to add!").queue();
+                            event.getChannel().sendMessage("Failed to add! This error may result due to an incorrect username (or us reaching the rate limit - try again in a few moments). ").queue();
                         }else{
                             event.getChannel().sendMessage("Successfully added!").queue();
                         }
@@ -34,7 +34,7 @@ public class TwitchHook implements GuildCommand {
                     if(args[1].toLowerCase().equals("remove")){
                         // remove hook from this channel
                         if(!new TwitchHookManagement(event.getJDA()).remove(event.getChannel().getId(),args[2])){
-                            event.getChannel().sendMessage("Failed to remove!").queue();
+                            event.getChannel().sendMessage("Failed to remove! This error may result due to an incorrect user name.").queue();
                         }else{
                             event.getChannel().sendMessage("Successfully removed!").queue();
                         }
