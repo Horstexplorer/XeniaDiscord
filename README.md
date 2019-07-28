@@ -123,6 +123,7 @@ public class YourCoreModule {
 ##### 1.0.3.2
 ```
 - improved notifications for twitch webhooks
+- twitch api limitations should now be considered
 ```
 ##### 1.0.3.1
 ```
