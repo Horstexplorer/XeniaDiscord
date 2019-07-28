@@ -1,10 +1,12 @@
 package de.netbeacon.xeniadiscord.util.webhooks.twitch;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,9 +119,11 @@ public class TwitchHookManagement {
                 hashMap.put(uid, "offline");
                 // if our hashmap contains 100 elements or this is the last element we have, we process it
                 if((hashMap.size() == 100) || (uids.size()==processed)){
-                    // contact twitch
-                    hashMap = new TwitchAPIWrap().getStreamsStatus(hashMap);
-                    // process results
+                    // get online/offline results & update stream information
+                    hashMap = new TwitchAPIWrap().getStreamsAdvanced(hashMap, twitchHookObjekts); // not using getStreamsStatus()
+                    // update stream information
+
+                    // process online/offline results
                     for(Map.Entry<String, String> result : hashMap.entrySet()){
 
                         // if status == offline (nothing changed) we need to set the status from every object with the matching id to offline
@@ -150,12 +154,14 @@ public class TwitchHookManagement {
                                             TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                             haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
                                             if(haspermission){
-                                                jda.getTextChannelById(textChannel.getId()).sendMessage(
-                                                        "Hey @everyone !"+"\n"+
-                                                                thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch!" +"\n"+
-                                                                "Let's drop in!"+"\n"+
-                                                                "https://twitch.tv/"+thos.getChannelName()
-                                                ).queue();
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage("Hey @everyone! "+thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch!"+ " Let's drop in! \n").queue();
+
+                                                EmbedBuilder eb = new EmbedBuilder();
+                                                eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
+                                                eb.setColor(Color.MAGENTA);
+                                                eb.setDescription("["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")");
+                                                eb.setImage(thos.getThumbnailurl());
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
                                             }else{
                                                 toremove.add(thos);
                                             }
