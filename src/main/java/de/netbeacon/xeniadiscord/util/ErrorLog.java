@@ -67,7 +67,7 @@ public class ErrorLog {
             return false;
         }
     }
-
+    public void reset() { errors.clear(); }
     public int count(){
         return errors.size();
     }
