@@ -97,7 +97,7 @@ public class Admin implements PrivateCommand {
                     eb.addField("Ping:",event.getJDA().getGatewayPing()+"ms", false);
                     eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
                     eb.addField("Blacklisted channels:",new BlackListUtility().count()+" channels", false);
-                    eb.addField("TwitchHooks:",new TwitchHookManagement(event.getJDA()).count()+" hooks\n"+ "Current api-calls: "+new TwitchHookManagement(event.getJDA()).count(), false);
+                    eb.addField("TwitchHooks:",new TwitchHookManagement(event.getJDA()).count()+" hooks\n"+ "Current api-calls: "+new TwitchHookManagement(event.getJDA()).countapicalls(), false);
                     eb.addField("Errors:", new ErrorLog(0, "").count()+" errors recorded \n", false);
                     event.getChannel().sendMessage(eb.build()).queue();
                 }
