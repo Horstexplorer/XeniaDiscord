@@ -173,12 +173,12 @@ public class TwitchHookManagement {
                                                         TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                                         haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
                                                         if(haspermission){
-                                                            jda.getTextChannelById(textChannel.getId()).sendMessage("Hey @everyone! "+thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch!"+ " Let's drop in! \n").queue();
+                                                            jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
 
                                                             EmbedBuilder eb = new EmbedBuilder();
                                                             eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
                                                             eb.setColor(Color.MAGENTA);
-                                                            eb.setDescription("["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")");
+                                                            eb.setDescription("Hey everyone! \n"+thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch!\n Let's drop in! \n \n"+"["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")");
                                                             eb.setImage(thos.getThumbnailurl());
                                                             jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
                                                         }else{
