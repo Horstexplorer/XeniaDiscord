@@ -15,28 +15,30 @@ public class ErrorLog {
         if(errors == null){
             errors = new ArrayList<String>();
         }
-        // set error level
-        String level = "";
-        switch(lvl){
-            case 0:
-                level = "Minor";
-                break;
-            case 1:
-                level = "Moderate";
-                break;
-            case 3:
-                level = "Major";
-                break;
-            case 4:
-                level = "Critical";
-                break;
-            default:
-                level = "Unknown";
-                break;
+        if(!cause.isEmpty()){   // we may call it just to get the object so we dont need to add it as error
+            // set error level
+            String level = "";
+            switch(lvl){
+                case 0:
+                    level = "Minor";
+                    break;
+                case 1:
+                    level = "Moderate";
+                    break;
+                case 3:
+                    level = "Major";
+                    break;
+                case 4:
+                    level = "Critical";
+                    break;
+                default:
+                    level = "Unknown";
+                    break;
+            }
+            // add to list
+            String error = new Date()+" |#| "+level+" |#| "+cause;
+            errors.add(error);
         }
-        // add to list
-        String error = new Date()+" |#| "+level+" |#| "+cause;
-        errors.add(error);
     }
 
     public List<String> getErrors(){
