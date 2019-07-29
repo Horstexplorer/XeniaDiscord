@@ -16,7 +16,7 @@ import java.util.Map;
 public class TwitchHookManagement {
 
     private static List<TwitchHookObjekt> twitchHookObjekts;
-    private static int apicalls;
+    private static int apicalls = 0;
     private static boolean update_isrunning;
     private static JDA jda;
 
