@@ -34,7 +34,7 @@ public class Help implements GuildCommand {
             eb.setDescription("Version: "+ new Config().version());
             eb.addField("Ping:",event.getJDA().getGatewayPing()+"ms", false);
             eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
-            eb.addField("More Information:","https://xenia.netbeacon.de" , false);
+            eb.addField("More information:","https://xenia.netbeacon.de" , false);
 
             event.getChannel().sendMessage(eb.build()).queue();
         }
@@ -61,7 +61,7 @@ public class Help implements GuildCommand {
                     "next                                        // Play next song in queue\n" +
                     "skip                                        // Same as next\n" +
                     "shuffle                                     // Shuffle queue\n" +
-                    "info                                        // Displaying information about the current song\n" +
+                    "info                                        // Display information about the current song\n" +
                     "off                                         // Disconnect from voice channel\n";
 
             String external_commands = "";
