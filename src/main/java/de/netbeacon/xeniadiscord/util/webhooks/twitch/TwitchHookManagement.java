@@ -35,6 +35,11 @@ public class TwitchHookManagement {
     public void resetapicalls(){
         apicalls = 0;
     }
+
+    public int countapicalls(){
+        return apicalls;
+    }
+
     private boolean loadfromfile(){
         try{
             // check if file exists

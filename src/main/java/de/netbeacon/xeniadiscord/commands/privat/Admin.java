@@ -2,12 +2,15 @@ package de.netbeacon.xeniadiscord.commands.privat;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.ErrorLog;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,13 +90,16 @@ public class Admin implements PrivateCommand {
                 }
                 // status
                 if(args[1].toLowerCase().equals("status")){
-                    event.getChannel().sendMessage(
-                            "Running Xenia v "+ new Config().version()+"\n"+
-                                    "Ping: "+event.getJDA().getGatewayPing()+"\n"+
-                                    "Used by "+event.getJDA().getGuilds().size()+" guilds\n"+
-                                    "Blacklisted channels: "+new BlackListUtility().count()+"\n"+
-                                    "Twitchhooks: "+new TwitchHookManagement(event.getJDA()).count()+"\n"
-                    ).queue();
+                    EmbedBuilder eb = new EmbedBuilder();
+                    eb.setTitle("Xenia - Overview", null);
+                    eb.setColor(Color.RED);
+                    eb.setDescription("Version: "+new Config().version());
+                    eb.addField("Ping:",event.getJDA().getGatewayPing()+"ms", false);
+                    eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
+                    eb.addField("Blacklisted channels:",new BlackListUtility().count()+" channels", false);
+                    eb.addField("TwitchHooks:",new TwitchHookManagement(event.getJDA()).count()+" hooks\n"+ "Current api-calls: "+new TwitchHookManagement(event.getJDA()).count(), false);
+                    eb.addField("Errors:", new ErrorLog(0, "").count()+" errors recorded \n", false);
+                    event.getChannel().sendMessage(eb.build()).queue();
                 }
             }else{
                 event.getChannel().sendMessage("View the README.md file for avaible admin commands.").queue();
