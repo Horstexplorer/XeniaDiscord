@@ -1,10 +1,12 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
 import de.netbeacon.xeniadiscord.util.Config;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -26,12 +28,15 @@ public class Help implements GuildCommand {
         }
         //info
         if(args[0].toLowerCase().equals("info")){
-            String msg =    "------[ Info ]-----\n" +
-                    "Running Xenia v "+ new Config().version()+"\n"+
-                    "Ping: "+event.getJDA().getGatewayPing()+"\n"+
-                    "Used by "+event.getJDA().getGuilds().size()+" guilds\n"+
-                    "More information: https://xenia.netbeacon.de \n";
-            event.getChannel().sendMessage(msg).queue();
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle("Xenia - Overview", null);
+            eb.setColor(Color.RED);
+            eb.setDescription("Version: "+ new Config().version());
+            eb.addField("Ping:",event.getJDA().getGatewayPing()+"ms", false);
+            eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
+            eb.addField("More Information:","https://xenia.netbeacon.de" , false);
+
+            event.getChannel().sendMessage(eb.build()).queue();
         }
         //commands
         if(args[0].toLowerCase().equals("commands")) {
