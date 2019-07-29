@@ -40,6 +40,7 @@ public class Config {
             input.close();
         }catch (Exception e){
             e.printStackTrace();
+            new ErrorLog(3, "Could not init propertys");
             return false;
         }
         return true;
@@ -118,6 +119,7 @@ public class Config {
             result = properties.getProperty(property);
         }catch(Exception e) {
             e.printStackTrace();
+            new ErrorLog(2, "Could not load property "+property);
         }
         return result;
     }

@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
+import de.netbeacon.xeniadiscord.util.ErrorLog;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
@@ -62,7 +63,9 @@ public class PrivateModuleProcessor {
                         classname.add(maincp);
                         //get url
                         urllist.add(new URL("file:./modules/"+module));
-                    }catch (Exception ignore){}
+                    }catch (Exception e){
+                        new ErrorLog(4, "An error occured while adding private module: "+module+" : "+e.toString());
+                    }
                 }
                 //create urlclassloader
                 URL[] urls = urllist.toArray(new URL[urllist.size()]);
@@ -90,6 +93,7 @@ public class PrivateModuleProcessor {
                     }
                 }
             }catch(Exception e){
+                new ErrorLog(4, "An error occured while handling private modules: "+e.toString());
                 e.printStackTrace();
             }
         }

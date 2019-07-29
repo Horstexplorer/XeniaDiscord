@@ -19,10 +19,10 @@ public class ErrorLog {
             // set error level
             String level = "";
             switch(lvl){
-                case 0:
+                case 1:
                     level = "Minor";
                     break;
-                case 1:
+                case 2:
                     level = "Moderate";
                     break;
                 case 3:

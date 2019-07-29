@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
+import de.netbeacon.xeniadiscord.util.ErrorLog;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.io.File;
@@ -58,7 +59,9 @@ public class GuildModuleProcessor {
                         classname.add(maincp);
                         //get url
                         urllist.add(new URL("file:./modules/"+module));
-                    }catch (Exception ignore){}
+                    }catch (Exception e){
+                        new ErrorLog(4, "An error occured while adding guild module: "+module+" : "+e.toString());
+                    }
                 }
                 //create urlclassloader
                 URL[] urls = urllist.toArray(new URL[urllist.size()]);
@@ -94,6 +97,7 @@ public class GuildModuleProcessor {
                 }
             }catch(Exception e){
                 e.printStackTrace();
+                new ErrorLog(4, "An error occured while handling guild modules: "+e.toString());
             }
         }
         return handled;

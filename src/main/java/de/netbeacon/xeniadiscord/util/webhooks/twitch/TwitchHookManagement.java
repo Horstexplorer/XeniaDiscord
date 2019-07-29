@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.util.webhooks.twitch;
 
+import de.netbeacon.xeniadiscord.util.ErrorLog;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -76,6 +77,7 @@ public class TwitchHookManagement {
             br.close();
             return true;
         }catch (Exception ignore){
+            new ErrorLog(3, "Could not load TwitchHooks from file");
             return false;
         }
     }
@@ -99,6 +101,7 @@ public class TwitchHookManagement {
 
             return true;
         }catch (Exception e){
+            new ErrorLog(3, "Could not write TwitchHooks to file");
             return false;
         }
     }
@@ -182,7 +185,7 @@ public class TwitchHookManagement {
                                                             toremove.add(thos);
                                                         }
                                                     }catch (Exception e){
-                                                        e.printStackTrace();
+                                                        new ErrorLog(3, "An error occured while sending notification for TwitchHooks: "+e.toString());
                                                     }
                                                 }// nothing to do
                                             }
@@ -193,7 +196,8 @@ public class TwitchHookManagement {
                                 }
                                 hashMap.clear();
                             }else{
-                                Thread.sleep(1000*5);   // wait 5 seconds before retrying
+                                Thread.sleep(1000*10);   // wait 10 seconds before retrying
+                                new ErrorLog(3, "Rate limit exceeded while updating TwitchHooks.");
                             }
                         }
                     }
@@ -202,6 +206,7 @@ public class TwitchHookManagement {
                 }
             }catch (Exception e){
                 e.printStackTrace();
+                new ErrorLog(4, "An error while updating TwitchHooks:"+e.toString());
             }
             // we finished updating
             update_isrunning = false;
@@ -225,9 +230,11 @@ public class TwitchHookManagement {
                     return false;
                 }
             }else{
+                new ErrorLog(3, "Rate limit exceeded while adding TwitchHook: Originated from "+guildchannelid);
                 return false;
             }
         }catch (Exception e){
+            new ErrorLog(4, "An error occured while adding TwitchHook: Originated from "+guildchannelid+" : "+e.toString());
             return false;
         }
         return true;
