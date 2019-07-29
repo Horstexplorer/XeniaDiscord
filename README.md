@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.3.2
+> Current Version: 1.0.4.0
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -55,6 +55,7 @@ admin onlinestatus <idle/on>                || set onlinestatus to dnd, idle or 
 admin blacklistforcesave                    || force saving the blacklist
 admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
+admin errorlog <list/export/reset>          || list last 25 errors; export all of them; reset cached errors
 ```
 
 ### Modules
@@ -120,6 +121,13 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.4.0
+```
+- improved messages
+- added error log
+- fixed PrivateModuleProcessor
+- some other bugs fixed
+```
 ##### 1.0.3.2
 ```
 - improved notifications for twitch webhooks
