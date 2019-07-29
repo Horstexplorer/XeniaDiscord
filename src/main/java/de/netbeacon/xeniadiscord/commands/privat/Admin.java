@@ -101,6 +101,36 @@ public class Admin implements PrivateCommand {
                     eb.addField("Errors:", new ErrorLog(0, "").count()+" errors recorded \n", false);
                     event.getChannel().sendMessage(eb.build()).queue();
                 }
+                // errorlog
+                if(args[1].toLowerCase().equals("errorlog")){
+                    if (args.length>2){
+                        if(args[2].equals("list")){
+                            int currentpos = 0;
+                            String errors = "";
+                            for(String error : new ErrorLog(0, "").getErrors()){
+                                currentpos++;
+                                if(new ErrorLog(0,"").count() - currentpos <= 25){
+                                    errors += "   "+error+"\n";
+                                }
+                            }
+                            if(errors.isEmpty()){
+                                errors = "No errors recorded :D";
+                            }
+                            event.getChannel().sendMessage("Last 25 errors:\n"+errors).queue();
+                        }
+                        if(args[2].equals("export")){
+                            if(new ErrorLog(0 , "").export()){
+                                event.getChannel().sendMessage("Export successful!").queue();
+                            }else{
+                                event.getChannel().sendMessage("Export failed!").queue();
+                            }
+                        }
+                        if(args[2].equals("reset")){
+                            new ErrorLog(0 , "").reset();
+                            event.getChannel().sendMessage("Error list cleared").queue();
+                        }
+                    }
+                }
             }else{
                 event.getChannel().sendMessage("View the README.md file for avaible admin commands.").queue();
             }
