@@ -45,22 +45,22 @@ public class Admin implements PrivateCommand {
                     if(!new BlackListUtility().writetofile()){
                         event.getChannel().sendMessage("Saving blacklist failed.").queue();
                     }else{
-                        event.getChannel().sendMessage("Blacklist saved sucessfully").queue();
+                        event.getChannel().sendMessage("Blacklist saved successfully.").queue();
                     }
                 }
                 // force webhooks save
                 if(args[1].toLowerCase().equals("twitchhookforcesave")){
                     if(!new TwitchHookManagement(event.getJDA()).writetofile()){
-                        event.getChannel().sendMessage("Saving twitchhooks failed.").queue();
+                        event.getChannel().sendMessage("Saving TwitchHooks failed.").queue();
                     }else{
-                        event.getChannel().sendMessage("Twitchhooks saved sucessfully").queue();
+                        event.getChannel().sendMessage("TwitchHooks saved successfully.").queue();
                     }
                 }
                 // update config property values
                 if(args[1].toLowerCase().equals("config")){
                     if (args.length>3){
                         if(new Config().updateproperties(args[2].toLowerCase(), args[3])){
-                            event.getChannel().sendMessage("Value updated successfull").queue();
+                            event.getChannel().sendMessage("Value updated successful.").queue();
                         }else{
                             event.getChannel().sendMessage("Update failed. Please check property name").queue();
                         }

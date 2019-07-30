@@ -47,7 +47,7 @@ public class GuildCoreModuleProcessor {
 
                     urlcl = new URLClassLoader(new URL[]{new URL("file:./coremodule/coremodule.jar")}, this.getClass().getClassLoader());
                 }catch (Exception e){
-                    new ErrorLog(4, "An error occured while adding guild core module: "+e.toString());
+                    new ErrorLog(4, "An error occurred while adding guild core module: "+e.toString());
                     e.printStackTrace();
                 }
             }
@@ -78,7 +78,7 @@ public class GuildCoreModuleProcessor {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                new ErrorLog(4, "An error occured while handling guild core module: "+e.toString());
+                new ErrorLog(4, "An error occurred while handling guild core module: "+e.toString());
             }
         }
         return handled;
@@ -94,7 +94,7 @@ public class GuildCoreModuleProcessor {
                 method.invoke(instance, jda);   //ignore result
 
             } catch (Exception e) {
-                new ErrorLog(4, "An error occured while starting the background task for core module: "+e.toString());
+                new ErrorLog(4, "An error occurred while starting the background task for core module: "+e.toString());
                 System.out.println("[ERROR] " + e);
             }
         }
