@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.4.1
+> Current Version: 1.0.4.2
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -66,7 +66,7 @@ There are two types of modules that can be used: core modules and default module
 ##### Create your own module:
 Its very simple.  
 You need to create a class containing three functions: permission(Member), guild_execute(GuildMessageReceivedEvent, Member) and private_execute(PrivateMessageReceivedEvent). The permission() function should return a boolean if the given permission (member.haspermission(x)) is enough to use the module. Note that it only gets called if the request isn't from a private chat.
-If the permission is sufficient the guild_execute() function is called with the current GuildMessageRecievedEvent and the Member. If the message was sent via private chat private_execute() gets called instead of permission() and guild_execute() with a given PrivateMessageReceivedEvent. If the module has triggered an action guild/private_execute should return true.
+If the permission is sufficient the guild_execute() function is called with the current GuildMessageReceivedEvent and the Member. If the message was sent via private chat private_execute() gets called instead of permission() and guild_execute() with a given PrivateMessageReceivedEvent. If the module has triggered an action guild/private_execute should return true.
 The module should then be packed as jar where via the manifest file Main-Class points to the class with those functions.  
 The jar file of the module can be named as you like and should be stored in ./modules/.  
 The main class could look something like this:
@@ -92,7 +92,7 @@ public class YourModule {
 This works the same way as with the normal modules but with the additional function onstart(JDA).  
 This can be used to start a thread for background tasks after starting the bot. The return of onstart() is ignored by the bot, so it should be set to void.
 The guild/private_execute functions may, but does not have to return true when the event has been processed. This can be used for example so that other modules may be executed afterwards.
-Make sure the file is named coremodule.jar and is placed in./coremodule/ to work. In contrast to normal modules, there can only be one core-module installed.
+Make sure the file is named coremodule.jar and is placed in./coremodule/ to work. In contrast to normal modules, there can only be one module installed.
 The main class could look something like this:
 ```
 public class YourCoreModule {
@@ -121,6 +121,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.4.2
+```
+- fixed some spelling mistakes
+- optimized handling of the twitch-api limit
+```
 ##### 1.0.4.1
 ```
 - minor improvements
