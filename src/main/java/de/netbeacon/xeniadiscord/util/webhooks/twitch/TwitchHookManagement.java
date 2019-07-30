@@ -18,6 +18,8 @@ public class TwitchHookManagement {
 
     private static List<TwitchHookObjekt> twitchHookObjekts;
     private static int apicalls = 0;
+    private static int updates = 0;
+    private static int additions = 0;
     private static boolean update_isrunning;
     private static JDA jda;
 
@@ -35,6 +37,8 @@ public class TwitchHookManagement {
 
     public void resetapicalls(){
         apicalls = 0;
+        updates = 0;
+        additions = 0;
     }
 
     public int countapicalls(){
@@ -137,9 +141,10 @@ public class TwitchHookManagement {
                         boolean waitforratelimitresetloop = true;
                         // try to process if possible
                         while(waitforratelimitresetloop){
-                            if(apicalls+1 <= 30){
+                            if((apicalls+1 <= 30) && (updates <= 25)){  // check if the next update would fit in our api budget & check that we keep some free for additions (5)
                                 waitforratelimitresetloop = false; // we dont need to retry
                                 apicalls++;
+                                updates++;
                                 // get online/offline results & update stream information
                                 hashMap = new TwitchAPIWrap().getStreamsAdvanced(hashMap, twitchHookObjekts); // not using getStreamsStatus()
                                 // process online/offline results
@@ -185,7 +190,7 @@ public class TwitchHookManagement {
                                                             toremove.add(thos);
                                                         }
                                                     }catch (Exception e){
-                                                        new ErrorLog(3, "An error occured while sending notification for TwitchHooks: "+e.toString());
+                                                        new ErrorLog(3, "An error occurred while sending notification for TwitchHooks: "+e.toString());
                                                     }
                                                 }// nothing to do
                                             }
@@ -197,7 +202,7 @@ public class TwitchHookManagement {
                                 hashMap.clear();
                             }else{
                                 Thread.sleep(1000*10);   // wait 10 seconds before retrying
-                                new ErrorLog(3, "Rate limit exceeded while updating TwitchHooks.");
+                                new ErrorLog(3, "Rate limit exceeded while updating TwitchHooks. "+"Utm: "+updates+" Rlm: "+apicalls);
                             }
                         }
                     }
@@ -206,7 +211,7 @@ public class TwitchHookManagement {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                new ErrorLog(4, "An error while updating TwitchHooks:"+e.toString());
+                new ErrorLog(4, "An error occurred while updating TwitchHooks:"+e.toString());
             }
             // we finished updating
             update_isrunning = false;
@@ -221,8 +226,9 @@ public class TwitchHookManagement {
         }
         try{
             // check if we could run into an api rate limit
-            if(apicalls+1 <= 25){   // keep 5 as buffer for update process
+            if((apicalls+1 <= 30) && (additions <= 25)){   // keep 5 as buffer for update process
                 apicalls++; // add one
+                additions++;
                 String channelid = new TwitchAPIWrap().getChannelid(twitchname);
                 if(channelid != null){
                     twitchHookObjekts.add(new TwitchHookObjekt(guildchannelid, twitchname, channelid));
@@ -230,11 +236,11 @@ public class TwitchHookManagement {
                     return false;
                 }
             }else{
-                new ErrorLog(3, "Rate limit exceeded while adding TwitchHook: Originated from "+guildchannelid);
+                new ErrorLog(3, "Rate limit exceeded while adding TwitchHook: Originated from "+guildchannelid+" Utm: "+updates+" Rlm: "+apicalls);
                 return false;
             }
         }catch (Exception e){
-            new ErrorLog(4, "An error occured while adding TwitchHook: Originated from "+guildchannelid+" : "+e.toString());
+            new ErrorLog(4, "An error occurred while adding TwitchHook: Originated from "+guildchannelid+" : "+e.toString());
             return false;
         }
         return true;
