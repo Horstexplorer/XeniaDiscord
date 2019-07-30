@@ -25,7 +25,7 @@ public class TwitchHook implements GuildCommand {
                     if(args[1].toLowerCase().equals("add")){
                         // add hook to this channel
                         if(!new TwitchHookManagement(event.getJDA()).add(event.getChannel().getId(),args[2])){
-                            event.getChannel().sendMessage("Failed to add! This error may result due to an incorrect username (or us reaching the rate limit - try again in a few moments). ").queue();
+                            event.getChannel().sendMessage("Failed to add! This error may result due to an incorrect username (or us reaching the rate limit - try again in a few moments).").queue();
                         }else{
                             event.getChannel().sendMessage("Successfully added!").queue();
                         }

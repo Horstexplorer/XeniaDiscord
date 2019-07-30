@@ -60,7 +60,7 @@ public class GuildModuleProcessor {
                         //get url
                         urllist.add(new URL("file:./modules/"+module));
                     }catch (Exception e){
-                        new ErrorLog(4, "An error occured while adding guild module: "+module+" : "+e.toString());
+                        new ErrorLog(4, "An error occurred while adding guild module: "+module+" : "+e.toString());
                     }
                 }
                 //create urlclassloader
@@ -97,7 +97,7 @@ public class GuildModuleProcessor {
                 }
             }catch(Exception e){
                 e.printStackTrace();
-                new ErrorLog(4, "An error occured while handling guild modules: "+e.toString());
+                new ErrorLog(4, "An error occurred while handling guild modules: "+e.toString());
             }
         }
         return handled;

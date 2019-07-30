@@ -20,7 +20,7 @@ public class UserManagement implements GuildCommand {
                 if(event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)){    // bot needs permission
                     event.getGuild().kick(userid).queue();
                 }else{
-                    event.getChannel().sendMessage("I cant't do that.");
+                    event.getChannel().sendMessage("I can't do that.");
                 }
             }else{
                 event.getChannel().sendMessage("Command requires 1 argument (user)").queue();
@@ -37,7 +37,7 @@ public class UserManagement implements GuildCommand {
                 if(event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)){
                     event.getGuild().ban(userid, deldays).queue();
                 }else{
-                    event.getChannel().sendMessage("I cant't do that.");
+                    event.getChannel().sendMessage("I can't do that.");
                 }
             }else{
                 event.getChannel().sendMessage("Command requires 2 arguments (user, deletetime)").queue();

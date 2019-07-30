@@ -42,7 +42,7 @@ public class TwitchAPIWrap {
             return json.getJSONArray("data").getJSONObject(0).getString("id");
         }catch (Exception e){
             //e.printStackTrace();
-            new ErrorLog(1, "An error occured while executing getChannelid() in TwitchAPIWrap: "+e.toString()); // lvl 2 ; displayname may just dont exist -> json is empty...
+            new ErrorLog(1, "An error occurred while executing getChannelid() in TwitchAPIWrap: "+e.toString()); // lvl 2 ; displayname may just dont exist -> json is empty...
             return null;
         }
     }
@@ -68,7 +68,7 @@ public class TwitchAPIWrap {
             return json.getJSONArray("data").getJSONObject(0).getString("type");
         }catch (Exception e){
             //e.printStackTrace();
-            new ErrorLog(4, "An error occured while executing getStreamStatus() in TwitchAPIWrap: "+e.toString());
+            new ErrorLog(4, "An error occurred while executing getStreamStatus() in TwitchAPIWrap: "+e.toString());
             return null;
         }
     }
@@ -110,7 +110,7 @@ public class TwitchAPIWrap {
             return  channelids;
         }catch (Exception e){
             //e.printStackTrace();
-            new ErrorLog(4, "An error occured while executing getStreamsStatus() in TwitchAPIWrap: "+e.toString());
+            new ErrorLog(4, "An error occurred while executing getStreamsStatus() in TwitchAPIWrap: "+e.toString());
             return null;
         }
     }
@@ -164,7 +164,7 @@ public class TwitchAPIWrap {
             return  channelids;
         }catch (Exception e){
             //e.printStackTrace();
-            new ErrorLog(4, "An error occured while executing getStreamsAdvanced() in TwitchAPIWrap: "+e.toString());
+            new ErrorLog(4, "An error occurred while executing getStreamsAdvanced() in TwitchAPIWrap: "+e.toString());
             return null;
         }
     }

@@ -64,7 +64,7 @@ public class PrivateModuleProcessor {
                         //get url
                         urllist.add(new URL("file:./modules/"+module));
                     }catch (Exception e){
-                        new ErrorLog(4, "An error occured while adding private module: "+module+" : "+e.toString());
+                        new ErrorLog(4, "An error occurred while adding private module: "+module+" : "+e.toString());
                     }
                 }
                 //create urlclassloader
@@ -93,7 +93,7 @@ public class PrivateModuleProcessor {
                     }
                 }
             }catch(Exception e){
-                new ErrorLog(4, "An error occured while handling private modules: "+e.toString());
+                new ErrorLog(4, "An error occurred while handling private modules: "+e.toString());
                 e.printStackTrace();
             }
         }
