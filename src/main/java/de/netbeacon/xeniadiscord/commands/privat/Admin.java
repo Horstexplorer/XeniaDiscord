@@ -133,7 +133,7 @@ public class Admin implements PrivateCommand {
                     }
                 }
             }else{
-                event.getChannel().sendMessage("View the README.md file for avaible admin commands.").queue();
+                event.getChannel().sendMessage("View the README.md file for available admin commands.").queue();
             }
         }
     }
