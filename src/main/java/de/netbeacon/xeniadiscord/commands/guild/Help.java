@@ -49,7 +49,7 @@ public class Help implements GuildCommand {
                     "music <command>                             // Permission.VOICE_CONNECT     // See 'Music Commands'\n" +
                     "ghost <channel> <msg>                       // Permission.MANAGE_CHANNEL    // Send <msg> as bot to <channel>\n"+
                     "blacklist <add/remove> <channel>            // Permission.MANAGE_CHANNEL    // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
-                    "twitchhook <list|add/remove> <username>     || Permission.MANAGE_CHANNEL    || Add a webhook for a specific twitch channel to your textchannel\n";
+                    "twitchhook <list|add/remove> <username>     // Permission.MANAGE_CHANNEL    // Add a webhook for a specific twitch channel to your textchannel\n";
 
             String music_commands = "**Music Commands:** \n" +
                     "Command                                     // Description\n" +
