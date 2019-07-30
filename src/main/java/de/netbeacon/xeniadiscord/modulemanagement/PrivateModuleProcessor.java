@@ -84,7 +84,7 @@ public class PrivateModuleProcessor {
                     }
                     Class<?> classToLoad = Class.forName(name, true, urlcl);
                     // execute module
-                    Method method_exec = classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class); // MessageReceivedEvent event, int currentpermission
+                    Method method_exec = classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class); // MessageReceivedEvent event
                     Object instance_exec = classToLoad.getConstructor().newInstance();
                     Object result_exec = method_exec.invoke(instance_exec, event);
 
