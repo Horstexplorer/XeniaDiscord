@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.4.2
+> Current Version: 1.0.4.3
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
