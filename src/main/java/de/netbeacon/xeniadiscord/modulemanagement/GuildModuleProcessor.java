@@ -80,13 +80,13 @@ public class GuildModuleProcessor {
                     }
                     Class<?> classToLoad = Class.forName(name, true, urlcl);
                     // execute permission() -> bool
-                    Method method_permission = classToLoad.getDeclaredMethod("permission", Member.class); // Permission lvl to module
+                    Method method_permission = classToLoad.getDeclaredMethod("permission", Member.class); // Member to module
                     Object instance_permission = classToLoad.getConstructor().newInstance();
                     Object result_permission = method_permission.invoke(instance_permission, event.getMember());
                     // check if permission() -> true
                     if((Boolean) result_permission){
                         // execute module
-                        Method method_exec = classToLoad.getDeclaredMethod("guild_execute", GuildMessageReceivedEvent.class, Member.class); // MessageReceivedEvent event, int currentpermission
+                        Method method_exec = classToLoad.getDeclaredMethod("guild_execute", GuildMessageReceivedEvent.class, Member.class); // GuildMessageReceivedEvent event
                         Object instance_exec = classToLoad.getConstructor().newInstance();
                         Object result_exec = method_exec.invoke(instance_exec, event, event.getMember());
 

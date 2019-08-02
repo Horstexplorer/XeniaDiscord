@@ -13,7 +13,7 @@ public class TwitchHookObjekt {
         this.guildchannelid = guildchannelid;
         this.channelname = channelname;
         this.channelid = channelid;
-        this.status = "offline";
+        this.status = "live";   // init as live so that if we start the bot and the channel is live we wont send a message (useful for restarting the bot when streams are online so that we dont notify twice)
         this.title = "unknown";
         this.thumbnailurl = "unknown";
     }

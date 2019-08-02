@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.commands.privat;
 
+import de.netbeacon.xeniadiscord.modulemanagement.GuildModuleProcessor;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.ErrorLog;
@@ -98,6 +99,7 @@ public class Admin implements PrivateCommand {
                     eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
                     eb.addField("Blacklisted channels:",new BlackListUtility().count()+" channels", false);
                     eb.addField("TwitchHooks:",new TwitchHookManagement(event.getJDA()).count()+" hooks\n"+ "Current api-calls: "+new TwitchHookManagement(event.getJDA()).countapicalls(), false);
+                    eb.addField("Modules:",new GuildModuleProcessor(null).listmodules(),false);
                     eb.addField("Errors:", new ErrorLog(0, "").count()+" errors recorded \n", false);
                     eb.addField("Memory:", "Used: "+((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1000000)+" / "+((Runtime.getRuntime().totalMemory())/1000000)+" MB", false);
                     event.getChannel().sendMessage(eb.build()).queue();
