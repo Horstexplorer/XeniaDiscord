@@ -121,6 +121,12 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.4.3
+```
+- fixed TwitchHook update schedule (every 5 minutes)
+- wont send notifications after restarting the bot when a channel is live
+- first update cycle now after 30 seconds instead of 5 minutes
+```
 ##### 1.0.4.2
 ```
 - fixed some spelling mistakes
