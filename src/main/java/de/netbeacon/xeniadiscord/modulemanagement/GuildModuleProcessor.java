@@ -17,7 +17,7 @@ public class GuildModuleProcessor {
 
     private GuildMessageReceivedEvent event;
     private static boolean modex = false;
-    private List<String> modules = new ArrayList<String>();
+    private static List<String> modules = new ArrayList<String>();
     //
     private static URLClassLoader urlcl;
     private static List<String> classname = new ArrayList<String>();

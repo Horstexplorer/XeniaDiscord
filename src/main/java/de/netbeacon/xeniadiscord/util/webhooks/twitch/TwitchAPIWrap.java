@@ -16,13 +16,23 @@ import java.util.Map;
 public class TwitchAPIWrap {
 
     private String twitchid;
+    private static int apicalls = 0;
 
     public TwitchAPIWrap(){
         twitchid = new Config().load("app_twitch_clientid");
     }
 
+    public void resetapicalls(){
+        apicalls = 0;
+    }
+
+    public int getapicalls(){
+        return apicalls;
+    }
+
     public String getChannelid(String displayname){
         try{
+            apicalls++;
             // get values from api
             URL url = new URL("https://api.twitch.tv/helix/users?login="+displayname);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -49,6 +59,7 @@ public class TwitchAPIWrap {
 
     public String getStreamStatus(String channelid){
         try{
+            apicalls++;
             // get values from api
             URL url = new URL("https://api.twitch.tv/helix/streams?user_id="+channelid);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -75,6 +86,7 @@ public class TwitchAPIWrap {
 
     public HashMap<String, String> getStreamsStatus(HashMap<String, String> channelids){
         try{
+            apicalls++;
             // build string from keys
             String channelidsS = "";
             Iterator iterator = channelids.entrySet().iterator();
@@ -117,6 +129,7 @@ public class TwitchAPIWrap {
 
     public HashMap<String, String> getStreamsAdvanced(HashMap<String, String> channelids, List<TwitchHookObjekt> twitchHookObjekts){
         try{
+            apicalls++;
             // build string from keys
             String channelidsS = "";
             Iterator iterator = channelids.entrySet().iterator();

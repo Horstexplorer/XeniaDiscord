@@ -32,7 +32,9 @@ public class BlackListUtility {
                 blacklist.add(line);
             }
             br.close();
-        }catch (Exception ignore){}
+        }catch (Exception e){
+            new ErrorLog(2, "Could not read blacklist from file: "+e);
+        }
     }
 
     public boolean isincluded(String channel){
@@ -74,6 +76,7 @@ public class BlackListUtility {
             writer.close();
         }catch (Exception e){
             e.printStackTrace();
+            new ErrorLog(3, "Could not write blacklist to file: "+e);
             return false;
         }
         return true;

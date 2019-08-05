@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class TwitchHookManagement {
 
+    private static TwitchAPIWrap twitchAPIWrap;
     private static List<TwitchHookObjekt> twitchHookObjekts;
-    private static int apicalls = 0;
     private static int updates = 0;
     private static int additions = 0;
     private static boolean update_isrunning;
@@ -32,17 +32,13 @@ public class TwitchHookManagement {
             if(!loadfromfile()){
                 System.out.println("[ERROR] Init TwitchHooks failed");
             }
+            twitchAPIWrap = new TwitchAPIWrap();
         }
     }
 
     public void resetapicalls(){
-        apicalls = 0;
         updates = 0;
         additions = 0;
-    }
-
-    public int countapicalls(){
-        return apicalls;
     }
 
     private boolean loadfromfile(){
@@ -141,12 +137,11 @@ public class TwitchHookManagement {
                         boolean waitforratelimitresetloop = true;
                         // try to process if possible
                         while(waitforratelimitresetloop){
-                            if((apicalls+1 <= 30) && (updates <= 25)){  // check if the next update would fit in our api budget & check that we keep some free for additions (5)
+                            if((twitchAPIWrap.getapicalls()+1 <= 30) && (updates+1 <= 25)){  // check if the next update would fit in our api budget & check that we keep some free for additions (5)
                                 waitforratelimitresetloop = false; // we dont need to retry
-                                apicalls++;
                                 updates++;
                                 // get online/offline results & update stream information
-                                hashMap = new TwitchAPIWrap().getStreamsAdvanced(hashMap, twitchHookObjekts); // not using getStreamsStatus()
+                                hashMap = twitchAPIWrap.getStreamsAdvanced(hashMap, twitchHookObjekts); // not using getStreamsStatus()
                                 // process online/offline results
                                 for(Map.Entry<String, String> result : hashMap.entrySet()){
 
@@ -202,7 +197,7 @@ public class TwitchHookManagement {
                                 hashMap.clear();
                             }else{
                                 Thread.sleep(1000*10);   // wait 10 seconds before retrying
-                                new ErrorLog(3, "Rate limit exceeded while updating TwitchHooks. "+"Utm: "+updates+" Rlm: "+apicalls);
+                                new ErrorLog(3, "Rate limit exceeded while updating TwitchHooks. "+"Utm: "+updates+" Rlm: "+twitchAPIWrap.getapicalls());
                             }
                         }
                     }
@@ -226,8 +221,7 @@ public class TwitchHookManagement {
         }
         try{
             // check if we could run into an api rate limit
-            if((apicalls+1 <= 30) && (additions <= 25)){   // keep 5 as buffer for update process
-                apicalls++; // add one
+            if((twitchAPIWrap.getapicalls()+1 <= 30) && (additions+1 <= 25)){   // keep 5 as buffer for update process
                 additions++;
                 String channelid = new TwitchAPIWrap().getChannelid(twitchname);
                 if(channelid != null){
@@ -236,7 +230,7 @@ public class TwitchHookManagement {
                     return false;
                 }
             }else{
-                new ErrorLog(3, "Rate limit exceeded while adding TwitchHook: Originated from "+guildchannelid+" Utm: "+updates+" Rlm: "+apicalls);
+                new ErrorLog(3, "Rate limit exceeded while adding TwitchHook: Originated from "+guildchannelid+" Utm: "+updates+" Rlm: "+twitchAPIWrap.getapicalls());
                 return false;
             }
         }catch (Exception e){
