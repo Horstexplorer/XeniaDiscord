@@ -113,7 +113,7 @@ public class Admin implements PrivateCommand {
                             String errors = "";
                             for(String error : new ErrorLog(0, "").getErrors()){
                                 currentpos++;
-                                if(new ErrorLog(0,"").count() - currentpos <= 25){
+                                if(new ErrorLog(0,"").count() - currentpos <= 10 && error.length()<2000){
                                     errors += "   "+error+"\n";
                                 }
                             }
