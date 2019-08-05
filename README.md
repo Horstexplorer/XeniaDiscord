@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.4.3
+> Current Version: 1.0.4.4
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -121,6 +121,12 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.4.4
+```
+- fixed minor bug in TwitchHooks
+- moved TwitchApi call counter to TwitchAPIWrap class
+- minor changes
+```
 ##### 1.0.4.3
 ```
 - fixed TwitchHook update schedule (every 5 minutes)
