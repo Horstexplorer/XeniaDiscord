@@ -55,7 +55,7 @@ admin onlinestatus <idle/on>                || set onlinestatus to dnd, idle or 
 admin blacklistforcesave                    || force saving the blacklist
 admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
-admin errorlog <list/export/reset>          || list last 25 errors; export all of them; reset cached errors
+admin errorlog <list/export/reset>          || list last 10 errors; export all of them; reset cached errors
 ```
 
 ### Modules
@@ -125,6 +125,7 @@ public class YourCoreModule {
 ```
 - fixed minor bug in TwitchHooks
 - moved TwitchApi call counter to TwitchAPIWrap class
+- limited errorlog list command to only 10 entrys (2000 char limit)
 - minor changes
 ```
 ##### 1.0.4.3
