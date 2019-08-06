@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.4.4
+> Current Version: 1.0.4.5
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -121,6 +121,10 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.4.5
+```
+- Twitchhooks are now only saved when updating them is finished
+```
 ##### 1.0.4.4
 ```
 - fixed minor bug in TwitchHooks
