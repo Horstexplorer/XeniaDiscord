@@ -201,13 +201,13 @@ public class TwitchHookManagement {
                             }
                         }
                     }
-                    // update file
-                    writetofile();
                 }
             }catch (Exception e){
                 e.printStackTrace();
                 new ErrorLog(4, "An error occurred while updating TwitchHooks:"+e.toString());
             }
+            // update file
+            writetofile();
             // we finished updating
             update_isrunning = false;
         }
