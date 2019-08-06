@@ -121,6 +121,10 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.4.5
+```
+- Twitchhooks are now only saved when updating them is finished
+```
 ##### 1.0.4.4
 ```
 - fixed minor bug in TwitchHooks
