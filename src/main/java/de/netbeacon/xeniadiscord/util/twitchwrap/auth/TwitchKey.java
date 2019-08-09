@@ -24,6 +24,7 @@ public class TwitchKey {
                    System.out.println("[INFO] Requested bearer token successfully");
                }else{
                    System.out.println("[ERROR] Requesting bearer token failed");
+                   System.exit(0);// exit will prevent undefined errors
                }
            }
            if(bearer_token == null || valid_until == null){
@@ -35,6 +36,7 @@ public class TwitchKey {
            }
        }else{
            System.out.println("[ERROR] Twitch user id and or secret missing");
+           System.exit(0);  // exit will prevent undefined errors
        }
     }
 
@@ -113,6 +115,7 @@ public class TwitchKey {
                 System.out.println("[INFO] Requested new bearer token successfully");
             }else{
                 System.out.println("[ERROR] Requesting new bearer token failed");
+                System.exit(0);// exit will prevent undefined errors
             }
             return true;
         }
@@ -121,6 +124,10 @@ public class TwitchKey {
 
     public String getToken(){
         return bearer_token;
+    }
+
+    public Long isvaliduntil(){
+        return valid_until;
     }
 
 }
