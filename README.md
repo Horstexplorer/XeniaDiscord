@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.5.0
+> Current Version: 1.0.5.1
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -121,6 +121,13 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.5.1
+```
+- an invalid bearer token is replaced before the next query is sent
+    - no request should be lost anymore
+- application is terminated to avoid further errors if the token cannot be created
+- minor improvements
+```
 ##### 1.0.5.0
 ```
 - Twitch api integration improved

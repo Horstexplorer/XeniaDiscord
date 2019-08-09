@@ -73,6 +73,7 @@ public class TwitchConfig {
         try {
             result = properties.getProperty(property);
         }catch(Exception e) {
+            result = "";
             e.printStackTrace();
         }
         return result;

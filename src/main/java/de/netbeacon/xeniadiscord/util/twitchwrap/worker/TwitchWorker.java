@@ -39,10 +39,6 @@ public class TwitchWorker implements Runnable{
             while(true){
                 if(ratelimitremaining > 15 || force){
                     force = false;
-                    // check if key isvalid
-                    if(!twitchKey.isvalid()){
-                        twitchKey.update();
-                    }
                     TwitchRequest twitchRequest = requestqueue.take();
                     process(twitchRequest);
                 }else{
@@ -59,6 +55,10 @@ public class TwitchWorker implements Runnable{
 
     private void process(TwitchRequest twitchRequest){
         try{
+            // check if key isvalid
+            if(!twitchKey.isvalid()){
+                twitchKey.update();
+            }
             // get values from api
             URL url = new URL(twitchRequest.getRequest());
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -87,5 +87,9 @@ public class TwitchWorker implements Runnable{
 
     public int getApilimit(){
         return ratelimitremaining;
+    }
+
+    public String nextestkeychange(){
+        return new java.util.Date(((twitchKey.isvaliduntil()-86400)*1000))+"";
     }
 }
