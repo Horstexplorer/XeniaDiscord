@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.4.5
+> Current Version: 1.0.5.0
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -121,6 +121,15 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.5.0
+```
+- Twitch api integration improved
+    - bearer token is used instead of a client id -> higher query limits
+    - automatic exchange of the token when needed
+    - added task queue
+    - several other improvements
+- application adapted to use the new integration
+```
 ##### 1.0.4.5
 ```
 - Twitchhooks are now only saved when updating them is finished

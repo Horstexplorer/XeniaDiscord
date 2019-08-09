@@ -37,8 +37,6 @@ public class XCore implements Runnable{
 
         //start backgroundtaskmanager
         startBTM();
-        // init twitch webhooks
-        new TwitchHookManagement(jda);
 
         //start coremodulepreloader (onstart function)
         if(Boolean.parseBoolean(config.load("bot_activate_coremodule_backgroundtask"))){
