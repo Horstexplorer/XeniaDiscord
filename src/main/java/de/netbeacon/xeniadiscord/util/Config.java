@@ -58,7 +58,6 @@ public class Config {
         properties.setProperty("bot_status", "with humans");
         properties.setProperty("bot_admin_id", "");
         properties.setProperty("bot_sayhellotonew", "true");
-        properties.setProperty("app_twitch_clientid", "");
 
         writetofile();
     }
@@ -79,7 +78,6 @@ public class Config {
         propcheck.put("bot_status","with humans");
         propcheck.put("bot_admin_id","");
         propcheck.put("bot_sayhellotonew","true");
-        propcheck.put("app_twitch_clientid", "");
         // check if the properties from the list are in our config.
         for(Map.Entry<String, String> entry : propcheck.entrySet()){
             if(properties.getProperty(entry.getKey()) == null){
@@ -125,8 +123,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.4.5";
-        String build = "1908061634";
+        String vers= "1.0.5.0";
+        String build = "1908090151";
         return vers+"-"+build;
     }
 }
