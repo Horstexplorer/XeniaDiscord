@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.5.1
+> Current Version: 1.0.5.2
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -8,7 +8,10 @@
 > - slf4j-simple - 1.7.26
 
 ### Configuration
-All settings are stored in the file sys.config. This file will be created automatically at first start.
+All basic settings are stored in the file sys.config. This file will be created automatically at first start. You then need to add your Discord bot token and your discord id. 
+A new application must be created for the bot token (bot_token): https://discordapp.com/developers/applications/ The token can then be found under the page "bot".
+You can get your Discord user id (bot_admin_id) by right-clicking your username on your discord guild and select "copy id".
+Finally (activated) has to be set to true, otherwise the bot won't start.
 ```
 activated=false                             // to disable everything, makes sure the configuration file has been noticed
 bot_token=<token>                           // bot token
@@ -20,7 +23,17 @@ bot_status=<status>                         // activity to display
 bot_admin_id=<id>                           // userid for bot-admin features
 bot_sayhellotonew=true                      // bot welcomes every user who joins guild (private chat)
 ```
-
+The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config should be modified now. It should look something like this:
+Now you have to specify a Twitch application which can be created here: https://dev.twitch.tv/console/apps
+```
+twitch_client_id=
+twitch_client_secret=
+twitch_bearer_token=
+twitch_bearer_token_validuntil=
+```
+Analytics tool to be selected as category. You need to copy the Client-ID (twitch_client_id) and create a new client-secret (twitch_client_secret).
+The application should now be restarted and be ready for use. You can add it to your Discord guild by using an o2auth authorization link with your bot id. (You can get the bot id from the url of your Discord application)
+https://discordapp.com/developers/applications/YOURBOTID/ => to => https://discordapp.com/oauth2/authorize?client_id=YOURBOTID&scope=bot
 ### Commands
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
 This list contains only the commands included by default and their required permissions.
@@ -33,7 +46,6 @@ music <command>                             || Permission.VOICE_CONNECT     || S
 ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Send <msg> as bot to <channel>
 blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Add <channel> to blacklist so that Xenia neither listen nor respond there
 twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Add a webhook for a specific twitch channel to your textchannel
-                    
 ```
 Commands to control music functions:
 ```
@@ -121,6 +133,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.5.2
+```
+- minor improvements
+- updated readme
+```
 ##### 1.0.5.1
 ```
 - an invalid bearer token is replaced before the next query is sent
