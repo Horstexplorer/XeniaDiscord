@@ -52,6 +52,7 @@ public class BTM implements Runnable{
             @Override
             public void run() {
                 new BlackListUtility().writetofile();
+                new TwitchHookManagement(jda).writetofile();
             }
         };
         TimerTask update_twitchkey = new TimerTask() {
