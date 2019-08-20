@@ -42,6 +42,9 @@ public class XCore implements Runnable{
         if(Boolean.parseBoolean(config.load("bot_activate_coremodule_backgroundtask"))){
             startcoremodulepreloader();
         }
+
+        // listen to local commands
+        new Thread(new LCL(jda)).start();
     }
 
     private void addListeners(){

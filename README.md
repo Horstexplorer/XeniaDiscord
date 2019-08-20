@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.5.2
+> Current Version: 1.0.6.0
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -22,6 +22,8 @@ bot_activate_coremodule_onstart=false       // execute onstartup() in coremodule
 bot_status=<status>                         // activity to display
 bot_admin_id=<id>                           // userid for bot-admin features
 bot_sayhellotonew=true                      // bot welcomes every user who joins guild (private chat)
+bot_gui_activate=false                      // activate gui
+bot_gui_exitonclose=true                    // quit application when the gui is closed
 ```
 The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config should be modified now. It should look something like this:
 Now you have to specify a Twitch application which can be created here: https://dev.twitch.tv/console/apps
@@ -34,7 +36,12 @@ twitch_bearer_token_validuntil=
 Analytics tool to be selected as category. You need to copy the Client-ID (twitch_client_id) and create a new client-secret (twitch_client_secret).
 The application should now be restarted and be ready for use. You can add it to your Discord guild by using an o2auth authorization link with your bot id. (You can get the bot id from the url of your Discord application)
 https://discordapp.com/developers/applications/YOURBOTID/ => to => https://discordapp.com/oauth2/authorize?client_id=YOURBOTID&scope=bot
+
 ### Commands
+Commands are divided into two groups: These which are sent in Discord and those which are sent locally via gui or terminal.
+
+
+#### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
 This list contains only the commands included by default and their required permissions.
 ```
@@ -68,6 +75,20 @@ admin blacklistforcesave                    || force saving the blacklist
 admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
 admin errorlog <list/export/reset>          || list last 10 errors; export all of them; reset cached errors
+```
+#### Local
+Commands start without an indicator
+```
+help                                        || show available commands
+guild  <>                                   ||
+       list                                 || list all connected guilds
+       leave <name/id>                      || leave specific guild
+status <dnd/idle/online>                    || set online status to <>
+info                                        || display information about the bot
+errors <>                                   ||
+       list                                 || list all errors"
+       export                               || export errors to file
+       reset                                || reset errors
 ```
 
 ### Modules
@@ -133,6 +154,13 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.6.0
+```
+- added optional gui
+- twitchworker will be restarted if it stopped working
+- added local commands
+- minor changes
+```
 ##### 1.0.5.2
 ```
 - minor improvements

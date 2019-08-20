@@ -58,6 +58,8 @@ public class Config {
         properties.setProperty("bot_status", "with humans");
         properties.setProperty("bot_admin_id", "");
         properties.setProperty("bot_sayhellotonew", "true");
+        properties.setProperty("bot_gui_activate", "false");
+        properties.setProperty("bot_gui_exitonclose", "true");
 
         writetofile();
     }
@@ -78,6 +80,8 @@ public class Config {
         propcheck.put("bot_status","with humans");
         propcheck.put("bot_admin_id","");
         propcheck.put("bot_sayhellotonew","true");
+        propcheck.put("bot_gui_activate", "false");
+        propcheck.put("bot_gui_exitonclose", "true");
         // check if the properties from the list are in our config.
         for(Map.Entry<String, String> entry : propcheck.entrySet()){
             if(properties.getProperty(entry.getKey()) == null){
@@ -123,8 +127,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.5.2";
-        String build = "1908101825";
+        String vers= "1.0.6.0";
+        String build = "1908210122";
         return vers+"-"+build;
     }
 }
