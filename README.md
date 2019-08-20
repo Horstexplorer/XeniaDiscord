@@ -80,6 +80,15 @@ admin errorlog <list/export/reset>          || list last 10 errors; export all o
 Commands start without an indicator
 ```
 help                                        || show available commands
+guild  <>                                   ||
+       list                                 || list all connected guilds
+       leave <name/id>                      || leave specific guild
+status <dnd/idle/online>                    || set online status to <>
+info                                        || display information about the bot
+errors <>                                   ||
+       list                                 || list all errors"
+       export                               || export errors to file
+       reset                                || reset errors
 ```
 
 ### Modules
