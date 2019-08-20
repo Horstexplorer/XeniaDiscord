@@ -7,7 +7,7 @@ public class Status implements LocalCommands{
     @Override
     public void execute(JDA jda, String[] args) {
         if(args[0].toLowerCase().equals("status") && args.length > 1){
-            switch (args[2].toLowerCase()){
+            switch (args[1].toLowerCase()){
                 case "dnd":
                     jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
                     break;
