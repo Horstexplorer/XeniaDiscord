@@ -36,7 +36,12 @@ twitch_bearer_token_validuntil=
 Analytics tool to be selected as category. You need to copy the Client-ID (twitch_client_id) and create a new client-secret (twitch_client_secret).
 The application should now be restarted and be ready for use. You can add it to your Discord guild by using an o2auth authorization link with your bot id. (You can get the bot id from the url of your Discord application)
 https://discordapp.com/developers/applications/YOURBOTID/ => to => https://discordapp.com/oauth2/authorize?client_id=YOURBOTID&scope=bot
+
 ### Commands
+Commands are divided into two groups: These which are sent in Discord and those which are sent locally via gui or terminal.
+
+
+#### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
 This list contains only the commands included by default and their required permissions.
 ```
@@ -70,6 +75,11 @@ admin blacklistforcesave                    || force saving the blacklist
 admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
 admin errorlog <list/export/reset>          || list last 10 errors; export all of them; reset cached errors
+```
+#### Local
+Commands start without an indicator
+```
+help                                        || show available commands
 ```
 
 ### Modules
@@ -139,6 +149,7 @@ public class YourCoreModule {
 ```
 - added optional gui
 - twitchworker will be restarted if it stopped working
+- added local commands
 - minor changes
 ```
 ##### 1.0.5.2
