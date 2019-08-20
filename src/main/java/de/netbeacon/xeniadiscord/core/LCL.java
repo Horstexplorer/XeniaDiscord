@@ -1,7 +1,6 @@
 package de.netbeacon.xeniadiscord.core;
 
-import de.netbeacon.xeniadiscord.core.localcommands.Help;
-import de.netbeacon.xeniadiscord.core.localcommands.LocalCommands;
+import de.netbeacon.xeniadiscord.core.localcommands.*;
 import de.netbeacon.xeniadiscord.util.Config;
 import net.dv8tion.jda.api.JDA;
 
@@ -23,6 +22,10 @@ public class LCL implements Runnable{
     private void registercommands(){
         // commands from localcommands
         commands.put("help", new Help());
+        commands.put("guild", new Guilds());
+        commands.put("status", new Status());
+        commands.put("info", new Info());
+        commands.put("errors", new Errors());
     }
 
     private String[] getargs(String raw){
