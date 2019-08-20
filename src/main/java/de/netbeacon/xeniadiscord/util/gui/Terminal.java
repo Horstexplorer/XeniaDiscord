@@ -59,6 +59,7 @@ public class Terminal extends JFrame implements Runnable{
             if(Boolean.parseBoolean(new Config().load("bot_gui_exitonclose"))){
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
+            frame.setTitle("XeniaDiscord");
             frame.setVisible( true );
 
 
