@@ -1,6 +1,5 @@
 package de.netbeacon.xeniadiscord.util.twitchwrap;
 
-import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
 import de.netbeacon.xeniadiscord.util.twitchwrap.request.TwitchRequest;
 import org.json.JSONObject;
 
