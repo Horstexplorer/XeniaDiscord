@@ -30,6 +30,8 @@ public class BTM implements Runnable{
     }
 
     private void init(){
+        // init blacklist
+        new BlackListUtility();
         // init twitchwrap
         new TwitchWrap();
         // init twitchworker
