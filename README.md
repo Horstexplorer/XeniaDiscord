@@ -138,6 +138,7 @@ public class YourCoreModule {
 ##### 1.0.6.0
 ```
 - added optional gui
+- twitchworker will be restarted if it stopped working
 - minor changes
 ```
 ##### 1.0.5.2
