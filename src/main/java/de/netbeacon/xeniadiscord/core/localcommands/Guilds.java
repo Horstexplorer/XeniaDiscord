@@ -9,7 +9,7 @@ public class Guilds implements LocalCommands {
         if(args[0].toLowerCase().contains("guild") && args.length > 1){
 
             if(args[1].toLowerCase().equals("list")){
-                System.out.println("\nGuilds:");
+                System.out.println("Guilds:");
                 for(Guild g: jda.getGuilds()){
                     System.out.println(" "+g.getName()+"  "+g.getId()+"   "+g.getDescription());
                 }

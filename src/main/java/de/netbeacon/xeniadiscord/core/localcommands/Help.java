@@ -8,7 +8,7 @@ public class Help implements LocalCommands {
 
         if(args[0].toLowerCase().equals("help")){
             System.out.println(
-                    "\n"+ "Commands: "+"\n"+
+                    "Commands: "+"\n"+
                     " help                                        || show available commands"+"\n"+
                     " guild  <>                                   || "+"\n"+
                     "        list                                 || list all connected guilds"+"\n"+
@@ -22,7 +22,7 @@ public class Help implements LocalCommands {
                     "        list                                 || list all errors"+"\n"+
                     "        export                               || export errors to file"+"\n"+
                     "        reset                                || reset errors"+"\n"+
-                    "\n"
+                    ""
             );
         }
 

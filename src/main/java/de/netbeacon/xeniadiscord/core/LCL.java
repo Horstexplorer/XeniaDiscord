@@ -45,9 +45,13 @@ public class LCL implements Runnable{
             // check if requested command exists
             if(commands.containsKey(args[0])){
                 // execute command
+                System.out.println("");
                 commands.get(args[0]).execute(jda, args);
+                System.out.println("");
             }else {
+                System.out.println("");
                 System.out.println("> Unknown command: Use help for help.");
+                System.out.println("");
             }
         }
     }

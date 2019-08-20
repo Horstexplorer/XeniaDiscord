@@ -11,24 +11,23 @@ public class Errors implements LocalCommands{
         if(args[0].toLowerCase().equals("errors") && args.length > 1){
 
             if(args[1].toLowerCase().equals("list")){
-                System.out.println("\n Errors:");
+                System.out.println("Errors:");
                 for(String error : new ErrorLog(0, "").getErrors()){
                     System.out.println(" "+error);
                 }
-                System.out.println("");
             }
 
             if(args[1].toLowerCase().equals("export")){
                 if(new ErrorLog(0 , "").export()){
-                    System.out.println("\nExport successful!\n");
+                    System.out.println("Export successful!");
                 }else{
-                    System.out.println("\nExport failed!\n");
+                    System.out.println("Export failed!");
                 }
             }
 
             if(args[1].toLowerCase().equals("reset")){
                 new ErrorLog(0 , "").reset();
-                System.out.println("\nError list cleared\n");
+                System.out.println("rror list cleared");
             }
         }
     }

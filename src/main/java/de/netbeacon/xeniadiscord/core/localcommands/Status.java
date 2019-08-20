@@ -18,6 +18,7 @@ public class Status implements LocalCommands{
                     jda.getPresence().setStatus(OnlineStatus.ONLINE);
                     break;
             }
+            System.out.println("Updated online status to "+jda.getPresence().getStatus());
         }
     }
 }
