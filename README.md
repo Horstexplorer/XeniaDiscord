@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.5.2
+> Current Version: 1.0.6.0
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -22,6 +22,8 @@ bot_activate_coremodule_onstart=false       // execute onstartup() in coremodule
 bot_status=<status>                         // activity to display
 bot_admin_id=<id>                           // userid for bot-admin features
 bot_sayhellotonew=true                      // bot welcomes every user who joins guild (private chat)
+bot_gui_activate=false                      // activate gui
+bot_gui_exitonclose=true                    // quit application when the gui is closed
 ```
 The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config should be modified now. It should look something like this:
 Now you have to specify a Twitch application which can be created here: https://dev.twitch.tv/console/apps
@@ -133,6 +135,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.6.0
+```
+- added optional gui
+- minor changes
+```
 ##### 1.0.5.2
 ```
 - minor improvements
