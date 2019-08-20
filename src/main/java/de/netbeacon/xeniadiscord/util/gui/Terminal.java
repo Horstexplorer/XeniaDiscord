@@ -47,6 +47,7 @@ public class Terminal extends JFrame implements Runnable{
                     } catch (IOException ex) {
                         //ex.printStackTrace();
                     }
+                    System.out.println("LOCAL>"+input.getText());
                     input.setText("");
                 }
             });
