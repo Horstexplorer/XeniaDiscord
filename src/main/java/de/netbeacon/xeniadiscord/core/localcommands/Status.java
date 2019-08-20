@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 public class Status implements LocalCommands{
     @Override
     public void execute(JDA jda, String[] args) {
-        if(args[0].toLowerCase().equals("status") && args.length > 2){
+        if(args[0].toLowerCase().equals("status") && args.length > 1){
             switch (args[2].toLowerCase()){
                 case "dnd":
                     jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
