@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.6.0
+> Current Version: 1.0.6.1
 
 > Using  
 > - net.dv8tion JDA -  4.BETA.0_24
@@ -154,6 +154,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.6.1
+```
+- added twtchgamecache
+- twitchhook now displays game title
+```
 ##### 1.0.6.0
 ```
 - added optional gui

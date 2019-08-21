@@ -1,6 +1,5 @@
 package de.netbeacon.xeniadiscord.core;
 
-import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.gui.Terminal;
 

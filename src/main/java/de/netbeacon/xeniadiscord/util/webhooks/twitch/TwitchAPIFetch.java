@@ -50,11 +50,13 @@ class TwitchAPIFetch {
                 String title = json.getJSONArray("data").getJSONObject(n).getString("title");
                 String turl = json.getJSONArray("data").getJSONObject(n).getString("thumbnail_url");
                 turl = turl.replace("-{width}x{height}", "");
+                String gameid = json.getJSONArray("data").getJSONObject(n).getString("game_id");
                 for(TwitchHookObjekt tho : twitchHookObjekts){
                     if(tho.getChannelID().equals(userid)){
                         // update value
                         tho.setTitle(title);
                         tho.setThumbnailurl(turl);
+                        tho.setGameid(gameid);
                     }
                 }
             }

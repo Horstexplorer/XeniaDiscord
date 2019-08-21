@@ -12,6 +12,7 @@ public class BlackListUtility {
         if(blacklist == null){
             System.out.println("[INFO] Init blacklist");
             initblacklist();
+            System.out.println(">> "+blacklist.size()+" entrys found");
         }
     }
 

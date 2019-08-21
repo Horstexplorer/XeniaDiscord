@@ -3,7 +3,6 @@ package de.netbeacon.xeniadiscord.core;
 import de.netbeacon.xeniadiscord.listeners.*;
 import de.netbeacon.xeniadiscord.modulemanagement.GuildCoreModuleProcessor;
 import de.netbeacon.xeniadiscord.util.Config;
-import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
