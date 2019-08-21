@@ -8,6 +8,7 @@ public class TwitchHookObjekt {
     private String status;
     private String title;
     private String thumbnailurl;
+    private String gameid;
 
     TwitchHookObjekt(String guildchannelid, String channelname, String channelid){
         this.guildchannelid = guildchannelid;
@@ -16,6 +17,7 @@ public class TwitchHookObjekt {
         this.status = "live";   // init as live so that if we start the bot and the channel is live we wont send a message (useful for restarting the bot when streams are online so that we dont notify twice)
         this.title = "unknown";
         this.thumbnailurl = "unknown";
+        this.gameid = "unknown";
     }
 
     String getGuildChannel(){return this.guildchannelid;}
@@ -40,4 +42,7 @@ public class TwitchHookObjekt {
 
     String getThumbnailurl(){ return this.thumbnailurl; }
     void setThumbnailurl(String url){ this.thumbnailurl = url; }
+
+    String getGameid(){ return this.gameid; }
+    void setGameid(String gameid){ this.gameid = gameid;}
 }

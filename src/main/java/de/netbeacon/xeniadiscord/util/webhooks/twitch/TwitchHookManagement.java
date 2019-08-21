@@ -1,6 +1,7 @@
 package de.netbeacon.xeniadiscord.util.webhooks.twitch;
 
 import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -152,7 +153,11 @@ public class TwitchHookManagement {
                                         // was online?
                                         if(!thos.getStatus().equals("live")){
                                             thos.setStatus("live");
-
+                                            // get game
+                                            String game = "unknown";
+                                            if(!thos.getGameid().equals("unknown")){
+                                                game = new TwitchGameCache().get(thos.getGameid());
+                                            }
                                             boolean haspermission = false;
                                             // check permissions
                                             try{
@@ -165,7 +170,7 @@ public class TwitchHookManagement {
                                                     EmbedBuilder eb = new EmbedBuilder();
                                                     eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
                                                     eb.setColor(Color.MAGENTA);
-                                                    eb.setDescription("Hey everyone! \n"+thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch!\n Let's drop in! \n \n"+"["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")");
+                                                    eb.setDescription("Hey everyone! \n"+thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch playing "+game+"!\n Let's drop in! \n \n"+"["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")");
                                                     eb.setImage(thos.getThumbnailurl());
                                                     jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
                                                 }else{
