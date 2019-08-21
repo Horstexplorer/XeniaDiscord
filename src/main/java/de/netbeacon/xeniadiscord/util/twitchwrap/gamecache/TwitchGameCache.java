@@ -129,4 +129,8 @@ public class TwitchGameCache {
             return gamecache.get(id);
         }
     }
+
+    public int count(){
+        return gamecache.size();
+    }
 }
