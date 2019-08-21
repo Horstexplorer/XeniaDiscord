@@ -5,6 +5,7 @@ import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.ErrorLog;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
+import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
 import de.netbeacon.xeniadiscord.util.twitchwrap.worker.TwitchWorker;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
@@ -40,6 +41,8 @@ public class BTM implements Runnable{
         // init twitchworker
         twitchworker = new Thread(new TwitchWorker());
         twitchworker.start();
+        // init twitchgamecache
+        new TwitchGameCache();
         // init twitchhooks
         new TwitchHookManagement(jda);
     }
