@@ -30,8 +30,10 @@ public class TwitchHookManagement {
             System.out.println("[INFO] Init TwitchHooks");
             if(!loadfromfile()){
                 System.out.println("[ERROR] Init TwitchHooks failed");
+            }else{
+                System.out.println(">> "+twitchHookObjekts.size()+" entrys found.");
+                twitchAPIFetch = new TwitchAPIFetch();
             }
-            twitchAPIFetch = new TwitchAPIFetch();
         }
     }
 

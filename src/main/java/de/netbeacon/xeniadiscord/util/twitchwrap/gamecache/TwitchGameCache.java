@@ -17,6 +17,8 @@ public class TwitchGameCache {
             // init gamecache
             if(!init()){
                 System.out.println("[ERROR] Init TwitchGameCache failed");
+            }else{
+                System.out.println(">> "+gamecache.size()+" entrys found.");
             }
         }
     }
