@@ -249,5 +249,9 @@ public class TwitchHookManagement {
     public int count(){
         return twitchHookObjekts.size();
     }
+
+    public List<TwitchHookObjekt> getAll(){
+        return twitchHookObjekts;
+    }
 }
 
