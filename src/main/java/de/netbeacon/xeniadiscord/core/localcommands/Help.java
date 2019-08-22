@@ -9,19 +9,24 @@ public class Help implements LocalCommands {
         if(args[0].toLowerCase().equals("help")){
             System.out.println(
                     "Commands: "+"\n"+
-                    " help                                        || show available commands"+"\n"+
-                    " guild  <>                                   || "+"\n"+
-                    "        list                                 || list all connected guilds"+"\n"+
-                    "        leave <name/id>                      || leave specific guild"+"\n"+
-                    " status <>                                   || "+"\n"+
-                    "        dnd                                  || set online status to do_not_disturb"+"\n"+
-                    "        idle                                 || set online status to idle"+"\n"+
-                    "        online                               || set online status to online"+"\n"+
-                    " info                                        || display information about this bot"+"\n"+
+                    " broadcast <msg>                             || tries to send msg to all guilds"+"\n"+
                     " errors <>                                   || "+"\n"+
                     "        list                                 || list all errors"+"\n"+
                     "        export                               || export errors to file"+"\n"+
                     "        reset                                || reset errors"+"\n"+
+                    " guild  <>                                   || "+"\n"+
+                    "        list                                 || list all connected guilds"+"\n"+
+                    "        leave <name/id>                      || leave specific guild"+"\n"+
+                    " help                                        || show available commands"+"\n"+
+                    " info                                        || display information about this bot"+"\n"+
+                    " shutdown                                    || save all files and exit"+"\n"+
+                    " status <>                                   || "+"\n"+
+                    "        dnd                                  || set online status to do_not_disturb"+"\n"+
+                    "        idle                                 || set online status to idle"+"\n"+
+                    "        online                               || set online status to online"+"\n"+
+                    " twitch <>                                   || "+"\n"+
+                    "        listhooks                            || Lists all twitchhooks"+"\n"+
+                    "        listgames                                || Lists all cached games"+"\n"+
                     ""
             );
         }
