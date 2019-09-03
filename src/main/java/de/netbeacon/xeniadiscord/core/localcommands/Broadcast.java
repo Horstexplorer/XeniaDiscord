@@ -16,7 +16,7 @@ public class Broadcast implements LocalCommands {
             // build string
             String message = "";
             for(int i = 1; i < args.length; i++){
-                message += args[i];
+                message += args[i]+" ";
             }
             if(!message.isEmpty()){
                 System.out.println("Broadcasting: "+message);
