@@ -79,16 +79,24 @@ admin errorlog <list/export/reset>          || list last 10 errors; export all o
 #### Local
 Commands start without an indicator
 ```
-help                                        || show available commands
-guild  <>                                   ||
-       list                                 || list all connected guilds
-       leave <name/id>                      || leave specific guild
-status <dnd/idle/online>                    || set online status to <>
-info                                        || display information about the bot
-errors <>                                   ||
-       list                                 || list all errors"
+broadcast <msg>                             || tries to send msg to all guilds
+errors <>                                   
+       list                                 || list all errors
        export                               || export errors to file
        reset                                || reset errors
+guild  <>                                   
+       list                                 || list all connected guilds
+       leave <name/id>                      || leave specific guild
+help                                        || show available commands
+info                                        || display information about this bot
+shutdown                                    || save all files and exit
+status <>                                   
+       dnd                                  || set online status to do_not_disturb
+       idle                                 || set online status to idle
+      online                                || set online status to online
+twitch <>                                    
+       listhooks                            || Lists all twitchhooks
+       listgames                            || Lists all cached games
 ```
 
 ### Modules
@@ -154,9 +162,14 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.6.2
+```
+- added more local commands
+- minor improvements
+```
 ##### 1.0.6.1
 ```
-- added twtchgamecache
+- added twitchgamecache
 - twitchhook now displays game title
 ```
 ##### 1.0.6.0
