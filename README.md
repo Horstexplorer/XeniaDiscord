@@ -43,16 +43,19 @@ Commands are divided into two groups: These which are sent in Discord and those 
 
 #### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
-This list contains only the commands included by default and their required permissions.
+This list contains only the commands included by default and their required permissions (all require Permission.MESSAGE_WRITE obviously).
 ```
-Command                                     || Required permission          || Description
+Command                                     || Required permission          ||Type     || Description
 
-kick <user>                                 || Permission.KICK_MEMBERS      || Kicks the user from the server
-ban <user>                                  || Permission.BAN_MEMBERS       || Bans the user from the server
-music <command>                             || Permission.VOICE_CONNECT     || See 'Music Commands
-ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Send <msg> as bot to <channel>
-blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Add <channel> to blacklist so that Xenia neither listen nor respond there
-twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Add a webhook for a specific twitch channel to your textchannel
+help                                        || -                            || Global  || Kicks the user from the server
+info                                        || -                            || Global  || Shows some information
+commands                                    || -                            || Guild   || Displays all commands
+kick <user>                                 || Permission.KICK_MEMBERS      || Guild   || Kicks the user from the server
+ban <user>                                  || Permission.BAN_MEMBERS       || Guild   || Bans the user from the server
+music <command>                             || Permission.VOICE_CONNECT     || Guild   || See 'Music Commands
+ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Guild   || Send <msg> as bot to <channel>
+blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
+twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Guild   || Add a webhook for a specific twitch channel to your textchannel
 ```
 Commands to control music functions:
 ```
@@ -66,7 +69,7 @@ shuffle                                     || Shuffle queue
 info                                        || Displaying information about the current song
 off                                         || Disconnect from voice channel
 ```
-Commands limited to admin user (bot_admin_id)
+Commands limited to admin user (bot_admin_id) (type: private)
 ```
 admin status                                || advanced status
 admin shutdown                              || shutdown bot
