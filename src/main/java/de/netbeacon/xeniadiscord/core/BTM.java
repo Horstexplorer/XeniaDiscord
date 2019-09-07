@@ -71,11 +71,18 @@ public class BTM implements Runnable{
                 new TwitchHookManagement(jda).update();
             }
         };
+        TimerTask update_twitchgamecache = new TimerTask() {
+            @Override
+            public void run() {
+                new TwitchGameCache().update();
+            }
+        };
         // schedule tasks
         time.schedule(update_status,1000*60,1000*60);               // wait 1 minute then update every minute
         time.schedule(save_files, 1000*60*60, 1000*60*60);          // wait 1h then update every h
         time.schedule(update_twitchkey, 1000*60*10,1000*60*10);     // wait 10 minutes then update every 10 minutes
         time.schedule(update_twitchhooks, 1000*30, 1000*60*5);      // wait 30 seconds then update every 5 minutes
+        time.schedule(update_twitchgamecache, 1000*60*60*24, 1000*60*60*24); // update every day
     }
 
     private int user_count(){
