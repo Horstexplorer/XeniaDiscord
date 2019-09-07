@@ -43,16 +43,19 @@ Commands are divided into two groups: These which are sent in Discord and those 
 
 #### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
-This list contains only the commands included by default and their required permissions.
+This list contains only the commands included by default and their required permissions (all require Permission.MESSAGE_WRITE obviously).
 ```
-Command                                     || Required permission          || Description
+Command                                     || Required permission          ||Type     || Description
 
-kick <user>                                 || Permission.KICK_MEMBERS      || Kicks the user from the server
-ban <user>                                  || Permission.BAN_MEMBERS       || Bans the user from the server
-music <command>                             || Permission.VOICE_CONNECT     || See 'Music Commands
-ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Send <msg> as bot to <channel>
-blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Add <channel> to blacklist so that Xenia neither listen nor respond there
-twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Add a webhook for a specific twitch channel to your textchannel
+help                                        || -                            || Global  || Kicks the user from the server
+info                                        || -                            || Global  || Shows some information
+commands                                    || -                            || Guild   || Displays all commands
+kick <user>                                 || Permission.KICK_MEMBERS      || Guild   || Kicks the user from the server
+ban <user>                                  || Permission.BAN_MEMBERS       || Guild   || Bans the user from the server
+music <command>                             || Permission.VOICE_CONNECT     || Guild   || See 'Music Commands
+ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Guild   || Send <msg> as bot to <channel>
+blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
+twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Guild   || Add a webhook for a specific twitch channel to your textchannel
 ```
 Commands to control music functions:
 ```
@@ -66,7 +69,7 @@ shuffle                                     || Shuffle queue
 info                                        || Displaying information about the current song
 off                                         || Disconnect from voice channel
 ```
-Commands limited to admin user (bot_admin_id)
+Commands limited to admin user (bot_admin_id) (type: private)
 ```
 admin status                                || advanced status
 admin shutdown                              || shutdown bot
@@ -79,16 +82,24 @@ admin errorlog <list/export/reset>          || list last 10 errors; export all o
 #### Local
 Commands start without an indicator
 ```
-help                                        || show available commands
-guild  <>                                   ||
-       list                                 || list all connected guilds
-       leave <name/id>                      || leave specific guild
-status <dnd/idle/online>                    || set online status to <>
-info                                        || display information about the bot
-errors <>                                   ||
-       list                                 || list all errors"
+broadcast <msg>                             || tries to send msg to all guilds
+errors <>                                   
+       list                                 || list all errors
        export                               || export errors to file
        reset                                || reset errors
+guild  <>                                   
+       list                                 || list all connected guilds
+       leave <name/id>                      || leave specific guild
+help                                        || show available commands
+info                                        || display information about this bot
+shutdown                                    || save all files and exit
+status <>                                   
+       dnd                                  || set online status to do_not_disturb
+       idle                                 || set online status to idle
+      online                                || set online status to online
+twitch <>                                    
+       listhooks                            || Lists all twitchhooks
+       listgames                            || Lists all cached games
 ```
 
 ### Modules
@@ -154,9 +165,14 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.6.2
+```
+- added more local commands
+- minor improvements
+```
 ##### 1.0.6.1
 ```
-- added twtchgamecache
+- added twitchgamecache
 - twitchhook now displays game title
 ```
 ##### 1.0.6.0

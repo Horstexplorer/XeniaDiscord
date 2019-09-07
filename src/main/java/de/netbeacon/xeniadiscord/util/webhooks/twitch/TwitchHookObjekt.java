@@ -20,9 +20,9 @@ public class TwitchHookObjekt {
         this.gameid = "unknown";
     }
 
-    String getGuildChannel(){return this.guildchannelid;}
+    public String getGuildChannel(){return this.guildchannelid;}
 
-    String getChannelName(){
+    public String getChannelName(){
         return this.channelname;
     }
 
@@ -30,7 +30,7 @@ public class TwitchHookObjekt {
         return this.channelid;
     }
 
-    String getStatus(){
+    public String getStatus(){
         return this.status;
     }
     void setStatus(String status){

@@ -12,8 +12,8 @@ public class TwitchGameCache {
     private static Map<String, String> gamecache;
 
     public TwitchGameCache(){
-        System.out.println("[INFO] Init TwitchGameCache");
         if(gamecache == null){
+            System.out.println("[INFO] Init TwitchGameCache");
             // init gamecache
             if(!init()){
                 System.out.println("[ERROR] Init TwitchGameCache failed");
@@ -128,5 +128,13 @@ public class TwitchGameCache {
             // return result
             return gamecache.get(id);
         }
+    }
+
+    public int count(){
+        return gamecache.size();
+    }
+
+    public Map<String, String> getAll(){
+        return gamecache;
     }
 }
