@@ -46,46 +46,8 @@ public class TwitchGameCache {
             e.printStackTrace();
             return false;
         }
-        try{
-            // update all game ids
-            List<String> gameids = new ArrayList<>();
-            int processed = 0;
-            for(Map.Entry<String, String> entry : gamecache.entrySet()){
-                // check if the size would be over 100 (then we have already processed them)
-                if(gameids.size()+1 > 100){
-                    gameids.clear();
-                }
-                // add game id
-                gameids.add(entry.getKey());
-                processed++;
-                // process if we have 100 game ids or if we have no more game ids
-                if(gameids.size() == 100 || processed == gamecache.size()){
-                    // build string
-                    String request = "";
-                    Iterator iterator = gameids.iterator();
-                    while(iterator.hasNext()){
-                        request += iterator.next(); // add value
-                        if(iterator.hasNext()){
-                            request += "&id=";  // add delimiter
-                        }
-                    }
-                    //parse json to new hashmap
-                    JSONObject json =  new TwitchWrap().get("https://api.twitch.tv/helix/games?id="+request);
-                    for(int n = 0; n < json.getJSONArray("data").length(); n++){
-                        String id = json.getJSONArray("data").getJSONObject(n).getString("id");
-                        String game = json.getJSONArray("data").getJSONObject(n).getString("name");
-                        gamecache.put(id, game);
-                    }
-                }
-            }
-            // save updated games
-            writetofile();
-        }catch (Exception e){
-            new ErrorLog(2, "Could not update twitchgamecache: "+e);
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+        // update all games
+        return update();
     }
 
     private boolean writetofile(){
@@ -136,5 +98,47 @@ public class TwitchGameCache {
 
     public Map<String, String> getAll(){
         return gamecache;
+    }
+
+    public boolean update(){
+        try{
+            // update all game ids
+            List<String> gameids = new ArrayList<>();
+            int processed = 0;
+            for(Map.Entry<String, String> entry : gamecache.entrySet()){
+                // check if the size would be over 100 (then we have already processed them)
+                if(gameids.size()+1 > 100){
+                    gameids.clear();
+                }
+                // add game id
+                gameids.add(entry.getKey());
+                processed++;
+                // process if we have 100 game ids or if we have no more game ids
+                if(gameids.size() == 100 || processed == gamecache.size()){
+                    // build string
+                    String request = "";
+                    Iterator iterator = gameids.iterator();
+                    while(iterator.hasNext()){
+                        request += iterator.next(); // add value
+                        if(iterator.hasNext()){
+                            request += "&id=";  // add delimiter
+                        }
+                    }
+                    //parse json to new hashmap
+                    JSONObject json =  new TwitchWrap().get("https://api.twitch.tv/helix/games?id="+request);
+                    for(int n = 0; n < json.getJSONArray("data").length(); n++){
+                        String id = json.getJSONArray("data").getJSONObject(n).getString("id");
+                        String game = json.getJSONArray("data").getJSONObject(n).getString("name");
+                        gamecache.put(id, game);
+                    }
+                }
+            }
+            // save updated games
+            return writetofile();
+        }catch (Exception e){
+            new ErrorLog(2, "Could not update twitchgamecache: "+e);
+            e.printStackTrace();
+            return false;
+        }
     }
 }
