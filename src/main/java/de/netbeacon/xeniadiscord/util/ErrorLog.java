@@ -47,22 +47,27 @@ public class ErrorLog {
 
     public boolean export(){
         try{
-            File errorlog = new File("error.log");
-            if(errorlog.exists()){
-                errorlog.delete();
+            if(!errors.isEmpty()){
+                long time = (System.currentTimeMillis() / 1000L);
+                File errorlog = new File(time+"_error.log");
+                if(errorlog.exists()){ //not rly needed anymore
+                    errorlog.delete();
+                }
+                errorlog.createNewFile();
+                // write to file
+                BufferedWriter writer = new BufferedWriter(new FileWriter(time+"_error.log"));
+                for(String line : errors){
+                    writer.write(line);
+                    writer.newLine();
+                }
+                writer.flush();
+                writer.close();
+                // clear log
+                reset();
             }
-            errorlog.createNewFile();
-            // write to file
-            BufferedWriter writer = new BufferedWriter(new FileWriter("error.log"));
-            for(String line : errors){
-                writer.write(line);
-                writer.newLine();
-            }
-            writer.flush();
-            writer.close();
             return true;
         }catch (Exception e){
-            // welp plz lot broken :c
+            // welp plz, lots broken :c
             e.printStackTrace();
             return false;
         }
