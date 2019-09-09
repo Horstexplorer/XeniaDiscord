@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.6.3
+> Current Version: 1.0.7.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
@@ -77,14 +77,14 @@ admin onlinestatus <idle/on>                || set onlinestatus to dnd, idle or 
 admin blacklistforcesave                    || force saving the blacklist
 admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
-admin errorlog <list/export/reset>          || list last 10 errors; export all of them; reset cached errors
+admin log <listerrors/export/reset>         || list last 10 errors; export the log; reset log
 ```
 #### Local
 Commands start without an indicator
 ```
 broadcast <msg>                             || tries to send msg to all guilds
-errorlog <>                                   
-       list                                 || list all errors
+log <>                                   
+       list <errorlevel>                    || list all entrys equal or above <errorlevel>
        export                               || export errors to file
        reset                                || reset errors
 guild  <>                                   
@@ -165,6 +165,11 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.7.0
+```
+- improved event logging (replacing errorlog)
+- updated commands
+```
 ##### 1.0.6.3
 ```
 - updating the twitchgamecache every 24h
