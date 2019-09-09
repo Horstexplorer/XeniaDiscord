@@ -14,12 +14,6 @@ public class ShutdownHook {
 
                 savefiles();
 
-                System.out.println("[EXIT]");
-                try{
-                    sleep(1000);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
             }
         });
     }
