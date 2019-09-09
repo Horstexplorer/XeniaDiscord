@@ -10,10 +10,10 @@ public class Help implements LocalCommands {
             System.out.println(
                     "Commands: "+"\n"+
                     " broadcast <msg>                             || tries to send msg to all guilds"+"\n"+
-                    " errorlog <>                                 || "+"\n"+
-                    "        list                                 || list all errors"+"\n"+
-                    "        export                               || export errors to file"+"\n"+
-                    "        reset                                || reset errors"+"\n"+
+                    " log <>                                      || "+"\n"+
+                    "        list <errorlevel>                    || list all entrys equal or above giveb errorlevel"+"\n"+
+                    "        export                               || export log to file"+"\n"+
+                    "        reset                                || reset log"+"\n"+
                     " guild  <>                                   || "+"\n"+
                     "        list                                 || list all connected guilds"+"\n"+
                     "        leave <name/id>                      || leave specific guild"+"\n"+
