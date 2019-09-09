@@ -2,11 +2,10 @@ package de.netbeacon.xeniadiscord.core;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
 import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
-import de.netbeacon.xeniadiscord.util.twitchwrap.worker.TwitchWorker;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
@@ -28,7 +27,6 @@ public class BTM implements Runnable{
     public void run() {
         init();
         createtasks();
-
     }
 
     private void init(){
@@ -43,6 +41,7 @@ public class BTM implements Runnable{
     }
 
     private void createtasks(){
+        new Log().addEntry("BTM", "Creating tasks", 0);
         Timer time = new Timer();
         // create tasks
         TimerTask update_status = new TimerTask() {
@@ -71,11 +70,18 @@ public class BTM implements Runnable{
                 new TwitchHookManagement(jda).update();
             }
         };
+        TimerTask update_twitchgamecache = new TimerTask() {
+            @Override
+            public void run() {
+                new TwitchGameCache().update();
+            }
+        };
         // schedule tasks
         time.schedule(update_status,1000*60,1000*60);               // wait 1 minute then update every minute
         time.schedule(save_files, 1000*60*60, 1000*60*60);          // wait 1h then update every h
         time.schedule(update_twitchkey, 1000*60*10,1000*60*10);     // wait 10 minutes then update every 10 minutes
         time.schedule(update_twitchhooks, 1000*30, 1000*60*5);      // wait 30 seconds then update every 5 minutes
+        time.schedule(update_twitchgamecache, 1000*60*60*24, 1000*60*60*24); // update every day
     }
 
     private int user_count(){

@@ -1,5 +1,7 @@
 package de.netbeacon.xeniadiscord.util;
 
+import de.netbeacon.xeniadiscord.util.log.Log;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ public class BlackListUtility {
         // init blacklist if it hasn't happened before
         if(blacklist == null){
             System.out.println("[INFO] Init blacklist");
+            new Log().addEntry("Blacklist", "Init blacklist", 0);
             initblacklist();
             System.out.println(">> "+blacklist.size()+" entrys found");
         }
@@ -34,7 +37,8 @@ public class BlackListUtility {
             }
             br.close();
         }catch (Exception e){
-            new ErrorLog(2, "Could not read blacklist from file: "+e);
+            new Log().addEntry("Blacklist", "Could not read blacklist from file: "+e.toString(), 5);
+            e.printStackTrace();
         }
     }
 
@@ -77,7 +81,7 @@ public class BlackListUtility {
             writer.close();
         }catch (Exception e){
             e.printStackTrace();
-            new ErrorLog(3, "Could not write blacklist to file: "+e);
+            new Log().addEntry("Blacklist", "Could not write blacklist to file: "+e.toString(), 5);
             return false;
         }
         return true;

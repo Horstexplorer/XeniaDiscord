@@ -3,7 +3,8 @@ package de.netbeacon.xeniadiscord.commands.privat;
 import de.netbeacon.xeniadiscord.modulemanagement.GuildModuleProcessor;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
+import de.netbeacon.xeniadiscord.util.log.LogEntry;
 import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
 import de.netbeacon.xeniadiscord.util.twitchwrap.worker.TwitchWorker;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
@@ -101,37 +102,42 @@ public class Admin implements PrivateCommand {
                     eb.addField("Blacklisted channels:",new BlackListUtility().count()+" channels", false);
                     eb.addField("TwitchWrap:", "Current api-calls: "+(800-new TwitchWorker().getApilimit())/800+"% \n"+"Next scheduled key change: "+new TwitchWorker().nextestkeychange()+"\n"+new TwitchHookManagement(event.getJDA()).count()+" TwitchHooks registered\n"+new TwitchGameCache().count()+" games cached\n", false);
                     eb.addField("Modules:",new GuildModuleProcessor(null).listmodules(),false);
-                    eb.addField("Errors:", new ErrorLog(0, "").count()+" errors recorded \n", false);
+                    eb.addField("Errors:", new Log().count(2) +" errors recorded \n", false);
                     eb.addField("Memory:", "Used: "+((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1000000)+" / "+((Runtime.getRuntime().totalMemory())/1000000)+" MB", false);
                     event.getChannel().sendMessage(eb.build()).queue();
                 }
                 // errorlog
-                if(args[1].toLowerCase().equals("errorlog")){
+                if(args[1].toLowerCase().equals("log")){
                     if (args.length>2){
-                        if(args[2].equals("list")){
-                            int currentpos = 0;
-                            String errors = "";
-                            for(String error : new ErrorLog(0, "").getErrors()){
-                                currentpos++;
-                                if(new ErrorLog(0,"").count() - currentpos <= 10 && error.length()<2000){
-                                    errors += "   "+error+"\n";
+                        if(args[2].equals("listerrors")){
+                            int pos = 0;
+                            int max = new Log().count(3);
+                            String result = "";
+                            for(LogEntry logEntry : new Log().getEntrys(3)){
+                                pos++;
+                                if(pos +10 >= max){
+                                    result += logEntry.getDate()+"|"+logEntry.getErrorlevel()+"|"+logEntry.getName()+"|"+logEntry.getDescription()+"\n";
                                 }
                             }
-                            if(errors.isEmpty()){
-                                errors = "No errors recorded :D";
+                            if(result.length() > 2000){
+                                result = result.substring(0,1999);
                             }
-                            event.getChannel().sendMessage("Last 25 errors:\n"+errors).queue();
+                            if(result.isEmpty()){
+                                result = "No errors logged";
+                            }
+                            event.getChannel().sendMessage("Errors:").queue();
+                            event.getChannel().sendMessage(result).queue();
                         }
                         if(args[2].equals("export")){
-                            if(new ErrorLog(0 , "").export()){
+                            if(new Log().export()){
                                 event.getChannel().sendMessage("Export successful!").queue();
                             }else{
                                 event.getChannel().sendMessage("Export failed!").queue();
                             }
                         }
                         if(args[2].equals("reset")){
-                            new ErrorLog(0 , "").reset();
-                            event.getChannel().sendMessage("Error list cleared").queue();
+                            new Log().resetLog();
+                            event.getChannel().sendMessage("Log cleared").queue();
                         }
                     }
                 }

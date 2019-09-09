@@ -25,7 +25,7 @@ public class LCL implements Runnable{
         commands.put("guild", new Guilds());
         commands.put("status", new Status());
         commands.put("info", new Info());
-        commands.put("errors", new Errors());
+        commands.put("log", new Log());
         commands.put("shutdown", new Shutdown());
         commands.put("broadcast", new Broadcast());
         commands.put("twitch", new Twitch());

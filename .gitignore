@@ -6,6 +6,7 @@
 /classes/
 /modules/
 /coremodule/
+/logs/
 /*.config
 /*.storage
 /*.txt

@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.util.twitchwrap.auth;
 
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.config.TwitchConfig;
 import org.json.JSONObject;
 
@@ -18,6 +19,7 @@ public class TwitchKey {
            twitchConfig = new TwitchConfig();
        }
        if(!twitchConfig.get("twitch_client_id").isEmpty() || !twitchConfig.get("twitch_client_secret").isEmpty()){
+           new Log().addEntry("TK", "Init TwitchKey", 0);
            if(twitchConfig.get("twitch_bearer_token").isEmpty()){
                System.out.println("[INFO] Requesting bearer token...");
                if(requestbearer()){
@@ -63,7 +65,8 @@ public class TwitchKey {
             twitchConfig.update("twitch_bearer_token_validuntil", valid_until+"");
             return true;
         }catch (Exception e){
-            //e.printStackTrace();
+            new Log().addEntry("TK", "Requesting bearer token failed: "+e.toString(), 5);
+            e.printStackTrace();
             revokebearer(); // revoke if something went wrong, we want no unknown keys around
             return false;
         }
@@ -82,8 +85,10 @@ public class TwitchKey {
             }
             in.close();
             con.disconnect();
+            new Log().addEntry("TK", "Revoked bearer token", 0);
             return true;
         }catch (Exception e){
+            new Log().addEntry("TK", "Revoking bearer token failed: "+e.toString(), 1);
             return false;
         }
     }
@@ -104,12 +109,14 @@ public class TwitchKey {
             con.disconnect();
             return true;
         }catch (Exception e){
+            new Log().addEntry("TK", "Could not check if key is valid: "+e.toString(), 4);
             return false;
         }
     }
 
     public boolean update(){
         if((((System.currentTimeMillis()/1000L)+86400) > valid_until) || !isvalid()){   // revoke if it will be invalid in the next 24h or if it is invalid
+            new Log().addEntry("TK", "Updating bearer token", 0);
             revokebearer(); // it may still be valid so we try to revoke it
             if(requestbearer()){ // request a new one
                 System.out.println("[INFO] Requested new bearer token successfully");

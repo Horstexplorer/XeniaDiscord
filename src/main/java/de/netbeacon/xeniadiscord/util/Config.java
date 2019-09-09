@@ -1,5 +1,7 @@
 package de.netbeacon.xeniadiscord.util;
 
+import de.netbeacon.xeniadiscord.util.log.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,6 +18,7 @@ public class Config {
         // init blacklist if it hasn't happened before
         if(properties == null){
             System.out.println("[INFO] Init config");
+            new Log().addEntry("Config", "Init config", 0);
             if(!initproperties()){
                 System.out.println("[INFO] Init config failed");
             }
@@ -40,7 +43,7 @@ public class Config {
             input.close();
         }catch (Exception e){
             e.printStackTrace();
-            new ErrorLog(3, "Could not init propertys");
+            new Log().addEntry("Config", "Could not init properties from sys.config "+e.toString(), 5);
             return false;
         }
         return true;
@@ -110,6 +113,7 @@ public class Config {
             properties.store(new FileOutputStream("sys.config"), null);
         }catch (Exception e){
             e.printStackTrace();
+            new Log().addEntry("Config", "Could not write properties to sys.config "+e.toString(), 5);
             System.exit(-1); //should quit; something is definitely wrong here
         }
     }
@@ -121,14 +125,14 @@ public class Config {
             result = properties.getProperty(property);
         }catch(Exception e) {
             e.printStackTrace();
-            new ErrorLog(2, "Could not load property "+property);
+            new Log().addEntry("Config", "Could not load property "+property, 2);
         }
         return result;
     }
 
     public String version() {
-        String vers= "1.0.6.2";
-        String build = "1909070229";
+        String vers= "1.0.7.0";
+        String build = "1909091727";
         return vers+"-"+build;
     }
 }

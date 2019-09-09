@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.util.twitchwrap.worker;
 
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
 import de.netbeacon.xeniadiscord.util.twitchwrap.request.TwitchRequest;
@@ -33,6 +34,7 @@ public class TwitchWorker implements Runnable{
     @Override
     public void run() {
         System.out.println("[INFO] Starting TwitchWorker");
+        new Log().addEntry("TW", "Starting TwitchWorker", 0);
         try{
             boolean force = false;
             // prepare
@@ -79,7 +81,8 @@ public class TwitchWorker implements Runnable{
             // set finished
             twitchRequest.setFinished();
 
-        }catch (Exception ignore){
+        }catch (Exception e){
+            new Log().addEntry("TW", "An error occured while processing request:  "+e.toString(), 4);
             twitchRequest.setResult(new JSONObject("{}"));
             twitchRequest.setFinished();
         }

@@ -1,6 +1,6 @@
 package de.netbeacon.xeniadiscord.util.webhooks.twitch;
 
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -72,8 +72,9 @@ public class TwitchHookManagement {
             }
             br.close();
             return true;
-        }catch (Exception ignore){
-            new ErrorLog(3, "Could not load TwitchHooks from file");
+        }catch (Exception e){
+            new Log().addEntry("THM", "Could not load TwitchHooks from file: "+e.toString(), 5);
+            e.printStackTrace();
             return false;
         }
     }
@@ -97,7 +98,8 @@ public class TwitchHookManagement {
 
             return true;
         }catch (Exception e){
-            new ErrorLog(3, "Could not write TwitchHooks to file");
+            new Log().addEntry("THM", "Could not write TwitchHooks to file: "+e.toString(), 5);
+            e.printStackTrace();
             return false;
         }
     }
@@ -179,7 +181,7 @@ public class TwitchHookManagement {
                                                     toremove.add(thos);
                                                 }
                                             }catch (Exception e){
-                                                new ErrorLog(3, "An error occurred while sending notification for TwitchHooks: "+e.toString());
+                                                new Log().addEntry("THM", "An error occurred while sending notification for TwitchHooks: "+e.toString(), 3);
                                             }
                                         }// nothing to do
                                     }
@@ -193,8 +195,8 @@ public class TwitchHookManagement {
                     }
                 }
             }catch (Exception e){
+                new Log().addEntry("THM", "An error occurred while updating TwitchHooks: "+e.toString(), 4);
                 e.printStackTrace();
-                new ErrorLog(4, "An error occurred while updating TwitchHooks:"+e.toString());
             }
             // update file
             writetofile();
@@ -217,7 +219,8 @@ public class TwitchHookManagement {
                 return false;
             }
         }catch (Exception e){
-            new ErrorLog(4, "An error occurred while adding TwitchHook: Originated from "+guildchannelid+" : "+e.toString());
+            new Log().addEntry("THM", "An error occurred while adding TwitchHook: Originated from "+guildchannelid+" : "+e.toString(), 4);
+            e.printStackTrace();
             return false;
         }
         return true;
