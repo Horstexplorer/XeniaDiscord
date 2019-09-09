@@ -1,6 +1,7 @@
 package de.netbeacon.xeniadiscord.core;
 
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.ShutdownHook;
 import de.netbeacon.xeniadiscord.util.gui.Terminal;
 
 public class Init {
@@ -23,5 +24,8 @@ public class Init {
         }else {
             System.out.println("Bot has been deactivated. Please check configuration file.");
         }
+
+        //add shutdown hook
+        new ShutdownHook();
     }
 }
