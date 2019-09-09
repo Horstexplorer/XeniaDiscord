@@ -3,6 +3,7 @@ package de.netbeacon.xeniadiscord.core;
 import de.netbeacon.xeniadiscord.listeners.*;
 import de.netbeacon.xeniadiscord.modulemanagement.GuildCoreModuleProcessor;
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,6 +21,7 @@ public class XCore implements Runnable{
 
     @Override
     public void run() {
+        new Log().addEntry("XCore", "Preparing JDA", 0);
         try{
             jdaBuilder = new JDABuilder(AccountType.BOT);
             jdaBuilder.setToken(config.load("bot_token"));
@@ -29,8 +31,11 @@ public class XCore implements Runnable{
             jda = jdaBuilder.build();
             jda.awaitReady();
         }catch (Exception e){
+            new Log().addEntry("XCore", "An error occurred preparing JDA: "+e.toString(), 5);
             e.printStackTrace();
+            System.exit(-1);
         }finally {
+            new Log().addEntry("XCore", "Bot started", 0);
             System.out.println("[INFO] >> Bot started");
         }
 

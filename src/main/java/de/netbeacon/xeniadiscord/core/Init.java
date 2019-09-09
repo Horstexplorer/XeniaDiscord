@@ -3,6 +3,7 @@ package de.netbeacon.xeniadiscord.core;
 import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.ShutdownHook;
 import de.netbeacon.xeniadiscord.util.gui.Terminal;
+import de.netbeacon.xeniadiscord.util.log.Log;
 
 public class Init {
 
@@ -12,6 +13,7 @@ public class Init {
 
         //prepare config file
         Config config = new Config();
+        new Log().addEntry("Xenia", "Running Xenia v"+config.version(), 0);
 
         if(Boolean.parseBoolean(config.load("bot_gui_activate"))){
             // start gui

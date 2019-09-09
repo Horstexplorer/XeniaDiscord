@@ -1,6 +1,7 @@
 package de.netbeacon.xeniadiscord.util.gui;
 
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.log.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.io.*;
 public class Terminal extends JFrame implements Runnable{
 
     public Terminal(){
+        new Log().addEntry("Terminal", "Started terminal gui", 0);
         try{
             JFrame frame = new JFrame();
 
