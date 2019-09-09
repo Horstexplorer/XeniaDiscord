@@ -49,13 +49,17 @@ public class ErrorLog {
         try{
             if(!errors.isEmpty()){
                 long time = (System.currentTimeMillis() / 1000L);
-                File errorlog = new File(time+"_error.log");
+                File dir = new File("./logs/");
+                if(!dir.exists()){
+                    dir.mkdir();
+                }
+                File errorlog = new File("./logs/"+time+"_error.log");
                 if(errorlog.exists()){ //not rly needed anymore
                     errorlog.delete();
                 }
                 errorlog.createNewFile();
                 // write to file
-                BufferedWriter writer = new BufferedWriter(new FileWriter(time+"_error.log"));
+                BufferedWriter writer = new BufferedWriter(new FileWriter("./logs/"+time+"_error.log"));
                 for(String line : errors){
                     writer.write(line);
                     writer.newLine();
