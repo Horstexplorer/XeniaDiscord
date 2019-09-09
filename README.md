@@ -1,9 +1,9 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.6.2
+> Current Version: 1.0.6.3
 
 > Using  
-> - net.dv8tion JDA -  4.BETA.0_24
+> - net.dv8tion JDA -  4.0.0_46
 > - lavaplayer - 1.3.17
 > - slf4j-simple - 1.7.26
 
@@ -83,7 +83,7 @@ admin errorlog <list/export/reset>          || list last 10 errors; export all o
 Commands start without an indicator
 ```
 broadcast <msg>                             || tries to send msg to all guilds
-errors <>                                   
+errorlog <>                                   
        list                                 || list all errors
        export                               || export errors to file
        reset                                || reset errors
@@ -96,7 +96,7 @@ shutdown                                    || save all files and exit
 status <>                                   
        dnd                                  || set online status to do_not_disturb
        idle                                 || set online status to idle
-      online                                || set online status to online
+       online                               || set online status to online
 twitch <>                                    
        listhooks                            || Lists all twitchhooks
        listgames                            || Lists all cached games
@@ -165,6 +165,14 @@ public class YourCoreModule {
 ```
 
 ### Changelog
+##### 1.0.6.3
+```
+- updating the twitchgamecache every 24h
+- exporting the error log won't overwrite an existing error log anymore
+- error logs moved to ./logs/
+- general improvements
+- switched to JDA 4.0.0_46
+```
 ##### 1.0.6.2
 ```
 - added more local commands
