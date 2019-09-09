@@ -18,6 +18,7 @@ public class Config {
         // init blacklist if it hasn't happened before
         if(properties == null){
             System.out.println("[INFO] Init config");
+            new Log().addEntry("Config", "Init config", 0);
             if(!initproperties()){
                 System.out.println("[INFO] Init config failed");
             }

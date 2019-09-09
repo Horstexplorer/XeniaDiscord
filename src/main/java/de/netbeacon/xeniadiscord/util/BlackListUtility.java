@@ -13,6 +13,7 @@ public class BlackListUtility {
         // init blacklist if it hasn't happened before
         if(blacklist == null){
             System.out.println("[INFO] Init blacklist");
+            new Log().addEntry("Blacklist", "Init blacklist", 0);
             initblacklist();
             System.out.println(">> "+blacklist.size()+" entrys found");
         }
