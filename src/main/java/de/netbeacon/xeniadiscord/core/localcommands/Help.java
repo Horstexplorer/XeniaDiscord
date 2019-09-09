@@ -10,7 +10,7 @@ public class Help implements LocalCommands {
             System.out.println(
                     "Commands: "+"\n"+
                     " broadcast <msg>                             || tries to send msg to all guilds"+"\n"+
-                    " errors <>                                   || "+"\n"+
+                    " errorlog <>                                 || "+"\n"+
                     "        list                                 || list all errors"+"\n"+
                     "        export                               || export errors to file"+"\n"+
                     "        reset                                || reset errors"+"\n"+

@@ -8,7 +8,7 @@ public class Errors implements LocalCommands{
     @Override
     public void execute(JDA jda, String[] args) {
 
-        if(args[0].toLowerCase().equals("errors") && args.length > 1){
+        if(args[0].toLowerCase().equals("errorlog") && args.length > 1){
 
             if(args[1].toLowerCase().equals("list")){
                 System.out.println("Errors:");
@@ -27,7 +27,7 @@ public class Errors implements LocalCommands{
 
             if(args[1].toLowerCase().equals("reset")){
                 new ErrorLog(0 , "").reset();
-                System.out.println("rror list cleared");
+                System.out.println("Error list cleared");
             }
         }
     }
