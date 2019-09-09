@@ -40,7 +40,7 @@ public class Config {
             input.close();
         }catch (Exception e){
             e.printStackTrace();
-            new ErrorLog(3, "Could not init propertys");
+            new ErrorLog(3, "Could not init properties from sys.config");
             return false;
         }
         return true;
