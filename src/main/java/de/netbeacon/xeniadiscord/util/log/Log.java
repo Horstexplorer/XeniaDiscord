@@ -39,7 +39,7 @@ public class Log {
                 if(!dir.exists()){
                     dir.mkdir();
                 }
-                String filename = "./logs/"+time+"_error.log";
+                String filename = "./logs/"+time+".log";
                 File log = new File(filename);
                 if(log.exists()){ //not rly needed anymore
                     log.delete();

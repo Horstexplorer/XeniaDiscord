@@ -19,7 +19,6 @@ public class TwitchKey {
            twitchConfig = new TwitchConfig();
        }
        if(!twitchConfig.get("twitch_client_id").isEmpty() || !twitchConfig.get("twitch_client_secret").isEmpty()){
-           new Log().addEntry("TK", "Init TwitchKey", 0);
            if(twitchConfig.get("twitch_bearer_token").isEmpty()){
                System.out.println("[INFO] Requesting bearer token...");
                if(requestbearer()){

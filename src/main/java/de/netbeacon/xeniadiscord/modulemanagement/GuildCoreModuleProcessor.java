@@ -86,6 +86,7 @@ public class GuildCoreModuleProcessor {
 
     public void startbackgroundtask(JDA jda){
         if(active) {
+            new Log().addEntry("GCMP","Starting the background task for core module", 0);
             try {
                 //Do magic
                 Class<?> classToLoad = Class.forName(mainclass, true, urlcl);
@@ -95,7 +96,7 @@ public class GuildCoreModuleProcessor {
 
             } catch (Exception e) {
                 new Log().addEntry("GCMP","An error occurred while starting the background task for core module: "+e.toString(), 4);
-                System.out.println("[ERROR] " + e);
+                e.printStackTrace();
             }
         }
     }
