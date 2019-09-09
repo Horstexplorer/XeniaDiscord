@@ -1,6 +1,6 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.io.File;
@@ -45,7 +45,7 @@ public class PrivateCoreModuleProcessor {
 
                     urlcl = new URLClassLoader(new URL[]{new URL("file:./coremodule/coremodule.jar")}, this.getClass().getClassLoader());
                 }catch (Exception e){
-                    new ErrorLog(4, "An error occurred while adding private core module: "+e.toString());
+                    new Log().addEntry("PCMP", "An error occurred while adding private core module: "+e.toString(), 4);
                     e.printStackTrace();
                 }
             }
@@ -67,7 +67,7 @@ public class PrivateCoreModuleProcessor {
                 }
 
             }catch (Exception e){
-                new ErrorLog(4, "An error occurred while handling private core module: "+e.toString());
+                new Log().addEntry("PCMP", "An error occurred while handling private core module: "+e.toString(), 4);
                 e.printStackTrace();
             }
         }

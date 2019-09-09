@@ -1,6 +1,6 @@
 package de.netbeacon.xeniadiscord.util.twitchwrap.gamecache;
 
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import org.json.JSONObject;
 
@@ -14,6 +14,7 @@ public class TwitchGameCache {
     public TwitchGameCache(){
         if(gamecache == null){
             System.out.println("[INFO] Init TwitchGameCache");
+            new Log().addEntry("TGC", "Init TwitchGameCache", 0);
             // init gamecache
             if(!init()){
                 System.out.println("[ERROR] Init TwitchGameCache failed");
@@ -42,7 +43,7 @@ public class TwitchGameCache {
             }
             br.close();
         }catch (Exception e){
-            new ErrorLog(2, "Could not read twitchgamecache from file:"+e);
+            new Log().addEntry("TGC", "Could not read twitchgamecache from file: "+e.toString(), 5);
             e.printStackTrace();
             return false;
         }
@@ -60,8 +61,8 @@ public class TwitchGameCache {
             writer.flush();
             writer.close();
         }catch (Exception e){
+            new Log().addEntry("TGC", "Could not write twitchgamecache to file: "+e.toString(), 5);
             e.printStackTrace();
-            new ErrorLog(3, "Could not write twitchgamecache to file: "+e);
             return false;
         }
         return true;
@@ -136,7 +137,7 @@ public class TwitchGameCache {
             // save updated games
             return writetofile();
         }catch (Exception e){
-            new ErrorLog(2, "Could not update twitchgamecache: "+e);
+            new Log().addEntry("TGC", "Could not update twitchgamecache: "+e.toString(), 4);
             e.printStackTrace();
             return false;
         }

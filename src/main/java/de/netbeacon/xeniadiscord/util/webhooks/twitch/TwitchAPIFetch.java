@@ -1,6 +1,6 @@
 package de.netbeacon.xeniadiscord.util.webhooks.twitch;
 
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ class TwitchAPIFetch {
             return json.getJSONArray("data").getJSONObject(0).getString("id");
         }catch (Exception e){
             //e.printStackTrace();
-            new ErrorLog(1, "An error occurred while executing getChannelid() in TwitchAPIFetch: "+e.toString()); // lvl 2 ; displayname may just dont exist -> json is empty...
+            new Log().addEntry("TAPIF", "An error occurred while executing getChannelid() in TwitchAPIFetch: "+e.toString(), 1);
             return null;
         }
     }
@@ -62,8 +62,8 @@ class TwitchAPIFetch {
             }
             return  channelids;
         }catch (Exception e){
+            new Log().addEntry("TAPIF", "An error occurred while executing getStreamsAdvanced() in TwitchAPIFetch: "+e.toString(), 4);
             e.printStackTrace();
-            new ErrorLog(4, "An error occurred while executing getStreamsAdvanced() in TwitchAPIFetch: "+e.toString());
             return null;
         }
     }

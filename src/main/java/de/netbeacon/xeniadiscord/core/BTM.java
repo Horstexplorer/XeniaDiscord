@@ -2,11 +2,10 @@ package de.netbeacon.xeniadiscord.core;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
 import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
-import de.netbeacon.xeniadiscord.util.twitchwrap.worker.TwitchWorker;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
@@ -28,7 +27,6 @@ public class BTM implements Runnable{
     public void run() {
         init();
         createtasks();
-
     }
 
     private void init(){
@@ -43,6 +41,7 @@ public class BTM implements Runnable{
     }
 
     private void createtasks(){
+        new Log().addEntry("BTM", "Creating tasks", 0);
         Timer time = new Timer();
         // create tasks
         TimerTask update_status = new TimerTask() {

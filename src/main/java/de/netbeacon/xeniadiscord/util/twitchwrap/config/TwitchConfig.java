@@ -1,5 +1,7 @@
 package de.netbeacon.xeniadiscord.util.twitchwrap.config;
 
+import de.netbeacon.xeniadiscord.util.log.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,6 +14,7 @@ public class TwitchConfig {
 
     public TwitchConfig(){
         if(properties == null){
+            new Log().addEntry("TC", "Init TwitchConfig", 0);
             initproperties();
         }
     }
@@ -32,6 +35,7 @@ public class TwitchConfig {
             properties.load(input);
             input.close();
         }catch (Exception e){
+            new Log().addEntry("TC", "Could not load twitch config: "+e.toString(), 5);
             e.printStackTrace();
             return false;
         }
@@ -51,6 +55,7 @@ public class TwitchConfig {
         try{
             properties.store(new FileOutputStream("twitch.config"), null);
         }catch (Exception e){
+            new Log().addEntry("TC", "Could not write twitch config to file: "+e.toString(), 5);
             e.printStackTrace();
         }
     }
@@ -74,6 +79,7 @@ public class TwitchConfig {
             result = properties.getProperty(property);
         }catch(Exception e) {
             result = "";
+            new Log().addEntry("TC", "Could not load property "+property+": "+e.toString(), 5);
             e.printStackTrace();
         }
         return result;

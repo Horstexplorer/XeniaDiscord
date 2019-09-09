@@ -1,6 +1,6 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
-import de.netbeacon.xeniadiscord.util.ErrorLog;
+import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -47,7 +47,7 @@ public class GuildCoreModuleProcessor {
 
                     urlcl = new URLClassLoader(new URL[]{new URL("file:./coremodule/coremodule.jar")}, this.getClass().getClassLoader());
                 }catch (Exception e){
-                    new ErrorLog(4, "An error occurred while adding guild core module: "+e.toString());
+                    new Log().addEntry("GCMP","An error occurred while adding guild core module: "+e.toString(), 4);
                     e.printStackTrace();
                 }
             }
@@ -77,8 +77,8 @@ public class GuildCoreModuleProcessor {
                     }
                 }
             }catch (Exception e){
+                new Log().addEntry("GCMP","An error occurred while handling guild core module: "+e.toString(), 4);
                 e.printStackTrace();
-                new ErrorLog(4, "An error occurred while handling guild core module: "+e.toString());
             }
         }
         return handled;
@@ -94,7 +94,7 @@ public class GuildCoreModuleProcessor {
                 method.invoke(instance, jda);   //ignore result
 
             } catch (Exception e) {
-                new ErrorLog(4, "An error occurred while starting the background task for core module: "+e.toString());
+                new Log().addEntry("GCMP","An error occurred while starting the background task for core module: "+e.toString(), 4);
                 System.out.println("[ERROR] " + e);
             }
         }
