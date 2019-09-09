@@ -47,7 +47,7 @@ public class BTM implements Runnable{
         TimerTask update_status = new TimerTask() {
             @Override
             public void run() {
-                String[] activity = {new Config().load("bot_status"),"on "+jda.getGuilds().size()+" servers", "with "+user_count()+" users"};
+                String[] activity = {new Config().load("bot_status"),"on "+jda.getGuilds().size()+" guilds", "with "+user_count()+" users"};
                 jda.getPresence().setActivity(Activity.playing(activity[new Random().nextInt(activity.length)]));
             }
         };
