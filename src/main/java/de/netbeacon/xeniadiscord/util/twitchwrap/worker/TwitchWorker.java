@@ -66,9 +66,7 @@ public class TwitchWorker implements Runnable{
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Authorization", "Bearer "+twitchKey.getToken());
-            try{
-                ratelimitremaining = Integer.parseInt(con.getHeaderField("ratelimit-remaining"));// there may be no ratelimit
-            }catch (Exception ignore){}
+            ratelimitremaining = Integer.parseInt(con.getHeaderField("ratelimit-remaining"));
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuffer content = new StringBuffer();
