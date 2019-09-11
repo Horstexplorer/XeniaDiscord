@@ -1,5 +1,7 @@
 package de.netbeacon.xeniadiscord.core;
 
+import de.netbeacon.xeniadiscord.modulemanagement.loader.CoreModuleLoader;
+import de.netbeacon.xeniadiscord.modulemanagement.loader.ModuleLoader;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.log.Log;
@@ -30,6 +32,10 @@ public class BTM implements Runnable{
     }
 
     private void init(){
+        // init CoreModuleLoader
+        new CoreModuleLoader(true);
+        // init ModuleLoader
+        new ModuleLoader(true);
         // init blacklist
         new BlackListUtility();
         // init twitchwrap

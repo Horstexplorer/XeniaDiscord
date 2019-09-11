@@ -42,11 +42,6 @@ public class XCore implements Runnable{
         //start backgroundtaskmanager
         startBTM();
 
-        //start coremodulepreloader (onstart function)
-        if(Boolean.parseBoolean(config.load("bot_activate_coremodule_backgroundtask"))){
-            startcoremodulepreloader();
-        }
-
         // listen to local commands
         new Thread(new LCL(jda)).start();
     }
@@ -61,9 +56,5 @@ public class XCore implements Runnable{
 
     private void startBTM(){
         new Thread(new BTM(jda)).start();
-    }
-
-    private void startcoremodulepreloader(){
-        new GuildCoreModuleProcessor(null).startbackgroundtask(jda);
     }
 }

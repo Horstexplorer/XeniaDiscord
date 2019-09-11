@@ -1,85 +1,38 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
+import de.netbeacon.xeniadiscord.modulemanagement.loader.ModuleLoader;
 import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
-import java.io.File;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+import java.util.Map;
 
 public class PrivateModuleProcessor {
 
     private PrivateMessageReceivedEvent event;
-    private static boolean modex = false;
-    private static List<String> modules = new ArrayList<String>();
-    //
-    private static URLClassLoader urlcl;
-    private static List<String> classname = new ArrayList<String>();
+    private URLClassLoader urlcl;
+    private Map<String, String> modules;
+    private boolean isEnabled;
 
     public PrivateModuleProcessor(PrivateMessageReceivedEvent event){
         this.event = event;
 
-        // check if urlcl is not null
-        if(urlcl == null){
-            //get files
-            //Check if dir exists
-            File directory = new File("./modules/");
-            if (!directory.exists()) {
-                directory.mkdir();
-            }
-            //Check if module exist, if load into array
-            File[] listOfFiles = directory.listFiles();
-            if(listOfFiles != null && listOfFiles.length > 0){
-                modex = true;
-                int x = 0;
-                for (File f: listOfFiles){
-                    if(f.getName().endsWith(".jar")){  // just find .jar files
-                        modules.add(f.getName());
-                    }
-                }
-            }
-            // create array of urls
-            if(modex){
-                List<URL> urllist = new ArrayList<URL>();
-                for(String module : modules){
-                    try{
-                        //Get main class from file
-                        JarFile jfile = new JarFile("./modules/"+module);
-                        Manifest mf = jfile.getManifest();
-                        Attributes atr = mf.getMainAttributes();
-                        String maincp = atr.getValue("Main-Class");
-                        jfile.close();
-                        //add to list
-                        classname.add(maincp);
-                        //get url
-                        urllist.add(new URL("file:./modules/"+module));
-                    }catch (Exception e){
-                        new Log().addEntry("PMP", "An error occurred while adding private module: "+module+" : "+e.toString(), 4);
-                        e.printStackTrace();
-                    }
-                }
-                //create urlclassloader
-                URL[] urls = urllist.toArray(new URL[urllist.size()]);
-                urlcl = new URLClassLoader(urls, this.getClass().getClassLoader());
-            }
-        }
+        ModuleLoader moduleLoader = new ModuleLoader(true);
+        urlcl = moduleLoader.getUrlcl();
+        modules = moduleLoader.getModules();
+        isEnabled = moduleLoader.isIsenabled();
     }
 
     public boolean handle(){
         boolean handled = false;
-        if(modex){
-            try{
-                for(String name : classname){
+        if(isEnabled){
+            for(Map.Entry<String, String> entry : modules.entrySet()) {
+                try{
                     if(handled){
                         break;
                     }
-                    Class<?> classToLoad = Class.forName(name, true, urlcl);
+                    Class<?> classToLoad = Class.forName(entry.getValue(), true, urlcl);
                     // execute module
                     Method method_exec = classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class); // MessageReceivedEvent event
                     Object instance_exec = classToLoad.getConstructor().newInstance();
@@ -88,10 +41,10 @@ public class PrivateModuleProcessor {
                     if(result_exec != null){
                         handled = (boolean) result_exec;
                     }
+                }catch (Exception e){
+                    new Log().addEntry("PMP", "An error occurred while handling module: "+entry.getKey()+" "+e.toString(), 3);
+                    e.printStackTrace();
                 }
-            }catch(Exception e){
-                new Log().addEntry("PMP", "An error occurred while handling private modules: "+e.toString(), 4);
-                e.printStackTrace();
             }
         }
         return handled;

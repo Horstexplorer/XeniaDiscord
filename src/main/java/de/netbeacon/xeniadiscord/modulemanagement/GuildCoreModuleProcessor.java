@@ -1,62 +1,32 @@
 package de.netbeacon.xeniadiscord.modulemanagement;
 
+import de.netbeacon.xeniadiscord.modulemanagement.loader.CoreModuleLoader;
 import de.netbeacon.xeniadiscord.util.log.Log;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.io.File;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 public class GuildCoreModuleProcessor {
 
     private GuildMessageReceivedEvent event;
-    private static Boolean active = false;
-    //
-    private static String mainclass;
-    private static URLClassLoader urlcl;
+    private Boolean isEnabled;
+    private String mainclass;
+    private URLClassLoader urlcl;
 
     public GuildCoreModuleProcessor(GuildMessageReceivedEvent event){
         this.event = event;
 
-        if(urlcl == null){
-            //Check if dir exists
-            File dir = new File("./coremodule/");
-            if(!dir.exists()){
-                dir.mkdirs();
-            }
-            //Check if cmod exists
-            File cmod = new File("./coremodule/coremodule.jar");
-            if (cmod.exists()) {
-                active = true;
-            }
-            // create urlcl
-            if(active){
-                try{
-                    //Get main class from file
-                    JarFile jfile = new JarFile("./coremodule/coremodule.jar");
-                    Manifest mf = jfile.getManifest();
-                    Attributes atr = mf.getMainAttributes();
-                    mainclass = atr.getValue("Main-Class");
-                    jfile.close();
-
-                    urlcl = new URLClassLoader(new URL[]{new URL("file:./coremodule/coremodule.jar")}, this.getClass().getClassLoader());
-                }catch (Exception e){
-                    new Log().addEntry("GCMP","An error occurred while adding guild core module: "+e.toString(), 4);
-                    e.printStackTrace();
-                }
-            }
-        }
+        CoreModuleLoader coreModuleLoader = new CoreModuleLoader(true);
+        this.mainclass = coreModuleLoader.getModuleClass();
+        this.urlcl = coreModuleLoader.getUrlcl();
+        this.isEnabled = coreModuleLoader.isIsenabled();
     }
 
     public boolean handle(){
         boolean handled = false;
-        if(active){
+        if(isEnabled){
             try{
                 Class<?> classToLoad = Class.forName(mainclass, true, urlcl);
 
@@ -82,22 +52,5 @@ public class GuildCoreModuleProcessor {
             }
         }
         return handled;
-    }
-
-    public void startbackgroundtask(JDA jda){
-        if(active) {
-            new Log().addEntry("GCMP","Starting the background task for core module", 0);
-            try {
-                //Do magic
-                Class<?> classToLoad = Class.forName(mainclass, true, urlcl);
-                Method method = classToLoad.getDeclaredMethod("onstart", JDA.class);
-                Object instance = classToLoad.getConstructor().newInstance();
-                method.invoke(instance, jda);   //ignore result
-
-            } catch (Exception e) {
-                new Log().addEntry("GCMP","An error occurred while starting the background task for core module: "+e.toString(), 4);
-                e.printStackTrace();
-            }
-        }
     }
 }
