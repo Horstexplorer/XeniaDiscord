@@ -39,7 +39,9 @@ public class TwitchGameCache {
             String line;
             while((line = br.readLine()) != null){
                 String[] args = line.split(" ");
-                gamecache.put(args[0], line.replace(args[0], "").trim());    // args[id] this is the game name
+                if(args.length > 0){
+                    gamecache.put(args[0], line.replace(args[0], "").trim());    // args[id] this is the game name
+                }
             }
             br.close();
         }catch (Exception e){
