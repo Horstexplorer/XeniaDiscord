@@ -1,6 +1,9 @@
 package de.netbeacon.xeniadiscord.modulemanagement.loader;
 
 import de.netbeacon.xeniadiscord.util.log.Log;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -66,10 +69,17 @@ public class CoreModuleLoader {
         // enable module (call onEnable)
         if(hasmodule){
             System.out.println("[INFO][MLc] Enabling CoreModule");
-            new Log().addEntry("MLd", "Enabling CoreModule", 0);
+            new Log().addEntry("MLc", "Enabling CoreModule", 0);
 
             try{
                 Class<?> classToLoad = Class.forName(classname, true, urlcl);
+                // check if methods exist [onEnable(void), onDisable(void), permission(Member), guild_execute(GuildMessageReceivedEvent,Member), private_execute(PrivateMessageReceivedEvent)]
+                // should throw an error when not found
+                classToLoad.getDeclaredMethod("onEnable");
+                classToLoad.getDeclaredMethod("onDisable");
+                classToLoad.getDeclaredMethod("permission", Member.class);
+                classToLoad.getDeclaredMethod("guild_execute", GuildMessageReceivedEvent.class, Member.class);
+                classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class);
                 // execute onEnable function
                 Method method_onenable = classToLoad.getDeclaredMethod("onEnable");
                 Object instance_onenable = classToLoad.getConstructor().newInstance();
@@ -117,4 +127,5 @@ public class CoreModuleLoader {
     public URLClassLoader getUrlcl(){ return urlcl; }
     public String getModuleClass(){ return classname; }
     public boolean isIsenabled(){ return isenabled; }
+
 }

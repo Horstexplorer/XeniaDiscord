@@ -1,6 +1,9 @@
 package de.netbeacon.xeniadiscord.modulemanagement.loader;
 
 import de.netbeacon.xeniadiscord.util.log.Log;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -93,6 +96,13 @@ public class ModuleLoader {
             for(Map.Entry<String, String> entry : modules.entrySet()) {
                 try{
                     Class<?> classToLoad = Class.forName(entry.getValue(), true, urlcl);
+                    // check if methods exist [onEnable(void), onDisable(void), permission(Member), guild_execute(GuildMessageReceivedEvent,Member), private_execute(PrivateMessageReceivedEvent)]
+                    // should throw an error when not found
+                    classToLoad.getDeclaredMethod("onEnable");
+                    classToLoad.getDeclaredMethod("onDisable");
+                    classToLoad.getDeclaredMethod("permission", Member.class);
+                    classToLoad.getDeclaredMethod("guild_execute", GuildMessageReceivedEvent.class, Member.class);
+                    classToLoad.getDeclaredMethod("private_execute", PrivateMessageReceivedEvent.class);
                     // execute onEnable function
                     Method method_onenable = classToLoad.getDeclaredMethod("onEnable");
                     Object instance_onenable = classToLoad.getConstructor().newInstance();
@@ -154,4 +164,5 @@ public class ModuleLoader {
     public URLClassLoader getUrlcl(){ return urlcl; }
     public Map<String, String> getModules(){ return modules; }
     public boolean isIsenabled(){ return isenabled; }
+
 }
