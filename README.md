@@ -119,10 +119,10 @@ The main class of a module could look something like this:
 ```
 public class YourModule {
 
-    public boolean onLoad(){
+    public boolean onEnable(){
         return // true if successfull
     }
-    public boolean onUnload(){
+    public boolean onDisable(){
         return // true if successfull
     }
 
@@ -144,7 +144,7 @@ public class YourModule {
 ### Changelog
 ##### 1.1.0.0
 ```
-- rework of the module loader
+- rework of the module loaders
 ```
 ##### 1.0.7.1
 ```
