@@ -57,7 +57,6 @@ public class Config {
         properties.setProperty("bot_command_indicator", "x!");
         properties.setProperty("bot_activate_modules", "false");
         properties.setProperty("bot_activate_coremodule", "false");
-        properties.setProperty("bot_activate_coremodule_backgroundtask", "false");
         properties.setProperty("bot_status", "with humans");
         properties.setProperty("bot_admin_id", "");
         properties.setProperty("bot_sayhellotonew", "true");
@@ -79,7 +78,6 @@ public class Config {
         propcheck.put("bot_command_indicator","x!");
         propcheck.put("bot_activate_modules","false");
         propcheck.put("bot_activate_coremodule","false");
-        propcheck.put("bot_activate_coremodule_backgroundtask","false");
         propcheck.put("bot_status","with humans");
         propcheck.put("bot_admin_id","");
         propcheck.put("bot_sayhellotonew","true");
@@ -131,8 +129,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.0.7.1";
-        String build = "1909092214";
+        String vers= "1.1.0.0";
+        String build = "1909160232";
         return vers+"-"+build;
     }
 }

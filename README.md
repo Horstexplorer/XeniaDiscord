@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.0.7.1
+> Current Version: 1.1.0.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
@@ -18,7 +18,6 @@ bot_token=<token>                           // bot token
 bot_command_indicator=x!                    // indicator for commands
 bot_activate_modules=false                  // use modules
 bot_activate_coremodule=false               // use priority module
-bot_activate_coremodule_onstart=false       // execute onstartup() in coremodule once after starting the bot
 bot_status=<status>                         // activity to display
 bot_admin_id=<id>                           // userid for bot-admin features
 bot_sayhellotonew=true                      // bot welcomes every user who joins guild (private chat)
@@ -104,67 +103,49 @@ twitch <>
 
 ### Modules
 The functionality of the bot can be extended with modules. These can react to any interactions as long as they do not start with "bot_command_indicator"  
-There are two types of modules that can be used: core modules and default modules. Both are built the same way, but core modules have another function that can be executed after bots are started.
+Modules can be used in two ways: as normal module or as core module. Both are built in the same way, but the core module is executed before all other modules.
 
 
 ##### Create your own module:
 Its very simple.  
-You need to create a class containing three functions: permission(Member), guild_execute(GuildMessageReceivedEvent, Member) and private_execute(PrivateMessageReceivedEvent). The permission() function should return a boolean if the given permission (member.haspermission(x)) is enough to use the module. Note that it only gets called if the request isn't from a private chat.
-If the permission is sufficient the guild_execute() function is called with the current GuildMessageReceivedEvent and the Member. If the message was sent via private chat private_execute() gets called instead of permission() and guild_execute() with a given PrivateMessageReceivedEvent. If the module has triggered an action guild/private_execute should return true.
+You need to create a class containing five functions as shown in the example below.
+onLoad() gets called once when the module is loaded for the first time and onUnload() when the bot is shut down (or restarted)
+permission() gets called to check whether a particular member has the appropriate permissions to use the module. Note that it only gets called if the request isn't from a private chat.
+If the permission is sufficient the guild_execute() function is called with the current GuildMessageReceivedEvent and the Member. If the message was sent via private chat private_execute() gets called instead with a given PrivateMessageReceivedEvent. If the module has triggered an action guild/private_execute should return true.
 The module should then be packed as jar where via the manifest file Main-Class points to the class with those functions.  
-The jar file of the module can be named as you like and should be stored in ./modules/.  
-The main class could look something like this:
+The jar file of the module can be named as you like and should be stored in ./modules/. If a module should be used as core module instead, it has to be named coremodule.jar in ./coremodule/ .
+
+The main class of a module could look something like this:
 ```
 public class YourModule {
+
+    public boolean onEnable(){
+        return // true if successfull
+    }
+    public boolean onDisable(){
+        return // true if successfull
+    }
 
     public boolean permission(Member member){
         return member.hasPermission(Permission);    // return true if has permission
     }
     public boolean guild_execute(GuildMessageReceivedEvent event, Member member){
         // process the event
-        return <boolean>;                                                         // response to the bot if the module has handled the request. (it doesnt need to try other modules)
+        return <boolean>;                                                         // return if the module has handled the request. (it doesnt need to try other modules)
     }
     public boolean private_execute(PrivateMessageReceivedEvent event){
         // process the event
-        return <boolean>;                                                         // response to the bot if the module has handled the request. (it doesnt need to try other modules)
+        return <boolean>;                                                         // return if the module has handled the request. (it doesnt need to try other modules)
     }
 }
 ```
 
 
-##### Create your own core-module:
-This works the same way as with the normal modules but with the additional function onstart(JDA).  
-This can be used to start a thread for background tasks after starting the bot. The return of onstart() is ignored by the bot, so it should be set to void.
-The guild/private_execute functions may, but does not have to return true when the event has been processed. This can be used for example so that other modules may be executed afterwards.
-Make sure the file is named coremodule.jar and is placed in./coremodule/ to work. In contrast to normal modules, there can only be one module installed.
-The main class could look something like this:
-```
-public class YourCoreModule {
-
-   public boolean permission(Member member){
-        return member.hasPermission(Permission);    // return true if has permission
-   }
-   public boolean guild_execute(GuildMessageReceivedEvent event, Member member){
-        // process the event   
-        return <boolean>;                                                         // response to the bot if the module has handled the request. (it doesnt need to try other modules)
-   }
-   public boolean private_execute(PrivateMessageReceivedEvent event){
-        // process the event
-        return <boolean>;                                                         // response to the bot if the module has handled the request. (it doesnt need to try other modules)
-   }
-       
-   public void onstart(JDA jda){
-       new Thread(new Runnable() {
-                   @Override
-                   public void run() {
-                       // process
-                   }
-       }).start();  
-   } 
-}
-```
-
 ### Changelog
+##### 1.1.0.0
+```
+- rework of the module loaders
+```
 ##### 1.0.7.1
 ```
 - minor improvements
