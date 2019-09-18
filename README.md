@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.0.0
+> Current Version: 1.1.0.1
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
@@ -142,6 +142,10 @@ public class YourModule {
 
 
 ### Changelog
+##### 1.1.0.1
+```
+- minor fix (core module reenable)
+```
 ##### 1.1.0.0
 ```
 - rework of the module loaders
