@@ -21,7 +21,7 @@ public class ModuleLoader {
 
     private static URLClassLoader urlcl;
     private static Map<String, String> modules = new HashMap<String, String>(); // module - class
-    private static boolean hasmodules = false;
+    private static boolean hasmodules = false; // at least one module exists, which is valid (modules valid until failing enable())
     private static boolean isenabled = false;
 
     public ModuleLoader(boolean active){
@@ -34,7 +34,7 @@ public class ModuleLoader {
                     buildcl();
                 }
             }
-            if(!isenabled){
+            if(!isenabled && hasmodules){
                 isenabled = enable();
             }
         }
