@@ -17,9 +17,8 @@ public class CoreModuleLoader {
 
     private static URLClassLoader urlcl;
     private static String classname; // module - class
-    private static boolean hasmodule = false;
+    private static boolean hasmodule = false; // module exists, which is valid (module valid until failing enable())
     private static boolean isenabled = false;
-    private static boolean erroronload = false;
 
     public CoreModuleLoader(boolean active){
         if(active){
@@ -31,7 +30,7 @@ public class CoreModuleLoader {
                     buildcl();
                 }
             }
-            if(!isenabled && !erroronload){
+            if(!isenabled && hasmodule){
                 isenabled = enable();
             }
         }
@@ -88,15 +87,15 @@ public class CoreModuleLoader {
                 // check result
                 isenabled = (Boolean) result_onenable;
                 if(!isenabled){
+                    hasmodule = false; // we dont need to be active if the module aint workin
                     System.out.println("[ERROR][MLc]"+"CoreModule could not be enabled successfully.");
                     new Log().addEntry("MLc", "CoreModule could not be enabled successfully.", 3);
-                    erroronload = true;
                     return false;
                 }
             }catch (Exception e){
+                hasmodule = false; // we dont need to be active if the module aint workin
                 System.out.println("[ERROR][MLc]"+"An error occurred while enabling CoreModule: "+e.toString());
                 new Log().addEntry("MLc", "An error occurred while enabling CoreModule: "+e.toString(), 4);
-                erroronload = true;
                 return false;
             }
             return true;
