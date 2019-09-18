@@ -145,6 +145,7 @@ public class YourModule {
 ##### 1.1.0.1
 ```
 - minor fix (core module reenable)
+- minor improvement
 ```
 ##### 1.1.0.0
 ```
