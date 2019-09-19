@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.0.1
+> Current Version: 1.1.1.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
@@ -44,17 +44,17 @@ Commands are divided into two groups: These which are sent in Discord and those 
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
 This list contains only the commands included by default and their required permissions (all require Permission.MESSAGE_WRITE obviously).
 ```
-Command                                     || Required permission          ||Type     || Description
+Command                                          || Required permission          ||Type     || Description
 
-help                                        || -                            || Global  || Kicks the user from the server
-info                                        || -                            || Global  || Shows some information
-commands                                    || -                            || Guild   || Displays all commands
-kick <user>                                 || Permission.KICK_MEMBERS      || Guild   || Kicks the user from the server
-ban <user>                                  || Permission.BAN_MEMBERS       || Guild   || Bans the user from the server
-music <command>                             || Permission.VOICE_CONNECT     || Guild   || See 'Music Commands
-ghost <channel> <msg>                       || Permission.MANAGE_CHANNEL    || Guild   || Send <msg> as bot to <channel>
-blacklist <add/remove> <channel>            || Permission.MANAGE_CHANNEL    || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
-twitchhook <add/remove/list> <username>     || Permission.MANAGE_CHANNEL    || Guild   || Add a webhook for a specific twitch channel to your textchannel
+help                                             || -                            || Global  || Kicks the user from the server
+info                                             || -                            || Global  || Shows some information
+commands                                         || -                            || Guild   || Displays all commands
+kick <user>                                      || Permission.KICK_MEMBERS      || Guild   || Kicks the user from the server
+ban <user>                                       || Permission.BAN_MEMBERS       || Guild   || Bans the user from the server
+music <command>                                  || Permission.VOICE_CONNECT     || Guild   || See 'Music Commands
+ghost <channel> <msg>                            || Permission.MANAGE_CHANNEL    || Guild   || Send <msg> as bot to <channel>
+blacklist <add/remove> <channel>                 || Permission.MANAGE_CHANNEL    || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
+twitchhook <add/remove/list> <username> [msg]    || Permission.MANAGE_CHANNEL    || Guild   || Add a webhook for a specific twitch channel to your textchannel; if [msg] is set it is used as alternative notification (supports placeholders, see changelog 1.1.1.0)
 ```
 Commands to control music functions:
 ```
@@ -142,6 +142,17 @@ public class YourModule {
 
 
 ### Changelog
+##### 1.1.1.0
+```
+- added customizable notifications for TwitchHooks
+    placeholders:
+        %uname% - Channel name starting with a capital letter
+        %lname% - Channel name in all lower case letters
+        %game%  - Name of the game which is currently streamed
+        %title% - Stream title
+
+- minor improvement
+```
 ##### 1.1.0.1
 ```
 - minor fix (core module reenable)
