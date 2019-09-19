@@ -150,8 +150,8 @@ public class YourModule {
         %lname% - Channel name in all lower case letters
         %game%  - Name of the game which is currently streamed
         %title% - Stream title
-
-- minor improvement
+- fixed module loaders
+- minor improvements
 ```
 ##### 1.1.0.1
 ```
