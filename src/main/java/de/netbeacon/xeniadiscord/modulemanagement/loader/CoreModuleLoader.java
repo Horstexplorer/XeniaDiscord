@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.modulemanagement.loader;
 
+import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -17,17 +18,21 @@ public class CoreModuleLoader {
 
     private static URLClassLoader urlcl;
     private static String classname; // module - class
-    private static boolean hasmodule = false; // module exists, which is valid (module valid until failing enable())
+    private static Boolean hasmodule = null; // module exists, which is valid (module valid until failing enable()) -> true | invalid or no module -> false | not set -> null
     private static boolean isenabled = false;
 
     public CoreModuleLoader(boolean active){
         if(active){
-            if(urlcl == null){
+            if(urlcl == null && hasmodule == null){
                 System.out.println("[INFO] Init ModuleLoader (core)");
                 new Log().addEntry("MLc", "Init ModuleLoader (core)", 0);
                 if(getFile()){
                     hasmodule = true;
                     buildcl();
+                }else{
+                    hasmodule = false;
+                    // deactivate
+                    new Config().updateproperties("bot_activate_modules","false");
                 }
             }
             if(!isenabled && hasmodule){
