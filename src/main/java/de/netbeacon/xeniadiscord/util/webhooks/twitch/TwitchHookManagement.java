@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.*;
@@ -53,21 +54,23 @@ public class TwitchHookManagement {
             // format be like:
             // discord_channel channelname channelid
             while((line = br.readLine()) != null){
-                // parse args
-                String args[] = line.split(" ");
-                if(args.length == 3){
-                    // create new object if no other with same userid exists in that channel
-                    boolean exists = false;
-                    for(TwitchHookObjekt tho : twitchHookObjekts){
-                        if(tho.getGuildChannel().equals(args[0]) && tho.getChannelID().equals(args[2])){
-                            exists = true;
-                            break;
-                        }
+                // parse to json
+                JSONObject jsonObject = new JSONObject(line);
+                String name = jsonObject.getString("twitchchannelname");
+                String tid = jsonObject.getString("twitchchannelid");
+                String gid = jsonObject.getString("guildchannelid");
+                String cn = jsonObject.getString("customnotification");
+
+                boolean exists = false;
+                for(TwitchHookObjekt tho : twitchHookObjekts){
+                    if(tho.getGuildChannel().equals(gid) && tho.getChannelID().equals(tid)){
+                        exists = true;
+                        break;
                     }
-                    if(!exists){
-                        TwitchHookObjekt tho = new TwitchHookObjekt(args[0], args[1], args[2]);
-                        twitchHookObjekts.add(tho);
-                    }
+                }
+                if(!exists){
+                    TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn);
+                    twitchHookObjekts.add(tho);
                 }
             }
             br.close();
@@ -89,8 +92,7 @@ public class TwitchHookManagement {
             // write new content
             BufferedWriter writer = new BufferedWriter(new FileWriter("twitchhooks.storage"));
             for(TwitchHookObjekt tho : twitchHookObjekts){
-                String line = tho.getGuildChannel()+" "+tho.getChannelName()+" "+tho.getChannelID();
-                writer.write(line);
+                writer.write(tho.toJSONString());
                 writer.newLine();
             }
             writer.flush();
@@ -174,7 +176,15 @@ public class TwitchHookManagement {
                                                     EmbedBuilder eb = new EmbedBuilder();
                                                     eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
                                                     eb.setColor(Color.MAGENTA);
-                                                    eb.setDescription("Hey everyone! \n"+thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1)+ " is now live on twitch playing "+game+"!\n Let's drop in! \n \n"+"["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")");
+                                                    // build custom message
+                                                    String message = thos.getNotification();
+                                                    message = message.replace("%uname%", thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1));
+                                                    message = message.replace("%lname%", thos.getChannelName());
+                                                    message = message.replace("%game%", game);
+                                                    message = message.replace("%title%", thos.getTitle());
+                                                    message += "["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")"; // add link to stream
+                                                    eb.setDescription(message);
+
                                                     eb.setImage(thos.getThumbnailurl());
                                                     jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
                                                 }else{
@@ -205,7 +215,7 @@ public class TwitchHookManagement {
         }
     }
 
-    public boolean add(String guildchannelid, String twitchname){
+    public boolean add(String guildchannelid, String twitchname, String customnotification){
         for(TwitchHookObjekt tho : twitchHookObjekts){
             if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
                 return false;
@@ -214,7 +224,7 @@ public class TwitchHookManagement {
         try{
             String channelid = twitchAPIFetch.getChannelid(twitchname);
             if(channelid != null){
-                twitchHookObjekts.add(new TwitchHookObjekt(guildchannelid, twitchname, channelid));
+                twitchHookObjekts.add(new TwitchHookObjekt(twitchname, channelid, guildchannelid, customnotification));
             }else{
                 return false;
             }
