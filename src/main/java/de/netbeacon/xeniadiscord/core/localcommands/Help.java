@@ -26,7 +26,7 @@ public class Help implements LocalCommands {
                     "        online                               || set online status to online"+"\n"+
                     " twitch <>                                   || "+"\n"+
                     "        listhooks                            || Lists all twitchhooks"+"\n"+
-                    "        listgames                                || Lists all cached games"+"\n"+
+                    "        listgames                            || Lists all cached games"+"\n"+
                     ""
             );
         }

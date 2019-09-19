@@ -23,8 +23,22 @@ public class TwitchHook implements GuildCommand {
                 }else if(args.length > 2){
                     // add
                     if(args[1].toLowerCase().equals("add")){
+                        String notification = "";
+
+                        if(args.length > 3){ // more than [0][1][2]
+                            // build notification if exist
+                            for(int i = 3; i < args.length; i++){
+                                notification += args[i]+" ";
+                            }
+
+                        }else{
+                            // set default
+                            notification = "Hey everyone! \\n %uname% is now live on twitch playing %game%! \\n Let's drop in! \\n";
+                        }
+
+
                         // add hook to this channel
-                        if(!new TwitchHookManagement(event.getJDA()).add(event.getChannel().getId(),args[2])){
+                        if(!new TwitchHookManagement(event.getJDA()).add(event.getChannel().getId(),args[2], notification)){
                             event.getChannel().sendMessage("Failed to add! This error may result due to an incorrect username (or us reaching the rate limit - try again in a few moments).").queue();
                         }else{
                             event.getChannel().sendMessage("Successfully added!").queue();
@@ -40,7 +54,7 @@ public class TwitchHook implements GuildCommand {
                         }
                     }
                 }else {
-                    event.getChannel().sendMessage("Command requires 2 arguments (<add/remove> , twitchchannelname)").queue();
+                    event.getChannel().sendMessage("Command requires 2 arguments (add twitchchannelname [notification] / remove twitchchannelname)").queue();
                 }
             }else {
                 event.getChannel().sendMessage("Command requires more arguments (<add/remove/list>)").queue();

@@ -20,7 +20,7 @@ public class PrivateMessageListener extends ListenerAdapter {
         if(!event.getJDA().getPresence().getStatus().equals(OnlineStatus.DO_NOT_DISTURB)){
             // modules should not interfere with default commands
             if(!event.getAuthor().isBot() && !event.getMessage().getContentRaw().startsWith(config.load("bot_command_indicator"))){
-                System.out.println("[INFO][PRIV][CMD] "+event.getAuthor()+" >> "+event.getMessage().getContentRaw());
+                System.out.println("[INFO][PRIV][MSG] "+event.getAuthor()+" >> "+event.getMessage().getContentRaw());
                 new Thread(new PrivateMessageHandler(event)).start();
             }
         }

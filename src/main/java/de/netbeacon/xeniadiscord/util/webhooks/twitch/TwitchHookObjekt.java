@@ -9,11 +9,13 @@ public class TwitchHookObjekt {
     private String title;
     private String thumbnailurl;
     private String gameid;
+    private String customnotification;
 
-    TwitchHookObjekt(String guildchannelid, String channelname, String channelid){
+    TwitchHookObjekt(String channelname, String channelid, String guildchannelid, String customnotification){
         this.guildchannelid = guildchannelid;
         this.channelname = channelname;
         this.channelid = channelid;
+        this.customnotification = customnotification;
         this.status = "live";   // init as live so that if we start the bot and the channel is live we wont send a message (useful for restarting the bot when streams are online so that we dont notify twice)
         this.title = "unknown";
         this.thumbnailurl = "unknown";
@@ -30,6 +32,8 @@ public class TwitchHookObjekt {
         return this.channelid;
     }
 
+    String getNotification(){ return this.customnotification; }
+
     public String getStatus(){
         return this.status;
     }
@@ -45,4 +49,8 @@ public class TwitchHookObjekt {
 
     String getGameid(){ return this.gameid; }
     void setGameid(String gameid){ this.gameid = gameid;}
+
+    String toJSONString(){
+        return "{\"twitchchannelname\":\""+this.channelname+",\"twitchchannelid\":\""+this.channelid+",\"guildchannelid\":\""+this.guildchannelid+",\"customnotification\":\""+this.customnotification+"}";
+    }
 }
