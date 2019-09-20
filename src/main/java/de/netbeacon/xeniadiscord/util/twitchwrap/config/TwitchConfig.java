@@ -14,8 +14,11 @@ public class TwitchConfig {
 
     public TwitchConfig(){
         if(properties == null){
+            System.out.println("[INFO] Init TwitchConfig");
             new Log().addEntry("TC", "Init TwitchConfig", 0);
-            initproperties();
+            if(!initproperties()){
+                System.out.println("[ERROR] Init TwitchConfig failed.");
+            }
         }
     }
 
@@ -68,7 +71,12 @@ public class TwitchConfig {
             properties.setProperty(property, value);
             // write to file
             writetofile();
+
+            new Log().addEntry("TC", "Updated property "+property, 0);
+            return true;
         }
+
+        new Log().addEntry("TC", "Could not update property "+property, 2);
         return false;
     }
 

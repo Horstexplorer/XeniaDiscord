@@ -12,7 +12,7 @@ import java.io.*;
 public class Terminal extends JFrame implements Runnable{
 
     public Terminal(){
-        new Log().addEntry("Terminal", "Started terminal gui", 0);
+        new Log().addEntry("Terminal", "Starting terminal gui", 0);
         try{
             JFrame frame = new JFrame();
 
@@ -67,7 +67,8 @@ public class Terminal extends JFrame implements Runnable{
 
 
         }catch (Exception e){
-            System.err.println("Error "+e);
+            e.printStackTrace();
+            new Log().addEntry("Terminal", "An error occurred: "+e.toString(), 3);
         }
     }
 
