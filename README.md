@@ -99,6 +99,8 @@ status <>
 twitch <>                                    
        listhooks                            || Lists all twitchhooks
        listgames                            || Lists all cached games
+config <>
+       update <property> <value>            || update <property> to <value> in sys.config
 ```
 
 ### Modules
@@ -142,9 +144,11 @@ public class YourModule {
 
 
 ### Changelog
-##### 1.1.1.1
+##### 1.1.2.0
 ```
 - fixed property @ coremoduleloader
+- some improvements
+- added another local command
 ```
 ##### 1.1.1.0
 ```
