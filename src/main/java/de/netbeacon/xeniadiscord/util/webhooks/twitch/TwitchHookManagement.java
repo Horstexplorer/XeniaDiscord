@@ -29,6 +29,7 @@ public class TwitchHookManagement {
         }
         if(twitchHookObjekts == null){
             System.out.println("[INFO] Init TwitchHooks");
+            new Log().addEntry("THM", "Init TwitchHooks", 0);
             if(!loadfromfile()){
                 System.out.println("[ERROR] Init TwitchHooks failed");
             }else{

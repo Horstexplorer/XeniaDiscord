@@ -24,8 +24,6 @@ public class Admin implements PrivateCommand {
             if(args[0].toLowerCase().equals("admin") && args.length > 1){
                 // shutdown bot
                 if(args[1].toLowerCase().equals("shutdown")){
-                    new BlackListUtility().writetofile();
-                    new TwitchHookManagement(event.getJDA()).writetofile();
                     event.getJDA().shutdownNow();
                     System.exit(0);
                 }

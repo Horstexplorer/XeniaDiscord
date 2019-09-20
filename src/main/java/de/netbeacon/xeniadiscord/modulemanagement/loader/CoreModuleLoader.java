@@ -39,7 +39,7 @@ public class CoreModuleLoader {
         }
     }
 
-    public boolean getFile(){
+    private boolean getFile(){
         //Check if dir exists
         File dir = new File("./coremodule/");
         if(!dir.exists()){
@@ -52,7 +52,7 @@ public class CoreModuleLoader {
         }
         return false;
     }
-    public void buildcl(){
+    private void buildcl(){
         try{
             //Get main class from file
             JarFile jfile = new JarFile("./coremodule/coremodule.jar");
