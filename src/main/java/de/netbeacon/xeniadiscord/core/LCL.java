@@ -29,6 +29,7 @@ public class LCL implements Runnable{
         commands.put("shutdown", new Shutdown());
         commands.put("broadcast", new Broadcast());
         commands.put("twitch", new Twitch());
+        commands.put("config", new ConfigView());
     }
 
     private String[] getargs(String raw){

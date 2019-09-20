@@ -27,6 +27,8 @@ public class Help implements LocalCommands {
                     " twitch <>                                   || "+"\n"+
                     "        listhooks                            || Lists all twitchhooks"+"\n"+
                     "        listgames                            || Lists all cached games"+"\n"+
+                    "config <>                                    || "+"\n"+
+                    "       update <property> <value>             || update <property> to <value> in sys.config"+
                     ""
             );
         }
