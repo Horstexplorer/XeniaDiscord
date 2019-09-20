@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.1.0
+> Current Version: 1.1.2.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
@@ -99,6 +99,8 @@ status <>
 twitch <>                                    
        listhooks                            || Lists all twitchhooks
        listgames                            || Lists all cached games
+config <>
+       update <property> <value>            || update <property> to <value> in sys.config
 ```
 
 ### Modules
@@ -142,6 +144,12 @@ public class YourModule {
 
 
 ### Changelog
+##### 1.1.2.0
+```
+- fixed property @ coremoduleloader
+- some improvements
+- added another local command
+```
 ##### 1.1.1.0
 ```
 - added customizable notifications for TwitchHooks

@@ -20,7 +20,7 @@ public class Config {
             System.out.println("[INFO] Init config");
             new Log().addEntry("Config", "Init config", 0);
             if(!initproperties()){
-                System.out.println("[INFO] Init config failed");
+                System.out.println("[ERROR] Init config failed");
             }
             // try updating config
             updateconfig();
@@ -102,7 +102,12 @@ public class Config {
             properties.setProperty(property, value);
             // write to file
             writetofile();
+
+            new Log().addEntry("Config", "Updated property "+property, 0);
+            return true;
         }
+
+        new Log().addEntry("Config", "Could not update property "+property, 2);
         return false;
     }
 
@@ -129,8 +134,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.1.1.0";
-        String build = "1909192211";
+        String vers= "1.1.2.0";
+        String build = "1909201425";
         return vers+"-"+build;
     }
 }

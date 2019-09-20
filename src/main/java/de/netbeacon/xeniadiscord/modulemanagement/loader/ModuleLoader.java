@@ -22,24 +22,24 @@ public class ModuleLoader {
 
     private static URLClassLoader urlcl;
     private static Map<String, String> modules = new HashMap<String, String>(); // module - class
-    private static Boolean hasmodules = null; // at least one module exists, which is valid (module valid until failing enable()) -> true | no module or non which is valid -> false | not set -> null
+    private static Boolean hasvalidmodules = null; // at least one module exists, which is valid (module valid until failing enable()) -> true | no module or non which is valid -> false | not set -> null
     private static boolean isenabled = false;
 
     public ModuleLoader(boolean active){
         if(active){
-            if(urlcl == null && hasmodules == null){
+            if(urlcl == null && hasvalidmodules == null){
                 System.out.println("[INFO] Init ModuleLoader (default)");
                 new Log().addEntry("MLd", "Init ModuleLoader (default)", 0);
-                if(getFiles()){
-                    hasmodules = true;
+                // get files
+                if((hasvalidmodules = getFiles())){
                     buildcl();
                 }else{
-                    hasmodules = false;
-                    // deactivate
+                    // deactivate if no files found
                     new Config().updateproperties("bot_activate_modules","false");
                 }
             }
-            if(!isenabled && hasmodules){
+            // enable if we have files & they are not enabled
+            if(!isenabled && hasvalidmodules){
                 isenabled = enable();
             }
         }
@@ -61,10 +61,7 @@ public class ModuleLoader {
                 }
             }
         }
-        if(modules.size() > 0){
-            return true;
-        }
-        return false;
+        return (modules.size() > 0);
     }
     private void buildcl(){
         List<URL> urllist = new ArrayList<URL>();
@@ -93,7 +90,7 @@ public class ModuleLoader {
 
     public boolean enable(){
         // enable all modules (call onEnable)
-        if(hasmodules){
+        if(hasvalidmodules){
             System.out.println("[INFO][MLd] Enabling modules");
             new Log().addEntry("MLd", "Enabling modules", 0);
 
@@ -132,7 +129,7 @@ public class ModuleLoader {
             }
             // we dont need to be active if there are no modules left
             if(modules.isEmpty()){
-                hasmodules = false;
+                hasvalidmodules = false;
                 return false;
             }
             return true;
