@@ -18,24 +18,22 @@ public class CoreModuleLoader {
 
     private static URLClassLoader urlcl;
     private static String classname; // module - class
-    private static Boolean hasmodule = null; // module exists, which is valid (module valid until failing enable()) -> true | invalid or no module -> false | not set -> null
+    private static Boolean hasvalidmodule = null; // module exists, which is valid (module valid until failing enable()) -> true | invalid or no module -> false | not set -> null
     private static boolean isenabled = false;
 
     public CoreModuleLoader(boolean active){
         if(active){
-            if(urlcl == null && hasmodule == null){
+            if(urlcl == null && hasvalidmodule == null){
                 System.out.println("[INFO] Init ModuleLoader (core)");
                 new Log().addEntry("MLc", "Init ModuleLoader (core)", 0);
-                if(getFile()){
-                    hasmodule = true;
+                if((hasvalidmodule = getFile())){
                     buildcl();
                 }else{
-                    hasmodule = false;
-                    // deactivate
+                    // deactivate if no file found
                     new Config().updateproperties("bot_activate_coremodule","false");
                 }
             }
-            if(!isenabled && hasmodule){
+            if(!isenabled && hasvalidmodule){
                 isenabled = enable();
             }
         }
@@ -72,7 +70,7 @@ public class CoreModuleLoader {
 
     public boolean enable(){
         // enable module (call onEnable)
-        if(hasmodule){
+        if(hasvalidmodule){
             System.out.println("[INFO][MLc] Enabling CoreModule");
             new Log().addEntry("MLc", "Enabling CoreModule", 0);
 
@@ -92,13 +90,13 @@ public class CoreModuleLoader {
                 // check result
                 isenabled = (Boolean) result_onenable;
                 if(!isenabled){
-                    hasmodule = false; // we dont need to be active if the module aint workin
+                    hasvalidmodule = false; // we dont need to be active if the module aint workin
                     System.out.println("[ERROR][MLc]"+"CoreModule could not be enabled successfully.");
                     new Log().addEntry("MLc", "CoreModule could not be enabled successfully.", 3);
                     return false;
                 }
             }catch (Exception e){
-                hasmodule = false; // we dont need to be active if the module aint workin
+                hasvalidmodule = false; // we dont need to be active if the module aint workin
                 System.out.println("[ERROR][MLc]"+"An error occurred while enabling CoreModule: "+e.toString());
                 new Log().addEntry("MLc", "An error occurred while enabling CoreModule: "+e.toString(), 4);
                 return false;
