@@ -32,7 +32,7 @@ public class CoreModuleLoader {
                 }else{
                     hasmodule = false;
                     // deactivate
-                    new Config().updateproperties("bot_activate_modules","false");
+                    new Config().updateproperties("bot_activate_coremodule","false");
                 }
             }
             if(!isenabled && hasmodule){
