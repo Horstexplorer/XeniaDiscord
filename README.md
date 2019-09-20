@@ -142,6 +142,10 @@ public class YourModule {
 
 
 ### Changelog
+##### 1.1.1.1
+```
+- fixed property @ coremoduleloader
+```
 ##### 1.1.1.0
 ```
 - added customizable notifications for TwitchHooks
