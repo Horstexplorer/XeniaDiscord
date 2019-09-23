@@ -76,10 +76,11 @@ public class TrackManager extends AudioEventAdapter {
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         try{
             Guild g = queue.poll().getAuthor().getGuild();
-            if (queue.isEmpty())
-                g.getAudioManager().closeAudioConnection();
-            else
+            if(queue.isEmpty()){
+                // ignore //g.getAudioManager().closeAudioConnection();
+            }else{
                 player.playTrack(queue.element().getTrack());
+            }
         }catch (NullPointerException ignore){
         }
     }
