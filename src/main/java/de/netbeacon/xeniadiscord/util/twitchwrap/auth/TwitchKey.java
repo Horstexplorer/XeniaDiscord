@@ -107,13 +107,13 @@ public class TwitchKey {
 
     public Boolean isvalid(){ // takes ~600ms :o
         // try checking up to 5 times whether the bearer is valid or not
-        long start = System.currentTimeMillis();
         for(int i = 0; i <=4; i++){
             try{
                 // build connection
                 URL url = new URL("https://id.twitch.tv/oauth2/validate");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
+                con.setRequestProperty("Authorization", "OAuth "+bearer_token);
                 con.connect();
                 // get status code
                 int responseCode = con.getResponseCode();
@@ -146,6 +146,7 @@ public class TwitchKey {
             revokebearer(); // it may still be valid so we try to revoke it
             if(requestbearer()){ // request a new one
                 System.out.println("[INFO] Requested new bearer token successfully");
+                new Log().addEntry("TWITCHKEY NEW", bearer_token, 5);
                 // cool and good
             }else{
                 System.out.println("[ERROR] Requesting new bearer token failed");
