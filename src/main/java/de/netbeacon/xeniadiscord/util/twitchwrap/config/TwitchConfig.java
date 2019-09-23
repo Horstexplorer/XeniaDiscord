@@ -18,6 +18,7 @@ public class TwitchConfig {
             new Log().addEntry("TC", "Init TwitchConfig", 0);
             if(!initproperties()){
                 System.out.println("[ERROR] Init TwitchConfig failed.");
+                System.exit(0);// exit will prevent undefined errors
             }
         }
     }

@@ -42,14 +42,14 @@ public class Help implements GuildCommand {
         if(args[0].toLowerCase().equals("commands")) {
 
             String default_commands = "**Default Commands:** \n" +
-                    "Command                                         // Required permission          // Description\n" +
+                    "Command                                                   // Required permission          // Description\n" +
                     "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n" +
-                    "kick <user>                                     // Permission.KICK_MEMBERS      // Kicks the user from the server\n" +
-                    "ban <user>                                      // Permission.BAN_MEMBERS       // Bans the user from the server\n" +
-                    "music <command>                                 // Permission.VOICE_CONNECT     // See 'Music Commands'\n" +
-                    "ghost <channel> <msg>                           // Permission.MANAGE_CHANNEL    // Send <msg> as bot to <channel>\n"+
-                    "blacklist <add/remove> <channel>                // Permission.MANAGE_CHANNEL    // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
-                    "twitchhook <list|add/remove> <username> [msg]   // Permission.MANAGE_CHANNEL    // Add a webhook for a specific twitch channel to your textchannel; If [msg] is set it is used as alternative notification (supports placeholders)\n";
+                    "kick <user>                                               // Permission.KICK_MEMBERS      // Kicks the user from the server\n" +
+                    "ban <user>                                                // Permission.BAN_MEMBERS       // Bans the user from the server\n" +
+                    "music <command>                                           // Permission.VOICE_CONNECT     // See 'Music Commands'\n" +
+                    "ghost <channel> <msg>                                     // Permission.MANAGE_CHANNEL    // Send <msg> as bot to <channel>\n"+
+                    "blacklist <add/remove> <channel>                          // Permission.MANAGE_CHANNEL    // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
+                    "twitchhook <list|add/remove> <username> <boolean> [msg]   // Permission.MANAGE_CHANNEL    // Add a webhook for a specific twitch channel to your textchannel; <boolean> true or false - use @everyone; If [msg] is set it is used as alternative notification (supports placeholders)\n";
 
             String music_commands = "**Music Commands:** \n" +
                     "Command                                     // Description\n" +

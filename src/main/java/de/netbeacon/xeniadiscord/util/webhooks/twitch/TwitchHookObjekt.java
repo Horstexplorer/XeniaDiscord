@@ -10,12 +10,14 @@ public class TwitchHookObjekt {
     private String thumbnailurl;
     private String gameid;
     private String customnotification;
+    private boolean notifyeveryone;
 
-    TwitchHookObjekt(String channelname, String channelid, String guildchannelid, String customnotification){
+    TwitchHookObjekt(String channelname, String channelid, String guildchannelid, String customnotification, boolean notifyeveryone){
         this.guildchannelid = guildchannelid;
         this.channelname = channelname;
         this.channelid = channelid;
         this.customnotification = customnotification;
+        this.notifyeveryone = notifyeveryone;
         this.status = "live";   // init as live so that if we start the bot and the channel is live we wont send a message (useful for restarting the bot when streams are online so that we dont notify twice)
         this.title = "unknown";
         this.thumbnailurl = "unknown";
@@ -34,6 +36,8 @@ public class TwitchHookObjekt {
 
     String getNotification(){ return this.customnotification; }
 
+    boolean allownotifyeveryone(){ return this.notifyeveryone; }
+
     public String getStatus(){
         return this.status;
     }
@@ -51,6 +55,6 @@ public class TwitchHookObjekt {
     void setGameid(String gameid){ this.gameid = gameid;}
 
     String toJSONString(){
-        return "{\"twitchchannelname\":\""+this.channelname+",\"twitchchannelid\":\""+this.channelid+",\"guildchannelid\":\""+this.guildchannelid+",\"customnotification\":\""+this.customnotification+"}";
+        return "{\"twitchchannelname\":\""+this.channelname+"\",\"twitchchannelid\":\""+this.channelid+"\",\"guildchannelid\":\""+this.guildchannelid+"\",\"customnotification\":\""+this.customnotification+"\",\"notifyeveryone\":"+this.notifyeveryone+"}";
     }
 }

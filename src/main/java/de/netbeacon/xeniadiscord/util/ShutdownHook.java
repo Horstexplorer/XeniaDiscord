@@ -3,6 +3,7 @@ package de.netbeacon.xeniadiscord.util;
 import de.netbeacon.xeniadiscord.modulemanagement.loader.CoreModuleLoader;
 import de.netbeacon.xeniadiscord.modulemanagement.loader.ModuleLoader;
 import de.netbeacon.xeniadiscord.util.log.Log;
+import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 
 public class ShutdownHook {
 
@@ -28,6 +29,8 @@ public class ShutdownHook {
         new Log().export();
         System.out.println("> Blacklist");
         new BlackListUtility().writetofile();
+        System.out.println("> TwitchHooks");
+        new TwitchHookManagement(null).writetofile();
     }
 
     private void unloadmodules(){

@@ -52,11 +52,18 @@ public class Music implements GuildCommand {
                     loadTrack(input, member, event.getMessage());
                     event.getChannel().sendMessage("Added to queue.").queue();
                     break;
+            }
+        }
+        if(args.length > 1){
+            switch (args[1].toLowerCase()){
                 case "list":
                 case "queue":
                     if (isIdle(guild)) return;
 
-                    int sideNumb = args.length > 3 ? Integer.parseInt(args[1]) : 1;
+                    int sideNumb = 1;
+                    if(args.length > 3){
+                        sideNumb = Integer.parseInt(args[1]);
+                    }
 
                     List<String> tracks = new ArrayList<>();
                     List<String> trackSublist;
@@ -81,9 +88,6 @@ public class Music implements GuildCommand {
                                     .build()
                     ).queue();
                     break;
-            }
-        }else if(args.length > 1){
-            switch (args[1].toLowerCase()){
                 case "stop":
                     getManager(guild).purgeQueue();
                     skip(guild);
