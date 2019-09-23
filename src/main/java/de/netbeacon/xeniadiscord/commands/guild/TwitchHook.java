@@ -28,7 +28,10 @@ public class TwitchHook implements GuildCommand {
                         if(args.length > 4){ // more than [0][1][2][3]
                             // build notification if exist
                             for(int i = 4; i < args.length; i++){
-                                notification += args[i]+" ";
+                                notification += args[i];
+                                if(i < args.length-1){
+                                    notification += " ";
+                                }
                             }
 
                         }else{
