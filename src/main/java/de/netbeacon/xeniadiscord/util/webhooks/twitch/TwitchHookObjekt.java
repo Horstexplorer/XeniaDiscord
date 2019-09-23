@@ -51,6 +51,6 @@ public class TwitchHookObjekt {
     void setGameid(String gameid){ this.gameid = gameid;}
 
     String toJSONString(){
-        return "{\"twitchchannelname\":\""+this.channelname+",\"twitchchannelid\":\""+this.channelid+",\"guildchannelid\":\""+this.guildchannelid+",\"customnotification\":\""+this.customnotification+"}";
+        return "{\"twitchchannelname\":\""+this.channelname+",\"twitchchannelid\":\""+this.channelid+",\"guildchannelid\":\""+this.guildchannelid+",\"customnotification\":\""+this.customnotification+"\"}";
     }
 }

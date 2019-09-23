@@ -55,23 +55,25 @@ public class TwitchHookManagement {
             // format be like:
             // discord_channel channelname channelid
             while((line = br.readLine()) != null){
-                // parse to json
-                JSONObject jsonObject = new JSONObject(line);
-                String name = jsonObject.getString("twitchchannelname");
-                String tid = jsonObject.getString("twitchchannelid");
-                String gid = jsonObject.getString("guildchannelid");
-                String cn = jsonObject.getString("customnotification");
+                if(!line.isEmpty()){
+                    // parse to json
+                    JSONObject jsonObject = new JSONObject(line);
+                    String name = jsonObject.getString("twitchchannelname");
+                    String tid = jsonObject.getString("twitchchannelid");
+                    String gid = jsonObject.getString("guildchannelid");
+                    String cn = jsonObject.getString("customnotification");
 
-                boolean exists = false;
-                for(TwitchHookObjekt tho : twitchHookObjekts){
-                    if(tho.getGuildChannel().equals(gid) && tho.getChannelID().equals(tid)){
-                        exists = true;
-                        break;
+                    boolean exists = false;
+                    for(TwitchHookObjekt tho : twitchHookObjekts){
+                        if(tho.getGuildChannel().equals(gid) && tho.getChannelID().equals(tid)){
+                            exists = true;
+                            break;
+                        }
                     }
-                }
-                if(!exists){
-                    TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn);
-                    twitchHookObjekts.add(tho);
+                    if(!exists){
+                        TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn);
+                        twitchHookObjekts.add(tho);
+                    }
                 }
             }
             br.close();
