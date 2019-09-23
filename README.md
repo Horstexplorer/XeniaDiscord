@@ -1,10 +1,10 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.2.0
+> Current Version: 1.1.2.1
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
-> - lavaplayer - 1.3.17
+> - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.26
 
 ### Configuration
@@ -144,6 +144,13 @@ public class YourModule {
 
 
 ### Changelog
+##### 1.1.2.1
+```
+- fixed TwitchWrap
+- fixed TwitchHooks
+- fixed LavaPlayer (added newer version)
+- some improvements
+```
 ##### 1.1.2.0
 ```
 - fixed property @ coremoduleloader
