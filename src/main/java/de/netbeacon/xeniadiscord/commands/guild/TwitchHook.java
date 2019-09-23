@@ -54,7 +54,7 @@ public class TwitchHook implements GuildCommand {
                         }
                     }
                 }else {
-                    event.getChannel().sendMessage("Command requires 3 arguments (<add> <twitchchannelname> <boolean for @everyone> [notification] OR <remove> <twitchchannelname>)").queue();
+                    event.getChannel().sendMessage("Command requires 3 arguments (<add> <twitchchannelname> <boolean for @everyone> [notification] OR <remove> <twitchchannelname>K)").queue();
                 }
             }else {
                 event.getChannel().sendMessage("Command requires more arguments (<add/remove/list>)").queue();
