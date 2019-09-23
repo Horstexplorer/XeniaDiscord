@@ -57,30 +57,35 @@ public class TwitchWorker implements Runnable{
 
     private void process(TwitchRequest twitchRequest){
         try{
-            // check if key isvalid
-            if(!twitchKey.isvalid()){
-                twitchKey.update();
+            if(!twitchKey.isvalid()){ // if the key is not valid - if this dont exit our application here, it should be valid or not
+                twitchKey.update(); // try updating it - if this dont exit our application here, it could be renewed successfully
             }
             // get values from api
+            long start = System.currentTimeMillis();
+            System.out.println("Start "+(System.currentTimeMillis()-start));
             URL url = new URL(twitchRequest.getRequest());
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Authorization", "Bearer "+twitchKey.getToken());
+            System.out.println("REQ "+(System.currentTimeMillis()-start));
+
             ratelimitremaining = Integer.parseInt(con.getHeaderField("ratelimit-remaining"));
+
+            System.out.println("Rate "+(System.currentTimeMillis()-start));
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer content = new StringBuffer();
+            StringBuilder content = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
             }
             in.close();
             con.disconnect();
-
+            System.out.println("Done "+(System.currentTimeMillis()-start));
             //parse json to new hashmap
             twitchRequest.setResult(new JSONObject(content.toString()));
             // set finished
             twitchRequest.setFinished();
-
+            System.out.println("Parse "+(System.currentTimeMillis()-start));
         }catch (Exception e){
             new Log().addEntry("TW", "An error occured while processing request:  "+e.toString(), 4);
             twitchRequest.setResult(new JSONObject("{}"));
