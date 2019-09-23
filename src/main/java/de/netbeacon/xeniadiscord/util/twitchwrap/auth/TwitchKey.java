@@ -146,7 +146,6 @@ public class TwitchKey {
             revokebearer(); // it may still be valid so we try to revoke it
             if(requestbearer()){ // request a new one
                 System.out.println("[INFO] Requested new bearer token successfully");
-                new Log().addEntry("TWITCHKEY NEW", bearer_token, 5);
                 // cool and good
             }else{
                 System.out.println("[ERROR] Requesting new bearer token failed");
