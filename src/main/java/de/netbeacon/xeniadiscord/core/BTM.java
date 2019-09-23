@@ -10,6 +10,7 @@ import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
 import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -32,10 +33,18 @@ public class BTM implements Runnable{
     }
 
     private void init(){
+        // set status to dnd
+        jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
+        System.out.println("[INFO] Set status to "+jda.getPresence().getStatus()+" | Starting init");
+
         // init CoreModuleLoader
-        new CoreModuleLoader(true);
+        if(Boolean.parseBoolean(new Config().load("bot_activate_coremodule"))){
+            new CoreModuleLoader(true);
+        }
         // init ModuleLoader
-        new ModuleLoader(true);
+        if(Boolean.parseBoolean(new Config().load("bot_activate_modules"))){
+            new ModuleLoader(true);
+        }
         // init blacklist
         new BlackListUtility();
         // init twitchwrap
@@ -44,6 +53,10 @@ public class BTM implements Runnable{
         new TwitchGameCache();
         // init twitchhooks
         new TwitchHookManagement(jda);
+
+        // set status to online
+        jda.getPresence().setStatus(OnlineStatus.ONLINE);
+        System.out.println("[INFO] Set status to "+jda.getPresence().getStatus()+" | Finished init");
     }
 
     private void createtasks(){
