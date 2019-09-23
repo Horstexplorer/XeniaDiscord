@@ -52,6 +52,10 @@ public class Music implements GuildCommand {
                     loadTrack(input, member, event.getMessage());
                     event.getChannel().sendMessage("Added to queue.").queue();
                     break;
+            }
+        }
+        if(args.length > 1){
+            switch (args[1].toLowerCase()){
                 case "list":
                 case "queue":
                     if (isIdle(guild)) return;
@@ -84,9 +88,6 @@ public class Music implements GuildCommand {
                                     .build()
                     ).queue();
                     break;
-            }
-        }else if(args.length > 1){
-            switch (args[1].toLowerCase()){
                 case "stop":
                     getManager(guild).purgeQueue();
                     skip(guild);
