@@ -62,6 +62,7 @@ public class TwitchHookManagement {
                     String tid = jsonObject.getString("twitchchannelid");
                     String gid = jsonObject.getString("guildchannelid");
                     String cn = jsonObject.getString("customnotification");
+                    boolean ne = jsonObject.getBoolean("notifyeveryone");
 
                     boolean exists = false;
                     for(TwitchHookObjekt tho : twitchHookObjekts){
@@ -71,7 +72,7 @@ public class TwitchHookManagement {
                         }
                     }
                     if(!exists){
-                        TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn);
+                        TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn, ne);
                         twitchHookObjekts.add(tho);
                     }
                 }
@@ -174,7 +175,9 @@ public class TwitchHookManagement {
                                                 TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                                 haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
                                                 if(haspermission){
-                                                    jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
+                                                    if(thos.allownotifyeveryone()){
+                                                        jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
+                                                    }
 
                                                     EmbedBuilder eb = new EmbedBuilder();
                                                     eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
@@ -218,7 +221,7 @@ public class TwitchHookManagement {
         }
     }
 
-    public boolean add(String guildchannelid, String twitchname, String customnotification){
+    public boolean add(String guildchannelid, String twitchname, String customnotification, boolean notifyeveryone){
         for(TwitchHookObjekt tho : twitchHookObjekts){
             if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
                 return false;
@@ -227,7 +230,7 @@ public class TwitchHookManagement {
         try{
             String channelid = twitchAPIFetch.getChannelid(twitchname);
             if(channelid != null){
-                twitchHookObjekts.add(new TwitchHookObjekt(twitchname, channelid, guildchannelid, customnotification));
+                twitchHookObjekts.add(new TwitchHookObjekt(twitchname, channelid, guildchannelid, customnotification, notifyeveryone));
             }else{
                 return false;
             }
