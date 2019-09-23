@@ -56,7 +56,10 @@ public class Music implements GuildCommand {
                 case "queue":
                     if (isIdle(guild)) return;
 
-                    int sideNumb = args.length > 3 ? Integer.parseInt(args[1]) : 1;
+                    int sideNumb = 1;
+                    if(args.length > 3){
+                        sideNumb = Integer.parseInt(args[1]);
+                    }
 
                     List<String> tracks = new ArrayList<>();
                     List<String> trackSublist;
