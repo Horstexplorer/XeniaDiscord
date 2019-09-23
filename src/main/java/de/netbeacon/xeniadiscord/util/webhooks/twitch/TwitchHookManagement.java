@@ -56,24 +56,28 @@ public class TwitchHookManagement {
             // discord_channel channelname channelid
             while((line = br.readLine()) != null){
                 if(!line.isEmpty()){
-                    // parse to json
-                    JSONObject jsonObject = new JSONObject(line);
-                    String name = jsonObject.getString("twitchchannelname");
-                    String tid = jsonObject.getString("twitchchannelid");
-                    String gid = jsonObject.getString("guildchannelid");
-                    String cn = jsonObject.getString("customnotification");
-                    boolean ne = jsonObject.getBoolean("notifyeveryone");
+                    try{
+                        // parse to json
+                        JSONObject jsonObject = new JSONObject(line);
+                        String name = jsonObject.getString("twitchchannelname");
+                        String tid = jsonObject.getString("twitchchannelid");
+                        String gid = jsonObject.getString("guildchannelid");
+                        String cn = jsonObject.getString("customnotification");
+                        boolean ne = jsonObject.getBoolean("notifyeveryone");
 
-                    boolean exists = false;
-                    for(TwitchHookObjekt tho : twitchHookObjekts){
-                        if(tho.getGuildChannel().equals(gid) && tho.getChannelID().equals(tid)){
-                            exists = true;
-                            break;
+                        boolean exists = false;
+                        for(TwitchHookObjekt tho : twitchHookObjekts){
+                            if(tho.getGuildChannel().equals(gid) && tho.getChannelID().equals(tid)){
+                                exists = true;
+                                break;
+                            }
                         }
-                    }
-                    if(!exists){
-                        TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn, ne);
-                        twitchHookObjekts.add(tho);
+                        if(!exists){
+                            TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn, ne);
+                            twitchHookObjekts.add(tho);
+                        }
+                    }catch (Exception e){
+                        new Log().addEntry("THM", "Could not load TwitchHook from file: "+e.toString(), 3);
                     }
                 }
             }
