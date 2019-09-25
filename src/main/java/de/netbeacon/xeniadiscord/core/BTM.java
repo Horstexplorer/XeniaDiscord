@@ -33,7 +33,7 @@ public class BTM implements Runnable{
     }
 
     private void init(){
-        // set status to dnd
+        // set status to dnd (not needed as it should be dnd by default)
         jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
         System.out.println("[INFO] Set status to "+jda.getPresence().getStatus()+" | Starting init");
 
