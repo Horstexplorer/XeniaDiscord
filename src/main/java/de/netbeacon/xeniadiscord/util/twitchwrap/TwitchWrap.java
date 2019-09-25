@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +16,7 @@ public class TwitchWrap {
 
 
     private static BlockingQueue<TwitchRequest> requestQueue;
-    private static List<Thread> workers;
+    private static List<Thread> workers = new ArrayList<Thread>();;
     private static boolean blocked = false;
 
     public TwitchWrap(){
@@ -26,7 +27,7 @@ public class TwitchWrap {
             requestQueue = new ArrayBlockingQueue<TwitchRequest>(250000);
         }
         // init twitchworker
-        if(workers == null && !blocked){
+        if(workers.isEmpty() && !blocked){
             blocked = true;
 
             // get config
@@ -34,32 +35,40 @@ public class TwitchWrap {
             try{
                 maxworker = Integer.parseInt(new TwitchConfig().get("twitch_worker_max"));
             }catch (Exception ignore){}
-            workers = new ArrayList<Thread>();
+
             // create master
-            workers.add(new Thread(new TwitchWorker(true, "master")));
+            Thread mt = new Thread(new TwitchWorker(true, "master"));
+            mt.setDaemon(true);
+            workers.add(mt);
             // create other
             for(int i = 1; i <= maxworker+1; i++){
-                workers.add(new Thread(new TwitchWorker(false, i+"")));
+                Thread t = new Thread(new TwitchWorker(false, i+""));
+                t.setDaemon(true);
+                workers.add(t);
             }
             // start
             for(Thread worker : workers){
                 worker.start();
             }
-            try{TimeUnit.SECONDS.sleep(1);}catch(Exception ignore){}
+            try{TimeUnit.MILLISECONDS.sleep(new Random().nextInt(201)+900);}catch(Exception ignore){}
 
             System.out.println("[INFO] Started "+(maxworker+1)+" TwitchWorker");
 
             blocked = false;
         }
-        if(workers != null && !blocked){
+        if(!workers.isEmpty() && !blocked){
             for(int i = 0; i < workers.size(); i++){
                 Thread worker = workers.get(i);
                 if(worker.getState().equals(Thread.State.TERMINATED)){
                     if(i == 0){
-                        workers.set(i, new Thread(new TwitchWorker(true, "master")));
+                        Thread t = new Thread(new TwitchWorker(true, "master"));
+                        t.setDaemon(true);
+                        workers.set(i, t);
                         workers.get(i).start();
                     }else{
-                        workers.set(i, new Thread(new TwitchWorker(false, i+"")));
+                        Thread t = new Thread(new TwitchWorker(false, i+""));
+                        t.setDaemon(true);
+                        workers.set(i, t);
                         workers.get(i).start();
                     }
                 }
@@ -91,6 +100,6 @@ public class TwitchWrap {
         return requestQueue;
     }
 
-    public int getremainingcapacity(){ return requestQueue.remainingCapacity(); }
+    public int getRemainingCapacity(){ return requestQueue.remainingCapacity(); }
 
 }
