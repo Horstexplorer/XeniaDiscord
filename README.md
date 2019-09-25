@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.2.1
+> Current Version: 1.1.3.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_46
@@ -27,10 +27,11 @@ bot_gui_exitonclose=true                    // quit application when the gui is 
 The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config should be modified now. It should look something like this:
 Now you have to specify a Twitch application which can be created here: https://dev.twitch.tv/console/apps
 ```
-twitch_client_id=
-twitch_client_secret=
-twitch_bearer_token=
-twitch_bearer_token_validuntil=
+twitch_client_id=                           // your application client id
+twitch_client_secret=                       // your application secret
+twitch_bearer_token=                        // created bearer token
+twitch_bearer_token_validuntil=             // bearer token expiration
+twitch_worker_max=                          // number of additional TwitchWorkers
 ```
 Analytics tool to be selected as category. You need to copy the Client-ID (twitch_client_id) and create a new client-secret (twitch_client_secret).
 The application should now be restarted and be ready for use. You can add it to your Discord guild by using an o2auth authorization link with your bot id. (You can get the bot id from the url of your Discord application)
@@ -144,6 +145,10 @@ public class YourModule {
 
 
 ### Changelog
+##### 1.1.3.0
+```
+- TwitchWrap requests can now be processed parallel with multiple TwitchWorker instances
+```
 ##### 1.1.2.1
 ```
 - fixed TwitchWrap
