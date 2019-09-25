@@ -98,7 +98,7 @@ public class Admin implements PrivateCommand {
                     eb.addField("Ping:",event.getJDA().getGatewayPing()+"ms", false);
                     eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
                     eb.addField("Blacklisted channels:",new BlackListUtility().count()+" channels", false);
-                    eb.addField("TwitchWrap:", "Current api-calls: "+(800-new TwitchWorker().getApilimit())/800+"% \n"+"Next scheduled key change: "+new TwitchWorker().nextestkeychange()+"\n"+new TwitchHookManagement(event.getJDA()).count()+" TwitchHooks registered\n"+new TwitchGameCache().count()+" games cached\n", false);
+                    eb.addField("TwitchWrap:", "Next scheduled key change: "+new TwitchWorker().nextestkeychange()+"\n"+new TwitchHookManagement(event.getJDA()).count()+" TwitchHooks registered\n"+new TwitchGameCache().count()+" games cached\n", false);
                     eb.addField("Modules:",new GuildModuleProcessor(null).listmodules(),false);
                     eb.addField("Errors:", new Log().count(2) +" errors recorded \n", false);
                     eb.addField("Memory:", "Used: "+((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1000000)+" / "+((Runtime.getRuntime().totalMemory())/1000000)+" MB", false);
