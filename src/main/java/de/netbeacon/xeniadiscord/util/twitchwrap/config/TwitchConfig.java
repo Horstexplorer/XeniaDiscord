@@ -52,6 +52,7 @@ public class TwitchConfig {
         properties.setProperty("twitch_client_secret", "");
         properties.setProperty("twitch_bearer_token", "");
         properties.setProperty("twitch_bearer_token_validuntil", "");
+        properties.setProperty("twitch_worker_max", "12");
         writetofile();
     }
 
