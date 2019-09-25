@@ -22,7 +22,9 @@ public class GuildMessageListener extends ListenerAdapter {
             // modules should not interfere with default commands nor whould the channel be listen on the blacklist
             if(!event.getAuthor().isBot() && !event.getMessage().getContentRaw().startsWith(config.load("bot_command_indicator")) && !new BlackListUtility().isincluded(event.getChannel().getId())){
                 System.out.println("[INFO][GUILD][MSG] "+event.getAuthor()+" >> "+event.getMessage().getContentRaw());
-                new Thread(new GuildMessageHandler(event)).start();
+                Thread gmh = new Thread(new GuildMessageHandler(event));
+                gmh.setDaemon(true);
+                gmh.start();
             }
         }
     }
