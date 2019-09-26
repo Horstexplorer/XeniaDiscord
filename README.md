@@ -148,6 +148,7 @@ public class YourModule {
 ##### 1.1.3.0
 ```
 - TwitchWrap requests can now be processed parallel with multiple TwitchWorker instances
+- various improvements
 ```
 ##### 1.1.2.1
 ```
