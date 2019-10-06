@@ -3,7 +3,7 @@
 > Current Version: 1.1.3.0
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_46
+> - net.dv8tion JDA -  4.0.0_50
 > - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.26
 
@@ -157,7 +157,7 @@ public class YourModule {
 
 
 ### ToDo
-Scheduled tasks (sorted by priority)
+Scheduled tasks (sorted by priority) (Target: 1.1.3.0)
 -[x] multi thread optimization for processing twitch requests
 -[ ] multi thread optimization for input to twitchwrap
 -[ ] introduction of a secondary permission system
