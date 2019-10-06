@@ -7,6 +7,17 @@
 > - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.26
 
+
+### Table of Contents
+- Configuration
+- Commands
+    - Discord
+    - Local
+- Modules
+- ToDo
+- Changelog
+
+
 ### Configuration
 All basic settings are stored in the file sys.config. This file will be created automatically at first start. You then need to add your Discord bot token and your discord id. 
 A new application must be created for the bot token (bot_token): https://discordapp.com/developers/applications/ The token can then be found under the page "bot".
@@ -37,9 +48,9 @@ Analytics tool to be selected as category. You need to copy the Client-ID (twitc
 The application should now be restarted and be ready for use. You can add it to your Discord guild by using an o2auth authorization link with your bot id. (You can get the bot id from the url of your Discord application)
 https://discordapp.com/developers/applications/YOURBOTID/ => to => https://discordapp.com/oauth2/authorize?client_id=YOURBOTID&scope=bot
 
+
 ### Commands
 Commands are divided into two groups: These which are sent in Discord and those which are sent locally via gui or terminal.
-
 
 #### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
@@ -79,6 +90,7 @@ admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
 admin log <listerrors/export/reset>         || list last 10 errors; export the log; reset log
 ```
+
 #### Local
 Commands start without an indicator
 ```
@@ -104,10 +116,10 @@ config <>
        update <property> <value>            || update <property> to <value> in sys.config
 ```
 
+
 ### Modules
 The functionality of the bot can be extended with modules. These can react to any interactions as long as they do not start with "bot_command_indicator"  
 Modules can be used in two ways: as normal module or as core module. Both are built in the same way, but the core module is executed before all other modules.
-
 
 ##### Create your own module:
 Its very simple.  
@@ -142,6 +154,13 @@ public class YourModule {
     }
 }
 ```
+
+
+### ToDo
+Scheduled tasks (sorted by priority)
+-[x] multi thread optimization for processing twitch requests
+-[ ] multi thread optimization for input to twitchwrap
+-[ ] introduction of a secondary permission system
 
 
 ### Changelog
