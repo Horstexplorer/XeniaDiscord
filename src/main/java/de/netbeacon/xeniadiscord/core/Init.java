@@ -27,7 +27,7 @@ public class Init {
         if(Boolean.parseBoolean(config.load("activated"))){
             new Thread(new XCore()).start();
         }else {
-            System.out.println("Bot has been deactivated. Please check configuration file.");
+            System.out.println("[INFO] Bot has been deactivated. Please check configuration file.");
         }
 
     }
