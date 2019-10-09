@@ -20,8 +20,7 @@ public class TwitchHook implements GuildCommand {
                 if(args[1].toLowerCase().equals("list")){
                     // return list of hooks in this channel
                     event.getChannel().sendMessage(new TwitchHookManagement(event.getJDA()).list(event.getChannel().getId())).queue();
-                }else if(args.length > 3){
-                    // add
+                }else if(args.length > 2){
                     // add
                     if(args[1].toLowerCase().equals("add")){
                         if(args.length > 3){
@@ -51,7 +50,7 @@ public class TwitchHook implements GuildCommand {
                                 event.getChannel().sendMessage("Successfully added!").queue();
                             }
                         }else {
-                            event.getChannel().sendMessage("Command requires 3 or more arguments (<add> <twitchchannelname> <boolean for @everyone> [notification]").queue();
+                            event.getChannel().sendMessage("Command requires 3 or more arguments (<add> <twitchchannelname> <true/false for @everyone> [notification]").queue();
                         }
                     }
                     // remove
