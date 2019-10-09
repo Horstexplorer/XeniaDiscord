@@ -157,8 +157,7 @@ public class YourModule {
 
 
 ### ToDo
-Scheduled tasks (sorted by priority) (Target: 1.1.3.0)
-- [x] multi thread optimization for processing twitch requests
+Scheduled tasks (sorted by priority) (Target: none)
 - [ ] multi thread optimization for input to twitchwrap
 - [ ] introduction of a secondary permission system
 
