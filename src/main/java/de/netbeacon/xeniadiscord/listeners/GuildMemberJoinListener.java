@@ -16,7 +16,10 @@ public class GuildMemberJoinListener extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event){
         if(!event.getUser().isBot() && Boolean.parseBoolean(config.load("bot_sayhellotonew"))){
-            new Thread(new GuildMemberJoinHandler(event)).start();
+
+            Thread gmjh = new Thread(new GuildMemberJoinHandler(event));
+            gmjh.setDaemon(true);
+            gmjh.start();
         }
     }
 }

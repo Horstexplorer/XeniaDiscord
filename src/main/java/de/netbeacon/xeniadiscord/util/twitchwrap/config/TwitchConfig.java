@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class TwitchConfig {
@@ -18,8 +20,9 @@ public class TwitchConfig {
             new Log().addEntry("TC", "Init TwitchConfig", 0);
             if(!initproperties()){
                 System.out.println("[ERROR] Init TwitchConfig failed.");
-                System.exit(0);// exit will prevent undefined errors
+                System.exit(0); // exit will prevent undefined errors
             }
+            updateconfig(); // try updating the config
         }
     }
 
@@ -52,6 +55,29 @@ public class TwitchConfig {
         properties.setProperty("twitch_client_secret", "");
         properties.setProperty("twitch_bearer_token", "");
         properties.setProperty("twitch_bearer_token_validuntil", "");
+        properties.setProperty("twitch_worker_max", "12");
+        writetofile();
+    }
+
+    private void updateconfig(){
+        // check if our config is updated to the latest version
+        // ( all properties should be included, add them if not )
+        // create list containing all properties
+        HashMap<String, String> propcheck = new HashMap<String, String>();
+        // add properies and values
+        propcheck.put("twitch_client_id","");
+        propcheck.put("twitch_client_secret","");
+        propcheck.put("twitch_bearer_token","");
+        propcheck.put("twitch_bearer_token_validuntil","");
+        propcheck.put("twitch_worker_max","12");
+        // check if the properties from the list are in our config.
+        for(Map.Entry<String, String> entry : propcheck.entrySet()){
+            if(properties.getProperty(entry.getKey()) == null){
+                // add property to properties
+                properties.setProperty(entry.getKey(), entry.getValue());
+            }
+        }
+        // write to file
         writetofile();
     }
 

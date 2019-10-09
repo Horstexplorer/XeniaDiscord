@@ -11,6 +11,9 @@ public class Init {
 
         System.out.println("-------------------- Xenia Discord --------------------");
 
+        //add shutdown hook
+        new ShutdownHook();
+
         //prepare config file
         Config config = new Config();
         new Log().addEntry("Xenia", "Running Xenia v"+config.version(), 0);
@@ -24,10 +27,8 @@ public class Init {
         if(Boolean.parseBoolean(config.load("activated"))){
             new Thread(new XCore()).start();
         }else {
-            System.out.println("Bot has been deactivated. Please check configuration file.");
+            System.out.println("[INFO] Bot has been deactivated. Please check configuration file.");
         }
 
-        //add shutdown hook
-        new ShutdownHook();
     }
 }

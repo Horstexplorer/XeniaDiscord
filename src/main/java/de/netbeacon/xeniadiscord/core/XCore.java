@@ -7,6 +7,7 @@ import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 
 public class XCore implements Runnable{
@@ -27,6 +28,7 @@ public class XCore implements Runnable{
             jdaBuilder.setToken(config.load("bot_token"));
             jdaBuilder.setActivity(Activity.of(Activity.ActivityType.DEFAULT, config.load("bot_status")));
             jdaBuilder.setAutoReconnect(true);
+            jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB); // is set to online after BTM finished init of components
             addListeners();
             jda = jdaBuilder.build();
             jda.awaitReady();
@@ -43,7 +45,7 @@ public class XCore implements Runnable{
         startBTM();
 
         // listen to local commands
-        new Thread(new LCL(jda)).start();
+        startLCL();
     }
 
     private void addListeners(){
@@ -55,6 +57,14 @@ public class XCore implements Runnable{
     }
 
     private void startBTM(){
-        new Thread(new BTM(jda)).start();
+        Thread btm = new Thread(new BTM(jda));
+        btm.setDaemon(true);
+        btm.start();
+    }
+
+    private void startLCL(){
+        Thread lcl = new Thread(new LCL(jda));
+        lcl.setDaemon(true);
+        lcl.start();
     }
 }

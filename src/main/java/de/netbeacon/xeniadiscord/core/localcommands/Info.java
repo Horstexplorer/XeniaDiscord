@@ -18,7 +18,7 @@ public class Info implements LocalCommands {
             System.out.println("Version: "+new Config().version());
             System.out.println("Guilds: "+jda.getGuilds().size()+" guilds");
             System.out.println("Blacklisted channels:\n " +new BlackListUtility().count()+" channels");
-            System.out.println("TwitchWrap:\n Current api-calls: "+(800-new TwitchWorker().getApilimit())/800+"% \n"+" Next scheduled key change: "+new TwitchWorker().nextestkeychange()+"\n "+new TwitchHookManagement(jda).count()+" TwitchHooks registered\n "+new TwitchGameCache().count()+" games cached");
+            System.out.println("TwitchWrap:\n "+"Next scheduled key change: "+new TwitchWorker().nextEstKeyChange()+"\n "+new TwitchHookManagement(jda).count()+" TwitchHooks registered\n "+new TwitchGameCache().count()+" games cached");
             System.out.println("Modules:\n " +new GuildModuleProcessor(null).listmodules());
             System.out.println("Log:\n "+ new Log().count(3)+" errors recorded");
             System.out.println("Memory:\n Used: "+((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1000000)+" / "+((Runtime.getRuntime().totalMemory())/1000000)+" MB");

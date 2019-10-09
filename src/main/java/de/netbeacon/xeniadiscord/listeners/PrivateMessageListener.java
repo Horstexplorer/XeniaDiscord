@@ -21,7 +21,9 @@ public class PrivateMessageListener extends ListenerAdapter {
             // modules should not interfere with default commands
             if(!event.getAuthor().isBot() && !event.getMessage().getContentRaw().startsWith(config.load("bot_command_indicator"))){
                 System.out.println("[INFO][PRIV][MSG] "+event.getAuthor()+" >> "+event.getMessage().getContentRaw());
-                new Thread(new PrivateMessageHandler(event)).start();
+                Thread pmh = new Thread(new PrivateMessageHandler(event));
+                pmh.setDaemon(true);
+                pmh.start();
             }
         }
     }

@@ -1,11 +1,22 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.2.1
+> Current Version: 1.1.3.0
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_46
+> - net.dv8tion JDA -  4.0.0_50
 > - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.26
+
+
+### Table of Contents
+- Configuration
+- Commands
+    - Discord
+    - Local
+- Modules
+- ToDo
+- Changelog
+
 
 ### Configuration
 All basic settings are stored in the file sys.config. This file will be created automatically at first start. You then need to add your Discord bot token and your discord id. 
@@ -27,18 +38,19 @@ bot_gui_exitonclose=true                    // quit application when the gui is 
 The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config should be modified now. It should look something like this:
 Now you have to specify a Twitch application which can be created here: https://dev.twitch.tv/console/apps
 ```
-twitch_client_id=
-twitch_client_secret=
-twitch_bearer_token=
-twitch_bearer_token_validuntil=
+twitch_client_id=                           // your application client id
+twitch_client_secret=                       // your application secret
+twitch_bearer_token=                        // created bearer token
+twitch_bearer_token_validuntil=             // bearer token expiration
+twitch_worker_max=                          // number of additional TwitchWorkers
 ```
 Analytics tool to be selected as category. You need to copy the Client-ID (twitch_client_id) and create a new client-secret (twitch_client_secret).
 The application should now be restarted and be ready for use. You can add it to your Discord guild by using an o2auth authorization link with your bot id. (You can get the bot id from the url of your Discord application)
 https://discordapp.com/developers/applications/YOURBOTID/ => to => https://discordapp.com/oauth2/authorize?client_id=YOURBOTID&scope=bot
 
+
 ### Commands
 Commands are divided into two groups: These which are sent in Discord and those which are sent locally via gui or terminal.
-
 
 #### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
@@ -78,6 +90,7 @@ admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
 admin log <listerrors/export/reset>         || list last 10 errors; export the log; reset log
 ```
+
 #### Local
 Commands start without an indicator
 ```
@@ -103,10 +116,10 @@ config <>
        update <property> <value>            || update <property> to <value> in sys.config
 ```
 
+
 ### Modules
 The functionality of the bot can be extended with modules. These can react to any interactions as long as they do not start with "bot_command_indicator"  
 Modules can be used in two ways: as normal module or as core module. Both are built in the same way, but the core module is executed before all other modules.
-
 
 ##### Create your own module:
 Its very simple.  
@@ -143,7 +156,19 @@ public class YourModule {
 ```
 
 
+### ToDo
+Scheduled tasks (sorted by priority) (Target: none)
+- [ ] multi thread optimization for input to twitchwrap
+- [ ] introduction of a secondary permission system
+
+
 ### Changelog
+##### 1.1.3.0
+```
+- TwitchWrap requests can now be processed parallel with multiple TwitchWorker instances
+- various improvements
+- fixed escape sequences in TwitchHooks
+```
 ##### 1.1.2.1
 ```
 - fixed TwitchWrap
