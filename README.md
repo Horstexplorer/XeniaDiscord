@@ -168,6 +168,7 @@ Scheduled tasks (sorted by priority) (Target: 1.1.3.0)
 ```
 - TwitchWrap requests can now be processed parallel with multiple TwitchWorker instances
 - various improvements
+- fixed escape sequences in TwitchHooks
 ```
 ##### 1.1.2.1
 ```

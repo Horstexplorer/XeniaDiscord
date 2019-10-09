@@ -35,6 +35,8 @@ public class TwitchHook implements GuildCommand {
                                         notification += " ";
                                     }
                                 }
+                                // replace escape sequences
+                                notification = notification.replaceAll("\\\\[^n]", "");
 
                             }else{
                                 // set default
