@@ -4,6 +4,7 @@ import de.netbeacon.xeniadiscord.modulemanagement.loader.CoreModuleLoader;
 import de.netbeacon.xeniadiscord.modulemanagement.loader.ModuleLoader;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
+import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
 import de.netbeacon.xeniadiscord.util.log.Log;
 import de.netbeacon.xeniadiscord.util.twitchwrap.TwitchWrap;
 import de.netbeacon.xeniadiscord.util.twitchwrap.auth.TwitchKey;
@@ -45,6 +46,8 @@ public class BTM implements Runnable{
         if(Boolean.parseBoolean(new Config().load("bot_activate_modules"))){
             new ModuleLoader(true);
         }
+        // init ExtPermManager
+        new ExtPermManager(jda);
         // init blacklist
         new BlackListUtility();
         // init twitchwrap
@@ -70,13 +73,6 @@ public class BTM implements Runnable{
                 jda.getPresence().setActivity(Activity.playing(activity[new Random().nextInt(activity.length)]));
             }
         };
-        TimerTask save_files = new TimerTask() {
-            @Override
-            public void run() {
-                new BlackListUtility().writetofile();
-                new TwitchHookManagement(jda).writetofile();
-            }
-        };
         TimerTask update_twitchkey = new TimerTask() {
             @Override
             public void run() {
@@ -97,7 +93,6 @@ public class BTM implements Runnable{
         };
         // schedule tasks
         time.schedule(update_status,1000*60,1000*60);               // wait 1 minute then update every minute
-        time.schedule(save_files, 1000*60*60, 1000*60*60);          // wait 1h then update every h
         time.schedule(update_twitchkey, 1000*60*10,1000*60*10);     // wait 10 minutes then update every 10 minutes
         time.schedule(update_twitchhooks, 1000*30, 1000*60*5);      // wait 30 seconds then update every 5 minutes
         time.schedule(update_twitchgamecache, 1000*60*60*24, 1000*60*60*24); // update every day

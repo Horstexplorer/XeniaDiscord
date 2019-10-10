@@ -2,22 +2,28 @@ package de.netbeacon.xeniadiscord.util.extperm;
 
 import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import de.netbeacon.xeniadiscord.util.log.Log;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ExtPermManager {
 
+    private static JDA jda;
     private static HashMap<String, List<ExtPerm>> data;
 
-    public ExtPermManager(){
-
+    public ExtPermManager(){}
+    public ExtPermManager(JDA jda_){
+        if(data == null){
+            System.out.println("[INFO] Init ExtPermManager");
+            loadfromfile();
+        }
+        if(jda == null){
+            jda = jda_;
+        }
     }
 
     public boolean addPermission(Role role, ExtPerm permission){
@@ -32,7 +38,6 @@ public class ExtPermManager {
         data.put(role.getId(), perm);
         return true;
     }
-
     public boolean removePermission(Role role, ExtPerm permission){
         if(data.containsKey(role.getId())){
             data.get(role.getId()).remove(permission);
@@ -40,7 +45,6 @@ public class ExtPermManager {
         }
         return false;
     }
-
     public boolean hasPermission(Member member, ExtPerm permission){
         List<Role> roles = member.getRoles();
         for(Role r : roles){
@@ -52,38 +56,18 @@ public class ExtPermManager {
         }
         return false;
     }
-
-    private ExtPerm getPermission(int value){
-        switch (value) {
-            case 0:
-                return ExtPerm.admin;
-            case 1:
-                return ExtPerm.permission_manage;
-            case 10:
-                return ExtPerm.music_all;
-            case 11:
-                return ExtPerm.music_play;
-            case 12:
-                return ExtPerm.music_stop;
-            case 13:
-                return ExtPerm.music_manage_queue;
-            case 14:
-                return ExtPerm.music_manage_off;
-            case 20:
-                return ExtPerm.membermanagement_all;
-            case 21:
-                return ExtPerm.membermanagement_kick;
-            case 22:
-                return ExtPerm.membermanagement_ban;
-            case 30:
-                return ExtPerm.ghost;
-            case 40:
-                return ExtPerm.blacklist_manage;
-            case 50:
-                return ExtPerm.twitchhooks_manage;
-            default:
-                return ExtPerm.none;
+    public boolean hasPermission(Member member, ExtPerm[] permission){
+        List<Role> roles = member.getRoles();
+        for(Role r : roles){
+            if(data.containsKey(r.getId())){
+                for(ExtPerm ep : permission){
+                    if(data.get(r.getId()).contains(permission)){
+                        return true;
+                    }
+                }
+            }
         }
+        return false;
     }
     public ExtPerm getPermission(String permission){
         switch (permission){
@@ -118,6 +102,51 @@ public class ExtPermManager {
         }
     }
 
+    private ExtPerm getPermission(int value){
+        switch (value) {
+            case 0:
+                return ExtPerm.admin;
+            case 1:
+                return ExtPerm.permission_manage;
+            case 10:
+                return ExtPerm.music_all;
+            case 11:
+                return ExtPerm.music_play;
+            case 12:
+                return ExtPerm.music_stop;
+            case 13:
+                return ExtPerm.music_manage_queue;
+            case 14:
+                return ExtPerm.music_manage_off;
+            case 20:
+                return ExtPerm.membermanagement_all;
+            case 21:
+                return ExtPerm.membermanagement_kick;
+            case 22:
+                return ExtPerm.membermanagement_ban;
+            case 30:
+                return ExtPerm.ghost;
+            case 40:
+                return ExtPerm.blacklist_manage;
+            case 50:
+                return ExtPerm.twitchhooks_manage;
+            default:
+                return ExtPerm.none;
+        }
+    }
+    private void selftest(){
+        Set<String> set = new HashSet<>();
+        for(Map.Entry<String, List<ExtPerm>> entry : data.entrySet()) {
+            try{
+                jda.getRoleById(entry.getKey()).getGuild();
+            }catch (Exception e){
+               set.add(entry.getKey());
+            }
+        }
+        if(set.size() > 0){
+            data.keySet().removeAll(set);
+        }
+    }
     private void loadfromfile(){
         try{
             // check if file exists
@@ -145,6 +174,7 @@ public class ExtPermManager {
                     data.put(roleid, eps);
                 }
             }
+            selftest();
         }catch (Exception e){
             e.printStackTrace();
             new Log().addEntry("ExtPermManager", "Could not write data to file: "+e, 4);
@@ -171,4 +201,5 @@ public class ExtPermManager {
             new Log().addEntry("ExtPermManager", "Could not write data to file: "+e, 4);
         }
     }
+
 }
