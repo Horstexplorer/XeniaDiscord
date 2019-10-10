@@ -1,6 +1,8 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
+import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
+import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -9,7 +11,7 @@ public class Blacklist implements GuildCommand{
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
-        if(args[0].toLowerCase().equals("blacklist")){
+        if(args[0].toLowerCase().equals("blacklist") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.blacklist_manage})){
             if(args.length > 2){
                 // get channel id
                 String channel = args[2].replaceAll("[^0-9]", "").trim();

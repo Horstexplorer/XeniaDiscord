@@ -1,5 +1,7 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
+import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
+import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -8,7 +10,7 @@ public class Ghost implements GuildCommand {
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
-        if(args[0].toLowerCase().equals("ghost")){
+        if(args[0].toLowerCase().equals("ghost") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.ghost})){
             if(args.length > 2){
                 // get channel id
                 String channelid = args[1].replaceAll("[^0-9]", "").trim();

@@ -1,5 +1,7 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
+import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
+import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -9,7 +11,7 @@ public class TwitchHook implements GuildCommand {
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
-        if(args[0].toLowerCase().equals("twitchhook")){
+        if(args[0].toLowerCase().equals("twitchhook") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.twitchhooks_manage})){
             if(args.length > 1){
                 // list
                 if(args[1].toLowerCase().equals("list")){
