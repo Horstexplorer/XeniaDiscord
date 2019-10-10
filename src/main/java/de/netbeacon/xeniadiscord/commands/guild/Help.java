@@ -11,10 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Help implements GuildCommand {
-    @Override
-    public boolean permission(Member member) {
-        return member.hasPermission(Permission.MESSAGE_WRITE);
-    }
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {

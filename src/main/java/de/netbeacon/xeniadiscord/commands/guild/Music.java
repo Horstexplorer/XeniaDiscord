@@ -34,11 +34,6 @@ public class Music implements GuildCommand {
     }
 
     @Override
-    public boolean permission(Member member) {
-        return member.hasPermission(Permission.VOICE_CONNECT);
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         guild = event.getGuild();
         if (args.length > 2) {

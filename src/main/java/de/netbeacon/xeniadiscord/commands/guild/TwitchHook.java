@@ -8,11 +8,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class TwitchHook implements GuildCommand {
 
     @Override
-    public boolean permission(Member member) {
-        return member.hasPermission(Permission.MANAGE_CHANNEL);
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("twitchhook")){
             if(args.length > 1){

@@ -6,12 +6,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class UserManagement implements GuildCommand {
 
-
-    @Override
-    public boolean permission(Member member) {
-        return true; // dont make the check here
-    }
-
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("kick") && member.hasPermission(Permission.KICK_MEMBERS)){  // user needs permission
