@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.3.0
+> Current Version: 1.1.4.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_50
@@ -159,10 +159,15 @@ public class YourModule {
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
 - [ ] multi thread optimization for input to twitchwrap
-- [ ] introduction of a secondary permission system
+- [x] introduction of a secondary permission system
 
 
 ### Changelog
+##### 1.1.4.0
+```
+- introduction of a secondary permission system
+- some improvements
+```
 ##### 1.1.3.0
 ```
 - TwitchWrap requests can now be processed parallel with multiple TwitchWorker instances
