@@ -52,8 +52,6 @@ public class TwitchHookManagement {
             // read file
             BufferedReader br = new BufferedReader(new FileReader(twitchhookfile));
             String line;
-            // format be like:
-            // discord_channel channelname channelid
             while((line = br.readLine()) != null){
                 if(!line.isEmpty()){
                     try{
@@ -92,11 +90,6 @@ public class TwitchHookManagement {
 
     public boolean writetofile(){
         try{
-            File twitchhookfile = new File("twitchhooks.storage");
-            // delete to clear
-            twitchhookfile.delete();
-            // create new
-            twitchhookfile.createNewFile();
             // write new content
             BufferedWriter writer = new BufferedWriter(new FileWriter("twitchhooks.storage"));
             for(TwitchHookObjekt tho : twitchHookObjekts){
