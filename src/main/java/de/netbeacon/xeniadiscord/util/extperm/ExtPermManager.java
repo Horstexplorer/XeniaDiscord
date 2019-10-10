@@ -8,11 +8,13 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExtPermManager {
 
-    private static List<ExtPermStorage> data;
+    private static HashMap<String, List<ExtPerm>> data;
 
     public ExtPermManager(){
 
@@ -20,50 +22,31 @@ public class ExtPermManager {
 
     public boolean addPermission(Role role, ExtPerm permission){
         // add permission
-        for(ExtPermStorage eps : data){
-            if(eps.getRoleid().equals(role.getId())){
-                return eps.addPermission(permission);
-            }
+        if(data.containsKey(role.getId())){
+            data.get(role.getId()).add(permission);
+            return true;
         }
-        // create new
-        ExtPermStorage eps = new ExtPermStorage(role);
-        eps.addPermission(permission);
-        data.add(eps);
+        // create new entry
+        List<ExtPerm> perm = new ArrayList<ExtPerm>(); // create new list
+        perm.add(permission);
+        data.put(role.getId(), perm);
         return true;
     }
 
     public boolean removePermission(Role role, ExtPerm permission){
-        for(ExtPermStorage eps : data){
-            if(eps.getRoleid().equals(role.getId())){
-                return eps.removePermission(permission);
-            }
+        if(data.containsKey(role.getId())){
+            data.get(role.getId()).remove(permission);
+            return true;
         }
         return false;
     }
 
-    public boolean hasPermission(Member member, String permission){
-        List<Role> roles = member.getRoles();
-        if(getPermission(permission) != ExtPerm.none){
-            for(ExtPermStorage eps : data){
-                for(Role r : roles){
-                    if(eps.getRoleid().equals(r.getId())){
-                        if(eps.haspermission(getPermission(permission))){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
     public boolean hasPermission(Member member, ExtPerm permission){
         List<Role> roles = member.getRoles();
-        for(ExtPermStorage eps : data){
-            for(Role r : roles){
-                if(eps.getRoleid().equals(r.getId())){
-                    if(eps.haspermission(permission)){
-                        return true;
-                    }
+        for(Role r : roles){
+            if(data.containsKey(r.getId())){
+                if(data.get(r.getId()).contains(permission)){
+                    return true;
                 }
             }
         }
@@ -144,7 +127,7 @@ public class ExtPermManager {
                 permfile.createNewFile();
             }
             // init list
-            data = new ArrayList<ExtPermStorage>();
+            data = new HashMap<String, List<ExtPerm>>();
             // read file
             BufferedReader br = new BufferedReader(new FileReader(permfile));
             String line;
@@ -152,14 +135,14 @@ public class ExtPermManager {
                 if (!line.isEmpty()) {
                     JSONObject jsonObject = new JSONObject(line);
                     String roleid = jsonObject.getString("roleid");
-                    ExtPermStorage eps = new ExtPermStorage(roleid);
+                    List<ExtPerm> eps = new ArrayList<ExtPerm>();
                     for(int i = 0; i < jsonObject.getJSONArray("permissions").length(); i++){
                         ExtPerm ep = getPermission(jsonObject.getJSONArray("permissions").getInt(i));
                         if(ep != ExtPerm.none){
-                            eps.addPermission(ep);
+                            eps.add(ep);
                         }
                     }
-                    data.add(eps);
+                    data.put(roleid, eps);
                 }
             }
         }catch (Exception e){
@@ -170,9 +153,16 @@ public class ExtPermManager {
     public void writetofile(){
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("extperm.storage"));
-            for(ExtPermStorage eps : data){
-                writer.write(eps.toString());
-                writer.newLine();
+            for(Map.Entry<String, List<ExtPerm>> entry : data.entrySet()) {
+                String roleid = entry.getKey();
+                String perm = "";
+                for(int i = 0; i < entry.getValue().size(); i++){
+                    perm += entry.getValue().get(i);
+                    if(i < entry.getValue().size()-1){
+                        perm += ", ";
+                    }
+                }
+                writer.write("{\"roleid\":\""+roleid+"\",\"permissions\":["+perm+"]}");
             }
             writer.flush();
             writer.close();
