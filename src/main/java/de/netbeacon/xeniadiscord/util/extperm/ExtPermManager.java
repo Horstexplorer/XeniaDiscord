@@ -102,7 +102,6 @@ public class ExtPermManager {
                 return ExtPerm.none;
         }
     }
-
     public ExtPerm getPermission(String permission){
         switch (permission){
             case "admin":
@@ -175,6 +174,8 @@ public class ExtPermManager {
                 writer.write(eps.toString());
                 writer.newLine();
             }
+            writer.flush();
+            writer.close();
         }catch (Exception e){
             e.printStackTrace();
             new Log().addEntry("ExtPermManager", "Could not write data to file: "+e, 4);
