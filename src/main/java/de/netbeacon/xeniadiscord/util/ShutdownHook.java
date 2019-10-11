@@ -16,8 +16,8 @@ public class ShutdownHook {
                 System.out.println("[INFO] Shutdownhook executed");
                 new Log().addEntry("ShutdownHook", "Shutdownhook executed", 0);
 
-                savefiles();
                 unloadmodules();
+                savefiles();
 
             }
         });
