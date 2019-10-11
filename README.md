@@ -121,19 +121,19 @@ config <>
 
 
 ### Permissions
-admin                           // all permissions
-permission_manage               // can manage permissions
-music_all                       // all music permissions
-music_play                      // can play music, add to queue, etc
-music_stop                      // can stop the music
-music_manage_queue              // can manage the queue, skip tracks, etc
-music_manage_off                // can disconnect the bot from voice
-membermanagement_all            // all membermanagement permission
-membermanagement_kick           // can kick member
-membermanagement_ban            // can ban member
-ghost                           // can talk as the bot
-blacklist_manage                // can manage blacklisted channel
-twitchhooks_manage              // can create & edit twitch hooks
+admin                           || all permissions
+permission_manage               || can manage permissions - is overwritten by Discord administrator and manage_permissions
+music_all                       || all music permissions
+music_play                      || can play music, add to queue, etc
+music_stop                      || can stop the music
+music_manage_queue              || can manage the queue, skip tracks, etc
+music_manage_off                || can disconnect the bot from voice
+membermanagement_all            || all membermanagement permission
+membermanagement_kick           || can kick member
+membermanagement_ban            || can ban member
+ghost                           || can talk as the bot
+blacklist_manage                || can manage blacklisted channel
+twitchhooks_manage              || can create & edit twitch hooks
 
 
 ### Modules
