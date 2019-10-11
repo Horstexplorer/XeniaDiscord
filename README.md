@@ -1,9 +1,9 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.4.0
+> Current Version: 1.1.4.1
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_50
+> - net.dv8tion JDA -  4.0.0_51
 > - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.26
 
@@ -178,10 +178,13 @@ public class YourModule {
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
 - [ ] multi thread optimization for input to twitchwrap
-- [x] introduction of a secondary permission system
 
 
 ### Changelog
+##### 1.1.4.1
+```
+- updated JDA
+```
 ##### 1.1.4.0
 ```
 - introduction of a secondary permission system
