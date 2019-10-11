@@ -1,20 +1,16 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
+import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
+import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class UserManagement implements GuildCommand {
 
-
-    @Override
-    public boolean permission(Member member) {
-        return true; // dont make the check here
-    }
-
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
-        if(args[0].toLowerCase().equals("kick") && member.hasPermission(Permission.KICK_MEMBERS)){  // user needs permission
+        if(args[0].toLowerCase().equals("kick") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.membermanagement_all, ExtPerm.membermanagement_kick})){  // user needs one of those permission
             if(args.length > 1){
                 String userid = args[1].replaceAll("[^0-9]", "").trim();
                 if(event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)){    // bot needs permission
@@ -27,7 +23,7 @@ public class UserManagement implements GuildCommand {
             }
         }
 
-        if(args[0].toLowerCase().equals("ban") && member.hasPermission(Permission.BAN_MEMBERS)){
+        if(args[0].toLowerCase().equals("ban") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.membermanagement_all, ExtPerm.membermanagement_ban})){
             if(args.length > 2){
                 String userid = args[1].replaceAll("[^0-9]", "").trim();
                 int deldays = 0;

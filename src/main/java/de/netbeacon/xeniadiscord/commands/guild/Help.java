@@ -11,10 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Help implements GuildCommand {
-    @Override
-    public boolean permission(Member member) {
-        return member.hasPermission(Permission.MESSAGE_WRITE);
-    }
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
@@ -42,27 +38,28 @@ public class Help implements GuildCommand {
         if(args[0].toLowerCase().equals("commands")) {
 
             String default_commands = "**Default Commands:** \n" +
-                    "Command                                                   // Required permission          // Description\n" +
+                    "Command                                                   // Permission                   // Description\n" +
                     "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n" +
-                    "kick <user>                                               // Permission.KICK_MEMBERS      // Kicks the user from the server\n" +
-                    "ban <user>                                                // Permission.BAN_MEMBERS       // Bans the user from the server\n" +
-                    "music <command>                                           // Permission.VOICE_CONNECT     // See 'Music Commands'\n" +
-                    "ghost <channel> <msg>                                     // Permission.MANAGE_CHANNEL    // Send <msg> as bot to <channel>\n"+
-                    "blacklist <add/remove> <channel>                          // Permission.MANAGE_CHANNEL    // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
-                    "twitchhook <list|add/remove> <username> <boolean> [msg]   // Permission.MANAGE_CHANNEL    // Add a webhook for a specific twitch channel to your textchannel; <boolean> true or false - use @everyone; If [msg] is set it is used as alternative notification (supports placeholders)\n";
+                    "kick <user>                                               // membermanagement_kick        // Kicks the user from the server\n" +
+                    "ban <user>                                                // membermanagement_ban         // Bans the user from the server\n" +
+                    "music <command>                                           // -                            // See 'Music Commands'\n" +
+                    "ghost <channel> <msg>                                     // ghost                        // Send <msg> as bot to <channel>\n"+
+                    "blacklist <add/remove> <channel>                          // blacklist_manage             // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
+                    "twitchhook <list|add/remove> <username> <boolean> [msg]   // twitchhooks_manage           // Add a webhook for a specific twitch channel to your textchannel; <boolean> true or false - use @everyone; If [msg] is set it is used as alternative notification (supports placeholders)\n"+
+                    "extperm <add/remove/list> <permission1> <permission2> ... // permission_manage            // Manage permissions of a given role\n";
 
             String music_commands = "**Music Commands:** \n" +
-                    "Command                                     // Description\n" +
+                    "Command                                     // Permission                   // Description\n" +
                     "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n" +
-                    "play <url>                                  // Add the song to the queue\n" +
-                    "stop                                        // Stops the playback and deletes the queue\n" +
-                    "list                                        // Display songs in queue\n" +
-                    "queue <num>                                 // Same as list\n" +
-                    "next                                        // Play next song in queue\n" +
-                    "skip                                        // Same as next\n" +
-                    "shuffle                                     // Shuffle queue\n" +
-                    "info                                        // Display information about the current song\n" +
-                    "off                                         // Disconnect from voice channel\n";
+                    "play <url>                                  // music_play                   // Add the song to the queue\n" +
+                    "stop                                        // music_stop                   // Stops the playback and deletes the queue\n" +
+                    "list                                        // music_play                   // Display songs in queue\n" +
+                    "queue <num>                                 // music_play                   // Same as list\n" +
+                    "next                                        // music_manage_queue           // Play next song in queue\n" +
+                    "skip                                        // music_manage_queue           // Same as next\n" +
+                    "shuffle                                     // music_manage_queue           // Shuffle queue\n" +
+                    "info                                        // music_play                   // Display information about the current song\n" +
+                    "off                                         // music_manage_off             // Disconnect from voice channel\n";
 
             String external_commands = "";
             try {

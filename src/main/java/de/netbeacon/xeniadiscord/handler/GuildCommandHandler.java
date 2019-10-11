@@ -32,13 +32,8 @@ public class GuildCommandHandler implements Runnable {
             registercommands();
             // check if requested command exists
             if(commands.containsKey(args[0])){
-                //check if permissions fit
-                if(commands.get(args[0]).permission(member)){
-                    //execute command
-                    commands.get(args[0]).execute(event,member,args);
-                }else{
-                    event.getChannel().sendMessage("You're not authorized to do that.").queue();
-                }
+                //execute command
+                commands.get(args[0]).execute(event,member,args);
             }else{
                 // unknown command
                 event.getChannel().sendMessage("Unknown command. \n Try "+config.load("bot_command_indicator")+"commands for a list of some commands.").queue();
@@ -57,6 +52,7 @@ public class GuildCommandHandler implements Runnable {
         commands.put("ghost", new Ghost());
         commands.put("blacklist", new Blacklist());
         commands.put("twitchhook", new TwitchHook());
+        commands.put("extperm", new ExtPermission());
 
     }
 

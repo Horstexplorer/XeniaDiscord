@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.3.0
+> Current Version: 1.1.4.0
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_50
@@ -13,6 +13,7 @@
 - Commands
     - Discord
     - Local
+- Permissions
 - Modules
 - ToDo
 - Changelog
@@ -56,29 +57,31 @@ Commands are divided into two groups: These which are sent in Discord and those 
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
 This list contains only the commands included by default and their required permissions (all require Permission.MESSAGE_WRITE obviously).
 ```
-Command                                                   || Required permission          ||Type     || Description
+Command                                                   || Permission                   ||Type     || Description
 
 help                                                      || -                            || Global  || Kicks the user from the server
 info                                                      || -                            || Global  || Shows some information
 commands                                                  || -                            || Guild   || Displays all commands
-kick <user>                                               || Permission.KICK_MEMBERS      || Guild   || Kicks the user from the server
-ban <user>                                                || Permission.BAN_MEMBERS       || Guild   || Bans the user from the server
-music <command>                                           || Permission.VOICE_CONNECT     || Guild   || See 'Music Commands
-ghost <channel> <msg>                                     || Permission.MANAGE_CHANNEL    || Guild   || Send <msg> as bot to <channel>
-blacklist <add/remove> <channel>                          || Permission.MANAGE_CHANNEL    || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
-twitchhook <list|add/remove> <username> <boolean> [msg]   || Permission.MANAGE_CHANNEL    || Guild   || Add a webhook for a specific twitch channel to your textchannel; <boolean> true or false - use @everyone; If [msg] is set it is used as alternative notification (supports placeholders, see changelog 1.1.1.0)
+kick <user>                                               || membermanagement_kick        || Guild   || Kicks the user from the server
+ban <user>                                                || membermanagement_ban         || Guild   || Bans the user from the server
+music <command>                                           || See 'Music Commands          || Guild   || See 'Music Commands
+ghost <channel> <msg>                                     || ghost                        || Guild   || Send <msg> as bot to <channel>
+blacklist <add/remove> <channel>                          || blacklist_manage             || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
+twitchhook <list|add/remove> <username> <boolean> [msg]   || twitchhooks_manage           || Guild   || Add a webhook for a specific twitch channel to your textchannel; <boolean> true or false - use @everyone; If [msg] is set it is used as alternative notification (supports placeholders, see changelog 1.1.1.0)
+extperm <add/remove/list> <permission1> <permission2> ... || permission_manage            || Guild   || Manage permissions of a given role
+
 ```
 Commands to control music functions:
 ```
-play <url>                                  || Add the song to the queue
-stop                                        || Stops the playback and deletes the queue
-list                                        || Display songs in queue
-queue                                       || Same as list
-next                                        || Play next song in queue
-skip                                        || Same as next
-shuffle                                     || Shuffle queue
-info                                        || Displaying information about the current song
-off                                         || Disconnect from voice channel
+play <url>                                  || music_play         || Add the song to the queue
+stop                                        || music_stop         || Stops the playback and deletes the queue
+list                                        || music_play         || Display songs in queue
+queue                                       || music_play         || Same as list
+next                                        || music_manage_queue || Play next song in queue
+skip                                        || music_manage_queue || Same as next
+shuffle                                     || music_manage_queue || Shuffle queue
+info                                        || music_play         || Displaying information about the current song
+off                                         || music_manage_off   || Disconnect from voice channel
 ```
 Commands limited to admin user (bot_admin_id) (type: private)
 ```
@@ -115,6 +118,22 @@ twitch <>
 config <>
        update <property> <value>            || update <property> to <value> in sys.config
 ```
+
+
+### Permissions
+admin                           || all permissions
+permission_manage               || can manage permissions - is overwritten by Discord administrator and manage_permissions
+music_all                       || all music permissions
+music_play                      || can play music, add to queue, etc
+music_stop                      || can stop the music
+music_manage_queue              || can manage the queue, skip tracks, etc
+music_manage_off                || can disconnect the bot from voice
+membermanagement_all            || all membermanagement permission
+membermanagement_kick           || can kick member
+membermanagement_ban            || can ban member
+ghost                           || can talk as the bot
+blacklist_manage                || can manage blacklisted channel
+twitchhooks_manage              || can create & edit twitch hooks
 
 
 ### Modules
@@ -159,10 +178,15 @@ public class YourModule {
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
 - [ ] multi thread optimization for input to twitchwrap
-- [ ] introduction of a secondary permission system
+- [x] introduction of a secondary permission system
 
 
 ### Changelog
+##### 1.1.4.0
+```
+- introduction of a secondary permission system
+- some improvements
+```
 ##### 1.1.3.0
 ```
 - TwitchWrap requests can now be processed parallel with multiple TwitchWorker instances
