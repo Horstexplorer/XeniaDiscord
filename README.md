@@ -121,6 +121,7 @@ config <>
 
 
 ### Permissions
+```
 admin                           || all permissions
 permission_manage               || can manage permissions - is overwritten by Discord administrator and manage_permissions
 music_all                       || all music permissions
@@ -134,6 +135,7 @@ membermanagement_ban            || can ban member
 ghost                           || can talk as the bot
 blacklist_manage                || can manage blacklisted channel
 twitchhooks_manage              || can create & edit twitch hooks
+```
 
 
 ### Modules
