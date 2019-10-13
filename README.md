@@ -177,12 +177,14 @@ public class YourModule {
 
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
-- [ ] multi thread optimization for input to twitchwrap
+- [ ] multi thread optimization for input to twitchwrap (twitchhooks)
+- [ ] web interface
 
 
 ### Changelog
 ##### 1.1.4.1
 ```
+- some improvements
 - updated JDA & slf4j
 ```
 ##### 1.1.4.0
