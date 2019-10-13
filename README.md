@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.4.1
+> Current Version: 1.1.4.2
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_52
@@ -181,6 +181,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.4.2
+```
+- minor improvement
+```
 ##### 1.1.4.1
 ```
 - multi thread optimization for input to twitchwrap
