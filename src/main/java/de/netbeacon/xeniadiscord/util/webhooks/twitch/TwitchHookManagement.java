@@ -15,11 +15,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TwitchHookManagement {
 
     private static TwitchAPIFetch twitchAPIFetch;
-    private static List<TwitchHookObjekt> twitchHookObjekts;
+    private static AtomicReference<List<TwitchHookObjekt>> twitchHookObjekts = new AtomicReference<>();
     private static boolean update_isrunning;
     private static JDA jda;
 
@@ -27,13 +28,13 @@ public class TwitchHookManagement {
         if(jda == null){
             jda = jda_;
         }
-        if(twitchHookObjekts == null){
+        if(twitchHookObjekts.get() == null){
             System.out.println("[INFO] Init TwitchHooks");
             new Log().addEntry("THM", "Init TwitchHooks", 0);
             if(!loadfromfile()){
                 System.out.println("[ERROR] Init TwitchHooks failed");
             }else{
-                System.out.println(">> "+twitchHookObjekts.size()+" entrys found.");
+                System.out.println(">> "+twitchHookObjekts.get().size()+" entrys found.");
                 twitchAPIFetch = new TwitchAPIFetch();
             }
         }
@@ -48,7 +49,7 @@ public class TwitchHookManagement {
                 twitchhookfile.createNewFile();
             }
             // init list
-            twitchHookObjekts = new ArrayList<TwitchHookObjekt>();
+            twitchHookObjekts.set(new ArrayList<TwitchHookObjekt>());
             // read file
             BufferedReader br = new BufferedReader(new FileReader(twitchhookfile));
             String line;
@@ -64,7 +65,7 @@ public class TwitchHookManagement {
                         boolean ne = jsonObject.getBoolean("notifyeveryone");
 
                         boolean exists = false;
-                        for(TwitchHookObjekt tho : twitchHookObjekts){
+                        for(TwitchHookObjekt tho : twitchHookObjekts.get()){
                             if(tho.getGuildChannel().equals(gid) && tho.getChannelID().equals(tid)){
                                 exists = true;
                                 break;
@@ -72,7 +73,7 @@ public class TwitchHookManagement {
                         }
                         if(!exists){
                             TwitchHookObjekt tho = new TwitchHookObjekt(name, tid, gid, cn, ne);
-                            twitchHookObjekts.add(tho);
+                            twitchHookObjekts.get().add(tho);
                         }
                     }catch (Exception e){
                         new Log().addEntry("THM", "Could not load TwitchHook from file: "+e.toString(), 3);
@@ -92,7 +93,7 @@ public class TwitchHookManagement {
         try{
             // write new content
             BufferedWriter writer = new BufferedWriter(new FileWriter("twitchhooks.storage"));
-            for(TwitchHookObjekt tho : twitchHookObjekts){
+            for(TwitchHookObjekt tho : twitchHookObjekts.get()){
                 writer.write(tho.toJSONString());
                 writer.newLine();
             }
@@ -115,7 +116,7 @@ public class TwitchHookManagement {
                 update_isrunning = true;
                 // create list with every UNIQUE channelid from our hooks
                 List<String> uids = new ArrayList<String>();
-                for(TwitchHookObjekt tho : twitchHookObjekts){
+                for(TwitchHookObjekt tho : twitchHookObjekts.get()){
                     if(!uids.contains(tho.getChannelID())){
                         uids.add(tho.getChannelID());
                     }
@@ -135,76 +136,15 @@ public class TwitchHookManagement {
                     hashMap.put(uid, "offline");
                     // if our hashmap contains 100 elements or this is the last element we have, we process it
                     if((hashMap.size() == 100) || (uids.size()==processed)){
-                        // get online/offline results & update stream information
-                        hashMap = twitchAPIFetch.getStreamsAdvanced(hashMap, twitchHookObjekts); // not using getStreamsStatus()
-                        // process online/offline results
-                        for(Map.Entry<String, String> result : hashMap.entrySet()){
-
-                            // if status == offline (nothing changed) we need to set the status from every object with the matching id to offline
-                            // do it with not tolowercase live, so we can be sure everything will work
-                            if(!result.getValue().toLowerCase().equals("live")){
-                                // find each twitchhookobject with the channelid and set status to offline
-                                for(TwitchHookObjekt thos : twitchHookObjekts){
-                                    if(result.getKey().equals(thos.getChannelID())){
-                                        thos.setStatus("offline");
-                                    }
-                                }
-                            }
-
-                            // if status == live we need to check if it was live before (we do nothing) or if it wasnt ( we need to check & send a notification )
-                            if(result.getValue().toLowerCase().equals("live")){
-                                List<TwitchHookObjekt> toremove = new ArrayList<TwitchHookObjekt>();
-                                // find each twitchhookobject with the channelid
-                                for(TwitchHookObjekt thos : twitchHookObjekts){
-                                    if(result.getKey().equals(thos.getChannelID())){
-                                        // was online?
-                                        if(!thos.getStatus().equals("live")){
-                                            thos.setStatus("live");
-                                            // get game
-                                            String game = "unknown";
-                                            if(!thos.getGameid().equals("unknown")){
-                                                game = new TwitchGameCache().get(thos.getGameid());
-                                            }
-                                            boolean haspermission = false;
-                                            // check permissions
-                                            try{
-                                                Guild guild = jda.getGuildChannelById(thos.getGuildChannel()).getGuild();
-                                                TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
-                                                haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
-                                                if(haspermission){
-                                                    if(thos.allownotifyeveryone()){
-                                                        jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
-                                                    }
-
-                                                    EmbedBuilder eb = new EmbedBuilder();
-                                                    eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
-                                                    eb.setColor(Color.MAGENTA);
-                                                    // build custom message
-                                                    String message = thos.getNotification();
-                                                    message = message.replace("%uname%", thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1));
-                                                    message = message.replace("%lname%", thos.getChannelName());
-                                                    message = message.replace("%game%", game);
-                                                    message = message.replace("%title%", thos.getTitle());
-                                                    message += "["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")"; // add link to stream
-                                                    eb.setDescription(message);
-
-                                                    eb.setImage(thos.getThumbnailurl());
-                                                    jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
-                                                }else{
-                                                    toremove.add(thos);
-                                                }
-                                            }catch (Exception e){
-                                                new Log().addEntry("THM", "An error occurred while sending notification for TwitchHooks: "+e.toString(), 3);
-                                            }
-                                        }// nothing to do
-                                    }
-                                }
-                                twitchHookObjekts.removeAll(toremove);
-                                toremove.clear();
-                            }
+                        // copy hashmap
+                        HashMap<String, String> newHashMap = new HashMap<String,String>();
+                        for(Map.Entry<String, String> entry : hashMap.entrySet()) {
+                            newHashMap.put(entry.getKey()+"",entry.getValue()+"");
                         }
+                        // process
+                        execute(newHashMap);
+                        // clear
                         hashMap.clear();
-
                     }
                 }
             }catch (Exception e){
@@ -219,7 +159,7 @@ public class TwitchHookManagement {
     }
 
     public boolean add(String guildchannelid, String twitchname, String customnotification, boolean notifyeveryone){
-        for(TwitchHookObjekt tho : twitchHookObjekts){
+        for(TwitchHookObjekt tho : twitchHookObjekts.get()){
             if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
                 return false;
             }
@@ -227,7 +167,7 @@ public class TwitchHookManagement {
         try{
             String channelid = twitchAPIFetch.getChannelid(twitchname);
             if(channelid != null){
-                twitchHookObjekts.add(new TwitchHookObjekt(twitchname, channelid, guildchannelid, customnotification, notifyeveryone));
+                twitchHookObjekts.get().add(new TwitchHookObjekt(twitchname, channelid, guildchannelid, customnotification, notifyeveryone));
             }else{
                 return false;
             }
@@ -240,9 +180,9 @@ public class TwitchHookManagement {
     }
 
     public boolean remove(String guildchannelid, String twitchname){
-        for(TwitchHookObjekt tho : twitchHookObjekts){
+        for(TwitchHookObjekt tho : twitchHookObjekts.get()){
             if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
-                twitchHookObjekts.remove(tho);
+                twitchHookObjekts.get().remove(tho);
                 return true;
             }
         }
@@ -251,7 +191,7 @@ public class TwitchHookManagement {
 
     public String list(String guildchannelid){
         String list = "";
-        for(TwitchHookObjekt tho : twitchHookObjekts){
+        for(TwitchHookObjekt tho : twitchHookObjekts.get()){
             if(tho.getGuildChannel().equals(guildchannelid)){
                 list += "> "+tho.getChannelName().substring(0, 1).toUpperCase() + tho.getChannelName().substring(1)+"\n";
             }
@@ -263,11 +203,96 @@ public class TwitchHookManagement {
     }
 
     public int count(){
-        return twitchHookObjekts.size();
+        return twitchHookObjekts.get().size();
     }
 
     public List<TwitchHookObjekt> getAll(){
-        return twitchHookObjekts;
+        return twitchHookObjekts.get();
+    }
+
+    private void execute(HashMap<String, String> hashMap){
+        class ExecuteTask implements Runnable{
+            private HashMap<String, String> hashMap;
+
+            private ExecuteTask(HashMap<String, String> hashMap){
+                this.hashMap = hashMap;
+            }
+            @Override
+            public void run() {
+                // get online/offline results & update stream information
+                hashMap = twitchAPIFetch.getStreamsAdvanced(hashMap, twitchHookObjekts.get()); // not using getStreamsStatus()
+                // process online/offline results
+                for(Map.Entry<String, String> result : hashMap.entrySet()){
+
+                    // if status == offline (nothing changed) we need to set the status from every object with the matching id to offline
+                    // do it with not tolowercase live, so we can be sure everything will work
+                    if(!result.getValue().toLowerCase().equals("live")){
+                        // find each twitchhookobject with the channelid and set status to offline
+                        for(TwitchHookObjekt thos : twitchHookObjekts.get()){
+                            if(result.getKey().equals(thos.getChannelID())){
+                                thos.setStatus("offline");
+                            }
+                        }
+                    }
+
+                    // if status == live we need to check if it was live before (we do nothing) or if it wasnt ( we need to check & send a notification )
+                    if(result.getValue().toLowerCase().equals("live")){
+                        List<TwitchHookObjekt> toremove = new ArrayList<TwitchHookObjekt>();
+                        // find each twitchhookobject with the channelid
+                        for(TwitchHookObjekt thos : twitchHookObjekts.get()){
+                            if(result.getKey().equals(thos.getChannelID())){
+                                // was online?
+                                if(!thos.getStatus().equals("live")){
+                                    thos.setStatus("live");
+                                    // get game
+                                    String game = "unknown";
+                                    if(!thos.getGameid().equals("unknown")){
+                                        game = new TwitchGameCache().get(thos.getGameid());
+                                    }
+                                    boolean haspermission = false;
+                                    // check permissions
+                                    try{
+                                        Guild guild = jda.getGuildChannelById(thos.getGuildChannel()).getGuild();
+                                        TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
+                                        haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
+                                        if(haspermission){
+                                            if(thos.allownotifyeveryone()){
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
+                                            }
+
+                                            EmbedBuilder eb = new EmbedBuilder();
+                                            eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
+                                            eb.setColor(Color.MAGENTA);
+                                            // build custom message
+                                            String message = thos.getNotification();
+                                            message = message.replace("%uname%", thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1));
+                                            message = message.replace("%lname%", thos.getChannelName());
+                                            message = message.replace("%game%", game);
+                                            message = message.replace("%title%", thos.getTitle());
+                                            message += "["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")"; // add link to stream
+                                            eb.setDescription(message);
+
+                                            eb.setImage(thos.getThumbnailurl());
+                                            jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
+                                        }else{
+                                            toremove.add(thos);
+                                        }
+                                    }catch (Exception e){
+                                        new Log().addEntry("THM", "An error occurred while sending notification for TwitchHooks: "+e.toString(), 3);
+                                    }
+                                }// nothing to do
+                            }
+                        }
+                        twitchHookObjekts.get().removeAll(toremove);
+                        toremove.clear();
+                    }
+                }
+                hashMap.clear();
+            }
+        }
+        Thread t = new Thread(new ExecuteTask(hashMap));
+        t.setDaemon(true);
+        t.start();
     }
 }
 
