@@ -9,18 +9,19 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ExtPermManager {
 
     private static JDA jda;
-    private static HashMap<String, List<ExtPerm>> data;
+    private static AtomicReference<HashMap<String, List<ExtPerm>>> data = new AtomicReference<>();
 
     public ExtPermManager(){}
     public ExtPermManager(JDA jda_){
-        if(data == null){
+        if(data.get() == null){
             System.out.println("[INFO] Init ExtPermManager");
             loadfromfile();
-            System.out.println(">> "+data.size()+" entrys found.");
+            System.out.println(">> "+data.get().size()+" entrys found.");
         }
         if(jda == null){
             jda = jda_;
@@ -29,24 +30,24 @@ public class ExtPermManager {
 
     public boolean addPermission(Role role, ExtPerm permission){
         // add permission
-        if(data.containsKey(role.getId())){
+        if(data.get().containsKey(role.getId())){
             if(permission != ExtPerm.none){
-                data.get(role.getId()).add(permission);
+                data.get().get(role.getId()).add(permission);
                 return true;
             }
         }
         // create new entry
         List<ExtPerm> perm = new ArrayList<ExtPerm>(); // create new list
         perm.add(permission);
-        data.put(role.getId(), perm);
+        data.get().put(role.getId(), perm);
         return true;
     }
     public boolean addPermission(Role role, ExtPerm[] permission){
         // add permission
-        if(data.containsKey(role.getId())){
+        if(data.get().containsKey(role.getId())){
             for(ExtPerm extPerm : permission){
                 if(extPerm != ExtPerm.none){
-                    data.get(role.getId()).add(extPerm);
+                    data.get().get(role.getId()).add(extPerm);
                 }
             }
             return true;
@@ -56,20 +57,20 @@ public class ExtPermManager {
         for(ExtPerm extPerm : permission){
             perm.add(extPerm);
         }
-        data.put(role.getId(), perm);
+        data.get().put(role.getId(), perm);
         return true;
     }
     public boolean removePermission(Role role, ExtPerm permission){
-        if(data.containsKey(role.getId())){
-            data.get(role.getId()).remove(permission);
+        if(data.get().containsKey(role.getId())){
+            data.get().get(role.getId()).remove(permission);
             return true;
         }
         return false;
     }
     public boolean removePermission(Role role, ExtPerm[] permission){
-        if(data.containsKey(role.getId())){
+        if(data.get().containsKey(role.getId())){
             for(ExtPerm extPerm : permission){
-                data.get(role.getId()).remove(extPerm);
+                data.get().get(role.getId()).remove(extPerm);
             }
             return true;
         }
@@ -78,8 +79,8 @@ public class ExtPermManager {
     public boolean hasPermission(Member member, ExtPerm permission){
         List<Role> roles = member.getRoles();
         for(Role r : roles){
-            if(data.containsKey(r.getId())){
-                if(data.get(r.getId()).contains(permission)){
+            if(data.get().containsKey(r.getId())){
+                if(data.get().get(r.getId()).contains(permission)){
                     return true;
                 }
             }
@@ -89,9 +90,9 @@ public class ExtPermManager {
     public boolean hasPermission(Member member, ExtPerm[] permission){
         List<Role> roles = member.getRoles();
         for(Role r : roles){
-            if(data.containsKey(r.getId())){
+            if(data.get().containsKey(r.getId())){
                 for(ExtPerm ep : permission){
-                    if(data.get(r.getId()).contains(ep)){
+                    if(data.get().get(r.getId()).contains(ep)){
                         return true;
                     }
                 }
@@ -197,7 +198,7 @@ public class ExtPermManager {
     }
     private void selftest(){
         Set<String> set = new HashSet<>();
-        for(Map.Entry<String, List<ExtPerm>> entry : data.entrySet()) {
+        for(Map.Entry<String, List<ExtPerm>> entry : data.get().entrySet()) {
             try{
                 jda.getRoleById(entry.getKey()).getGuild();
             }catch (Exception e){
@@ -205,7 +206,7 @@ public class ExtPermManager {
             }
         }
         if(set.size() > 0){
-            data.keySet().removeAll(set);
+            data.get().keySet().removeAll(set);
         }
     }
     private void loadfromfile(){
@@ -217,7 +218,7 @@ public class ExtPermManager {
                 permfile.createNewFile();
             }
             // init list
-            data = new HashMap<String, List<ExtPerm>>();
+            data.set(new HashMap<String, List<ExtPerm>>());
             // read file
             BufferedReader br = new BufferedReader(new FileReader(permfile));
             String line;
@@ -232,7 +233,7 @@ public class ExtPermManager {
                             eps.add(ep);
                         }
                     }
-                    data.put(roleid, eps);
+                    data.get().put(roleid, eps);
                 }
             }
             selftest();
@@ -244,7 +245,7 @@ public class ExtPermManager {
     public void writetofile(){
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("extperm.storage"));
-            for(Map.Entry<String, List<ExtPerm>> entry : data.entrySet()) {
+            for(Map.Entry<String, List<ExtPerm>> entry : data.get().entrySet()) {
                 String roleid = entry.getKey();
                 String perm = "";
                 for(int i = 0; i < entry.getValue().size(); i++){
@@ -263,11 +264,11 @@ public class ExtPermManager {
         }
     }
     public String listPermission(Role role){
-        if(data.containsKey(role.getId())){
+        if(data.get().containsKey(role.getId())){
             String permissions = "";
-            for(int i = 0; i < data.get(role.getId()).size(); i++){
-                permissions += getPermission(data.get(role.getId()).get(i));
-                if(i < data.get(role.getId()).size()-1){
+            for(int i = 0; i < data.get().get(role.getId()).size(); i++){
+                permissions += getPermission(data.get().get(role.getId()).get(i));
+                if(i < data.get().get(role.getId()).size()-1){
                     permissions += ", ";
                 }
             }
