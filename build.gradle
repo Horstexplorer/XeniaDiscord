@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    compile group: 'net.dv8tion', name: 'JDA', version: '4.0.0_51'
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.26'
+    compile group: 'net.dv8tion', name: 'JDA', version: '4.0.0_52'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.28'
     compile group: 'com.sedmelluq', name: 'lavaplayer', version: '1.3.22'
     compile group: 'org.json', name: 'json', version: '20190722'
 }

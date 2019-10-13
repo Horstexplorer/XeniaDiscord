@@ -3,9 +3,9 @@
 > Current Version: 1.1.4.1
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_51
+> - net.dv8tion JDA -  4.0.0_52
 > - lavaplayer - 1.3.22
-> - slf4j-simple - 1.7.26
+> - slf4j-simple - 1.7.28
 
 
 ### Table of Contents
@@ -183,7 +183,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 ### Changelog
 ##### 1.1.4.1
 ```
-- updated JDA
+- updated JDA & slf4j
 ```
 ##### 1.1.4.0
 ```
