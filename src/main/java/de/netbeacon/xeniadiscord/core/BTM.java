@@ -38,24 +38,30 @@ public class BTM implements Runnable{
         jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
         System.out.println("[INFO] Set status to "+jda.getPresence().getStatus()+" | Starting init");
 
-        // init CoreModuleLoader
-        if(Boolean.parseBoolean(new Config().load("bot_activate_coremodule"))){
-            new CoreModuleLoader(true);
+        try{
+            // init CoreModuleLoader
+            if(Boolean.parseBoolean(new Config().load("bot_activate_coremodule"))){
+                new CoreModuleLoader(true);
+            }
+            // init ModuleLoader
+            if(Boolean.parseBoolean(new Config().load("bot_activate_modules"))){
+                new ModuleLoader(true);
+            }
+            // init ExtPermManager
+            new ExtPermManager(jda);
+            // init blacklist
+            new BlackListUtility();
+            // init twitchwrap
+            new TwitchWrap();
+            // init twitchgamecache
+            new TwitchGameCache();
+            // init twitchhooks
+            new TwitchHookManagement(jda);
+        }catch (Exception e){
+            e.printStackTrace();
+            new Log().addEntry("BTM", "Init failed: "+e, 5);
+            System.exit(-1);
         }
-        // init ModuleLoader
-        if(Boolean.parseBoolean(new Config().load("bot_activate_modules"))){
-            new ModuleLoader(true);
-        }
-        // init ExtPermManager
-        new ExtPermManager(jda);
-        // init blacklist
-        new BlackListUtility();
-        // init twitchwrap
-        new TwitchWrap();
-        // init twitchgamecache
-        new TwitchGameCache();
-        // init twitchhooks
-        new TwitchHookManagement(jda);
 
         // set status to online
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
