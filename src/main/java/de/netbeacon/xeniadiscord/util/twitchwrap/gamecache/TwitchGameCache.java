@@ -128,12 +128,18 @@ public class TwitchGameCache {
                         }
                     }
                     //parse json to new hashmap
-                    JSONObject json =  new TwitchWrap().get("https://api.twitch.tv/helix/games?id="+request);
-                    for(int n = 0; n < json.getJSONArray("data").length(); n++){
-                        String id = json.getJSONArray("data").getJSONObject(n).getString("id");
-                        String game = json.getJSONArray("data").getJSONObject(n).getString("name");
-                        gamecache.put(id, game);
-                    }
+                    String finalRequest = request;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            JSONObject json =  new TwitchWrap().get("https://api.twitch.tv/helix/games?id="+ finalRequest);
+                            for(int n = 0; n < json.getJSONArray("data").length(); n++){
+                                String id = json.getJSONArray("data").getJSONObject(n).getString("id");
+                                String game = json.getJSONArray("data").getJSONObject(n).getString("name");
+                                gamecache.put(id, game);
+                            }
+                        }
+                    }).start();
                 }
             }
             // save updated games

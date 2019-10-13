@@ -15,7 +15,7 @@ public class BlackListUtility {
             System.out.println("[INFO] Init blacklist");
             new Log().addEntry("Blacklist", "Init blacklist", 0);
             initblacklist();
-            System.out.println(">> "+blacklist.size()+" entrys found");
+            System.out.println(">> "+blacklist.size()+" entrys found.");
         }
     }
 
