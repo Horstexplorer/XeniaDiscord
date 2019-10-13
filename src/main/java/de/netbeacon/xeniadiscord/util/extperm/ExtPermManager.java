@@ -20,6 +20,7 @@ public class ExtPermManager {
         if(data == null){
             System.out.println("[INFO] Init ExtPermManager");
             loadfromfile();
+            System.out.println(">> "+data.size()+" entrys found.");
         }
         if(jda == null){
             jda = jda_;
