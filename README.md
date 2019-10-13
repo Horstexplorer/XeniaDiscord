@@ -183,6 +183,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.4.3
+```
+- minor improvement
+```
 ##### 1.1.4.2
 ```
 - minor improvement
