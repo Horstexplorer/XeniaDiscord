@@ -12,9 +12,11 @@ public class UserManagement implements GuildCommand {
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("kick") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.membermanagement_all, ExtPerm.membermanagement_kick})){  // user needs one of those permission
             if(args.length > 1){
-                String userid = args[1].replaceAll("[^0-9]", "").trim();
+                if(event.getMessage().getMentionedUsers().size() > 0){
+                    args[1] = event.getMessage().getMentionedUsers().get(0).getId();
+                }
                 if(event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)){    // bot needs permission
-                    event.getGuild().kick(userid).queue();
+                    event.getGuild().kick(args[1]).queue();
                 }else{
                     event.getChannel().sendMessage("I can't do that.");
                 }
@@ -25,13 +27,15 @@ public class UserManagement implements GuildCommand {
 
         if(args[0].toLowerCase().equals("ban") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.membermanagement_all, ExtPerm.membermanagement_ban})){
             if(args.length > 2){
-                String userid = args[1].replaceAll("[^0-9]", "").trim();
+                if(event.getMessage().getMentionedUsers().size() > 0){
+                    args[1] = event.getMessage().getMentionedUsers().get(0).getId();
+                }
                 int deldays = 0;
                 try{
                     deldays = Integer.parseInt(args[2]);
                 }catch (Exception ignore){}
                 if(event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)){
-                    event.getGuild().ban(userid, deldays).queue();
+                    event.getGuild().ban(args[1], deldays).queue();
                 }else{
                     event.getChannel().sendMessage("I can't do that.");
                 }

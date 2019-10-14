@@ -26,14 +26,22 @@ public class ShutdownHook {
     private void savefiles(){
         System.out.println("[INFO] Saving files...");
 
-        System.out.println("> ExtPerm");
-        new ExtPermManager().writetofile();
-        System.out.println("> Blacklist");
-        new BlackListUtility().writetofile();
-        System.out.println("> TwitchHooks");
-        new TwitchHookManagement(null).writetofile();
-        System.out.println("> Log");
-        new Log().export();
+        try{
+            System.out.println("> ExtPerm");
+            new ExtPermManager().writetofile();
+        }catch (Exception ignore){}
+        try{
+            System.out.println("> Blacklist");
+            new BlackListUtility().writetofile();
+        }catch (Exception ignore){}
+        try{
+            System.out.println("> TwitchHooks");
+            new TwitchHookManagement(null).writetofile();
+        }catch (Exception ignore){}
+        try{
+            System.out.println("> Log");
+            new Log().export();
+        }catch (Exception ignore){}
     }
 
     private void unloadmodules(){

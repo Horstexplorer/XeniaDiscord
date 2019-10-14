@@ -28,25 +28,11 @@ public class ExtPermManager {
         }
     }
 
-    public boolean addPermission(Role role, ExtPerm permission){
-        // add permission
-        if(data.get().containsKey(role.getId())){
-            if(permission != ExtPerm.none){
-                data.get().get(role.getId()).add(permission);
-                return true;
-            }
-        }
-        // create new entry
-        List<ExtPerm> perm = new ArrayList<ExtPerm>(); // create new list
-        perm.add(permission);
-        data.get().put(role.getId(), perm);
-        return true;
-    }
     public boolean addPermission(Role role, ExtPerm[] permission){
         // add permission
         if(data.get().containsKey(role.getId())){
             for(ExtPerm extPerm : permission){
-                if(extPerm != ExtPerm.none){
+                if(extPerm != ExtPerm.none && !data.get().get(role.getId()).contains(permission)){
                     data.get().get(role.getId()).add(extPerm);
                 }
             }
@@ -59,13 +45,6 @@ public class ExtPermManager {
         }
         data.get().put(role.getId(), perm);
         return true;
-    }
-    public boolean removePermission(Role role, ExtPerm permission){
-        if(data.get().containsKey(role.getId())){
-            data.get().get(role.getId()).remove(permission);
-            return true;
-        }
-        return false;
     }
     public boolean removePermission(Role role, ExtPerm[] permission){
         if(data.get().containsKey(role.getId())){
@@ -161,7 +140,7 @@ public class ExtPermManager {
             case 50:
                 return "twitchhooks_manage";
             default:
-                return "unknown";
+                return "none";
         }
     }
     private ExtPerm getPermission(int value){
@@ -264,17 +243,19 @@ public class ExtPermManager {
         }
     }
     public String listPermission(Role role){
+        String permissions = "";
         if(data.get().containsKey(role.getId())){
-            String permissions = "";
             for(int i = 0; i < data.get().get(role.getId()).size(); i++){
                 permissions += getPermission(data.get().get(role.getId()).get(i));
                 if(i < data.get().get(role.getId()).size()-1){
                     permissions += ", ";
                 }
             }
-            return permissions;
         }
-        return "none";
+        if(permissions.isEmpty()){
+            permissions = "none";
+        }
+        return permissions;
     }
 
 }
