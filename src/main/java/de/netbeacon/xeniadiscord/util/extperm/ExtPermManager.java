@@ -234,6 +234,7 @@ public class ExtPermManager {
                     }
                 }
                 writer.write("{\"roleid\":\""+roleid+"\",\"permissions\":["+perm+"]}");
+                writer.newLine();
             }
             writer.flush();
             writer.close();
