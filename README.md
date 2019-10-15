@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.4.3
+> Current Version: 1.1.4.4
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_52
@@ -179,10 +179,21 @@ public class YourModule {
 
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
+- [ ] chat cooldown (rate limit)
+- [ ] chat analysis
+    - [ ] passive trigger
+    - [ ] get topic
+    - [ ] get details
+    - [ ] (get language / translate)
+    - [ ] send answer
 - [ ] web interface
 
 
 ### Changelog
+##### 1.1.4.4
+```
+- fixed ExtPermManager
+```
 ##### 1.1.4.3
 ```
 - some improvements

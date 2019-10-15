@@ -18,13 +18,13 @@ public class ExtPermManager {
 
     public ExtPermManager(){}
     public ExtPermManager(JDA jda_){
+        if(jda == null){
+            jda = jda_;
+        }
         if(data.get() == null){
             System.out.println("[INFO] Init ExtPermManager");
             loadfromfile();
             System.out.println(">> "+data.get().size()+" entrys found.");
-        }
-        if(jda == null){
-            jda = jda_;
         }
     }
 
