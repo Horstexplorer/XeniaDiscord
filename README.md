@@ -190,11 +190,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
-##### 1.1.4.5
-```
-- fixed ExtPermManager
-```
-##### 1.1.4.4
+##### 1.1.4.4 - 1.1.4.6
 ```
 - fixed ExtPermManager
 ```
