@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.4.3
+> Current Version: 1.1.4.4
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_52
@@ -190,6 +190,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.4.4
+```
+- fixed ExtPermManager
+```
 ##### 1.1.4.3
 ```
 - some improvements
