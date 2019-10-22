@@ -179,12 +179,6 @@ public class YourModule {
 
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
-- [ ] chat analysis
-    - [ ] passive trigger
-    - [ ] get topic
-    - [ ] get details
-    - [ ] (get language / translate)
-    - [ ] send answer
 - [ ] web interface
 
 
