@@ -61,6 +61,7 @@ Command                                                   || Permission         
 
 help                                                      || -                            || Global  || Kicks the user from the server
 info                                                      || -                            || Global  || Shows some information
+ping                                                      || -                            || Global  || Pong!
 commands                                                  || -                            || Guild   || Displays all commands
 kick <user>                                               || membermanagement_kick        || Guild   || Kicks the user from the server
 ban <user>                                                || membermanagement_ban         || Guild   || Bans the user from the server
@@ -185,6 +186,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 ### Changelog
 ##### 1.1.5.1
 ```
+- added ping command
 - updated JDA
 ```
 ##### 1.1.5.0
