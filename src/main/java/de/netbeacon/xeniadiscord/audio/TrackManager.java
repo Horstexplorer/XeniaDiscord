@@ -79,13 +79,4 @@ public class TrackManager extends AudioEventAdapter {
         }
     }
 
-    public void setVolume(int value){
-        if(value <= 100 && value >=0){
-            PLAYER.setVolume(value);
-        }
-    }
-    public int getVolume(){
-        return PLAYER.getVolume();
-    }
-
 }
