@@ -81,6 +81,7 @@ queue                                       || music_play         || Same as lis
 next                                        || music_manage_queue || Play next song in queue
 skip                                        || music_manage_queue || Same as next
 shuffle                                     || music_manage_queue || Shuffle queue
+volume 0-100                                || music_manage_queue || Adjust the volume
 info                                        || music_play         || Displaying information about the current song
 off                                         || music_manage_off   || Disconnect from voice channel
 ```
@@ -186,6 +187,8 @@ Scheduled tasks (sorted by priority) (Target: none)
 ### Changelog
 ##### 1.1.5.1
 ```
+- minor improvements
+- added volume command
 - added ping command
 - updated JDA
 ```
