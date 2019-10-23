@@ -53,6 +53,7 @@ public class GuildCommandHandler implements Runnable {
         commands.put("blacklist", new Blacklist());
         commands.put("twitchhook", new TwitchHook());
         commands.put("extperm", new ExtPermission());
+        commands.put("ping", new Ping());
 
     }
 

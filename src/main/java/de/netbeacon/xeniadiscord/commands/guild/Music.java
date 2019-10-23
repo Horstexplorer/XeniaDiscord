@@ -46,6 +46,15 @@ public class Music implements GuildCommand {
                 loadTrack(input, member, event.getMessage());
                 event.getChannel().sendMessage("Added to queue.").queue();
             }
+            if(args[1].toLowerCase().equals("volume") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_queue})){
+                int i = -1;
+                try{
+                    i = Integer.parseInt(args[2]);
+                }catch (Exception ignore){}
+                if(i >= 0){
+                    setVolume(i, event.getGuild());
+                }
+            }
 
         }
         if(args.length > 1){
@@ -178,5 +187,11 @@ public class Music implements GuildCommand {
 
     private void skip(Guild g) {
         getPlayer(g).stopTrack();
+    }
+
+    private void setVolume(int i, Guild g){
+        if(i < 0){
+            getPlayer(g).setVolume(0);
+        }else getPlayer(g).setVolume(Math.min(i, 100));
     }
 }

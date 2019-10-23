@@ -1,9 +1,9 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.5.0
+> Current Version: 1.1.5.1
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_52
+> - net.dv8tion JDA -  4.0.0_53
 > - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.28
 
@@ -61,6 +61,7 @@ Command                                                   || Permission         
 
 help                                                      || -                            || Global  || Kicks the user from the server
 info                                                      || -                            || Global  || Shows some information
+ping                                                      || -                            || Global  || Pong!
 commands                                                  || -                            || Guild   || Displays all commands
 kick <user>                                               || membermanagement_kick        || Guild   || Kicks the user from the server
 ban <user>                                                || membermanagement_ban         || Guild   || Bans the user from the server
@@ -80,6 +81,7 @@ queue                                       || music_play         || Same as lis
 next                                        || music_manage_queue || Play next song in queue
 skip                                        || music_manage_queue || Same as next
 shuffle                                     || music_manage_queue || Shuffle queue
+volume 0-100                                || music_manage_queue || Adjust the volume
 info                                        || music_play         || Displaying information about the current song
 off                                         || music_manage_off   || Disconnect from voice channel
 ```
@@ -179,16 +181,17 @@ public class YourModule {
 
 ### ToDo
 Scheduled tasks (sorted by priority) (Target: none)
-- [ ] chat analysis
-    - [ ] passive trigger
-    - [ ] get topic
-    - [ ] get details
-    - [ ] (get language / translate)
-    - [ ] send answer
 - [ ] web interface
 
 
 ### Changelog
+##### 1.1.5.1
+```
+- minor improvements
+- added volume command
+- added ping command
+- updated JDA
+```
 ##### 1.1.5.0
 ```
 - added chat / command cooldown

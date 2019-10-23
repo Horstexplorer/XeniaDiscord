@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.core.localcommands;
 
+import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary;
 import de.netbeacon.xeniadiscord.modulemanagement.GuildModuleProcessor;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
@@ -8,6 +9,7 @@ import de.netbeacon.xeniadiscord.util.twitchwrap.gamecache.TwitchGameCache;
 import de.netbeacon.xeniadiscord.util.twitchwrap.worker.TwitchWorker;
 import de.netbeacon.xeniadiscord.util.webhooks.twitch.TwitchHookManagement;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDAInfo;
 
 public class Info implements LocalCommands {
     @Override
@@ -17,6 +19,8 @@ public class Info implements LocalCommands {
             System.out.println("Xenia - Overview");
             System.out.println("Version: "+new Config().version());
             System.out.println("Guilds: "+jda.getGuilds().size()+" guilds");
+            System.out.println("JDA: "+JDAInfo.VERSION);
+            System.out.println("LavaPlayer: "+PlayerLibrary.VERSION);
             System.out.println("Blacklisted channels:\n " +new BlackListUtility().count()+" channels");
             System.out.println("TwitchWrap:\n "+"Next scheduled key change: "+new TwitchWorker().nextEstKeyChange()+"\n "+new TwitchHookManagement(jda).count()+" TwitchHooks registered\n "+new TwitchGameCache().count()+" games cached");
             System.out.println("Modules:\n " +new GuildModuleProcessor(null).listmodules());

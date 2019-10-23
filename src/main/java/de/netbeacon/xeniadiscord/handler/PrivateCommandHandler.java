@@ -2,6 +2,7 @@ package de.netbeacon.xeniadiscord.handler;
 
 import de.netbeacon.xeniadiscord.commands.privat.Admin;
 import de.netbeacon.xeniadiscord.commands.privat.Help;
+import de.netbeacon.xeniadiscord.commands.privat.Ping;
 import de.netbeacon.xeniadiscord.commands.privat.PrivateCommand;
 import de.netbeacon.xeniadiscord.util.Config;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
@@ -43,6 +44,7 @@ public class PrivateCommandHandler implements Runnable {
         commands.put("info", new Help());
         commands.put("commands", new Help());
         commands.put("admin", new Admin());
+        commands.put("ping", new Ping());
 
     }
 

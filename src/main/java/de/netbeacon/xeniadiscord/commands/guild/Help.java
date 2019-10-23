@@ -1,7 +1,10 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary;
 import de.netbeacon.xeniadiscord.util.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDAInfo;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -9,6 +12,11 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalField;
+import java.util.concurrent.TimeUnit;
 
 public class Help implements GuildCommand {
 
@@ -28,8 +36,8 @@ public class Help implements GuildCommand {
             eb.setTitle("Xenia - Overview", null);
             eb.setColor(Color.RED);
             eb.setDescription("Version: "+ new Config().version());
-            eb.addField("Ping:",event.getJDA().getGatewayPing()+"ms", false);
-            eb.addField("Guilds:",event.getJDA().getGuilds().size()+" guilds", false);
+            eb.addField("JDA:",JDAInfo.VERSION, false);
+            eb.addField("LavaPlayer:",PlayerLibrary.VERSION, false);
             eb.addField("More information:","https://xenia.netbeacon.de" , false);
 
             event.getChannel().sendMessage(eb.build()).queue();
@@ -40,6 +48,7 @@ public class Help implements GuildCommand {
             String default_commands = "**Default Commands:** \n" +
                     "Command                                                   // Permission                   // Description\n" +
                     "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n" +
+                    "ping                                                      // -                            // Pong! \n"+
                     "kick <user>                                               // membermanagement_kick        // Kicks the user from the server\n" +
                     "ban <user>                                                // membermanagement_ban         // Bans the user from the server\n" +
                     "music <command>                                           // -                            // See 'Music Commands'\n" +
@@ -58,6 +67,7 @@ public class Help implements GuildCommand {
                     "next                                        // music_manage_queue           // Play next song in queue\n" +
                     "skip                                        // music_manage_queue           // Same as next\n" +
                     "shuffle                                     // music_manage_queue           // Shuffle queue\n" +
+                    "volume 0-100                                // music_manage_queue           // Adjust the volume\n" +
                     "info                                        // music_play                   // Display information about the current song\n" +
                     "off                                         // music_manage_off             // Disconnect from voice channel\n";
 
