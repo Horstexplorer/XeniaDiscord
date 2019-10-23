@@ -67,6 +67,7 @@ public class Help implements GuildCommand {
                     "next                                        // music_manage_queue           // Play next song in queue\n" +
                     "skip                                        // music_manage_queue           // Same as next\n" +
                     "shuffle                                     // music_manage_queue           // Shuffle queue\n" +
+                    "volume 0-100                                // music_manage_queue           // Adjust the volume\n" +
                     "info                                        // music_play                   // Display information about the current song\n" +
                     "off                                         // music_manage_off             // Disconnect from voice channel\n";
 

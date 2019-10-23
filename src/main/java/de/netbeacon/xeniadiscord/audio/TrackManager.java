@@ -21,12 +21,6 @@ public class TrackManager extends AudioEventAdapter {
         this.queue = new LinkedBlockingQueue<>();
     }
 
-    /**
-     * Reiht den übergebenen Track in die Queue ein.
-     *
-     * @param track  AudioTrack
-     * @param author Member, der den Track eingereiht hat
-     */
     public void queue(AudioTrack track, Member author) {
         AudioInfo info = new AudioInfo(track, author);
         queue.add(info);
@@ -84,4 +78,14 @@ public class TrackManager extends AudioEventAdapter {
         }catch (NullPointerException ignore){
         }
     }
+
+    public void setVolume(int value){
+        if(value <= 100 && value >=0){
+            PLAYER.setVolume(value);
+        }
+    }
+    public int getVolume(){
+        return PLAYER.getVolume();
+    }
+
 }
