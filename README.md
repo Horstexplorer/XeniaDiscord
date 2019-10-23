@@ -1,9 +1,9 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.5.0
+> Current Version: 1.1.5.1
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_52
+> - net.dv8tion JDA -  4.0.0_53
 > - lavaplayer - 1.3.22
 > - slf4j-simple - 1.7.28
 
@@ -183,6 +183,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.5.1
+```
+- updated JDA
+```
 ##### 1.1.5.0
 ```
 - added chat / command cooldown
