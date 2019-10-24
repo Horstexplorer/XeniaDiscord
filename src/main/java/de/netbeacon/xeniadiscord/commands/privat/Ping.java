@@ -4,16 +4,22 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 
 import java.awt.*;
+import java.time.temporal.ChronoUnit;
 
 public class Ping implements PrivateCommand {
     @Override
     public void execute(PrivateMessageReceivedEvent event, String[] args) {
         if(args[0].toLowerCase().equals("ping")){
-            long ping = event.getJDA().getGatewayPing();
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setColor(getColorByPing(ping));
-            eb.setDescription("Pong! "+ping+"ms");
-            event.getChannel().sendMessage(eb.build()).queue();
+            EmbedBuilder ebx = new EmbedBuilder();
+            ebx.setColor(getColorByPing(0));
+            ebx.setDescription("Pong! "+0+"ms");
+            event.getChannel().sendMessage(ebx.build()).queue(m -> {
+                long ping = event.getMessage().getTimeCreated().until(m.getTimeCreated(), ChronoUnit.MILLIS);
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setColor(getColorByPing(ping));
+                eb.setDescription("Pong! "+ping+"ms");
+                m.editMessage(eb.build()).queue();
+            });
         }
     }
 

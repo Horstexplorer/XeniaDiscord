@@ -11,7 +11,10 @@ public class Ping implements GuildCommand {
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("ping")){
-            event.getChannel().sendMessage("ping").queue(m -> {
+            EmbedBuilder ebx = new EmbedBuilder();
+            ebx.setColor(getColorByPing(0));
+            ebx.setDescription("Pong! "+0+"ms");
+            event.getChannel().sendMessage(ebx.build()).queue(m -> {
                 long ping = event.getMessage().getTimeCreated().until(m.getTimeCreated(), ChronoUnit.MILLIS);
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setColor(getColorByPing(ping));
