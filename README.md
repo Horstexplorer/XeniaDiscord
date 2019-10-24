@@ -5,6 +5,7 @@
 > Using  
 > - net.dv8tion JDA -  4.0.0_54
 > - lavaplayer - 1.3.22
+> - jda-nas - 1.1.0
 > - slf4j-simple - 1.7.28
 
 
