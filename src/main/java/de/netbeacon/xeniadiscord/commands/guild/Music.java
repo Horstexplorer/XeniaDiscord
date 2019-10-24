@@ -15,7 +15,6 @@ import de.netbeacon.xeniadiscord.audio.TrackManager;
 import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
 import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -151,6 +150,7 @@ public class Music implements GuildCommand {
         AudioPlayer p = MANAGER.createPlayer();
         TrackManager m = new TrackManager(p);
         p.addListener(m);
+        p.setFrameBufferDuration(2000);
 
         guild.getAudioManager().setSendingHandler(new PlayerSendHandler(p));
 
