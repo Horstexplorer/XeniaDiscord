@@ -15,13 +15,14 @@ import de.netbeacon.xeniadiscord.audio.TrackManager;
 import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
 import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Music implements GuildCommand {
@@ -44,7 +45,11 @@ public class Music implements GuildCommand {
                 if (!(input.startsWith("http://") || input.startsWith("https://")))
                     input = "ytsearch: " + input;
                 loadTrack(input, member, event.getMessage());
-                event.getChannel().sendMessage("Added to queue.").queue();
+                Random random = new Random();
+                event.getChannel().sendMessage(new EmbedBuilder()
+                        .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                        .setDescription("Added to queue.")
+                        .build()).queue();
             }
             if(args[1].toLowerCase().equals("volume") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_queue})){
                 int i = -1;
@@ -53,6 +58,11 @@ public class Music implements GuildCommand {
                 }catch (Exception ignore){}
                 if(i >= 0){
                     setVolume(i, event.getGuild());
+                    Random random = new Random();
+                    event.getChannel().sendMessage(new EmbedBuilder()
+                            .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                            .setDescription("Set volume to "+i)
+                            .build()).queue();
                 }
             }
 
@@ -73,8 +83,10 @@ public class Music implements GuildCommand {
                     trackSublist = tracks;
                 String out = trackSublist.stream().collect(Collectors.joining("\n"));
                 int sideNumbAll = tracks.size() >= 20 ? tracks.size() / 20 : 1;
+                Random random = new Random();
                 event.getChannel().sendMessage(
                         new EmbedBuilder()
+                                .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
                                 .setDescription(
                                         "**CURRENT QUEUE:**\n" +
                                                 "*[ Tracks | Side " + sideNumb + " / " + sideNumbAll + "]*\n" +
@@ -86,14 +98,29 @@ public class Music implements GuildCommand {
             if(args[1].toLowerCase().equals("stop") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_stop})){
                 getManager(guild).purgeQueue();
                 skip(guild);
+                Random random = new Random();
+                event.getChannel().sendMessage(new EmbedBuilder()
+                        .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                        .setDescription("Music stopped")
+                        .build()).queue();
             }
             if((args[1].toLowerCase().equals("next") || args[1].toLowerCase().equals("skip")) && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_queue})){
                 if (isIdle(guild)) return;
                 skip(guild);
+                Random random = new Random();
+                event.getChannel().sendMessage(new EmbedBuilder()
+                        .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                        .setDescription("Track skipped")
+                        .build()).queue();
             }
             if(args[1].toLowerCase().equals("shuffle") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_queue})){
                 if (isIdle(guild)) return;
                 getManager(guild).shuffleQueue();
+                Random random = new Random();
+                event.getChannel().sendMessage(new EmbedBuilder()
+                        .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                        .setDescription("Queue shuffled")
+                        .build()).queue();
             }
             if(args[1].toLowerCase().equals("info") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_play})){
                 if (isIdle(guild)) return;
@@ -101,9 +128,11 @@ public class Music implements GuildCommand {
                 if (isIdle(guild)) return;
                 AudioTrack track = getPlayer(guild).getPlayingTrack();
                 AudioTrackInfo info = track.getInfo();
+                Random random = new Random();
                 event.getChannel().sendMessage(
                         new EmbedBuilder()
                                 .setDescription("**CURRENT TRACK INFO:**")
+                                .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
                                 .addField("Title", info.title, false)
                                 .addField("Author", info.author, false)
                                 .build()
@@ -121,6 +150,7 @@ public class Music implements GuildCommand {
         AudioPlayer p = MANAGER.createPlayer();
         TrackManager m = new TrackManager(p);
         p.addListener(m);
+        p.setFrameBufferDuration(2000);
 
         guild.getAudioManager().setSendingHandler(new PlayerSendHandler(p));
 

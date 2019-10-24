@@ -1,10 +1,11 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.5.1
+> Current Version: 1.1.5.2
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_53
+> - net.dv8tion JDA -  4.0.0_54
 > - lavaplayer - 1.3.22
+> - jda-nas - 1.1.0
 > - slf4j-simple - 1.7.28
 
 
@@ -55,7 +56,7 @@ Commands are divided into two groups: These which are sent in Discord and those 
 
 #### Discord
 Commands start with an indicator configurable via config as 'bot_command_indicator' (default: x!).  
-This list contains only the commands included by default and their required permissions (all require Permission.MESSAGE_WRITE obviously).
+This list contains only the commands included by default and their required extpermissions (not discord permission)  (all require Permission.MESSAGE_WRITE obviously).
 ```
 Command                                                   || Permission                   ||Type     || Description
 
@@ -63,6 +64,8 @@ help                                                      || -                  
 info                                                      || -                            || Global  || Shows some information
 ping                                                      || -                            || Global  || Pong!
 commands                                                  || -                            || Guild   || Displays all commands
+permission                                                || -                            || Guild   || Display link to github
+guide                                                     || -                            || Guild   || Display quick information where to find what about the bot (requires discord permission Administrator or manage_server)
 kick <user>                                               || membermanagement_kick        || Guild   || Kicks the user from the server
 ban <user>                                                || membermanagement_ban         || Guild   || Bans the user from the server
 music <command>                                           || See 'Music Commands          || Guild   || See 'Music Commands
@@ -185,6 +188,14 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.5.2
+```
+- updated JDA
+- various improvements
+- added quick guide (x!guide)
+- added jda-nas
+    fixing some audio lag; you may you may want to change the server region to something less used - helps a lot
+```
 ##### 1.1.5.1
 ```
 - minor improvements

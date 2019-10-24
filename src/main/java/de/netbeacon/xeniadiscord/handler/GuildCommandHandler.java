@@ -46,6 +46,8 @@ public class GuildCommandHandler implements Runnable {
         commands.put("help", new Help());
         commands.put("info", new Help());
         commands.put("commands", new Help());
+        commands.put("permission", new Help());
+        commands.put("guide", new Help());
         commands.put("music", new Music());
         commands.put("kick", new UserManagement());
         commands.put("ban", new UserManagement());

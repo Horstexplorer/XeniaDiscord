@@ -1,7 +1,7 @@
 package de.netbeacon.xeniadiscord.core;
 
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import de.netbeacon.xeniadiscord.listeners.*;
-import de.netbeacon.xeniadiscord.modulemanagement.GuildCoreModuleProcessor;
 import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.AccountType;
@@ -29,6 +29,7 @@ public class XCore implements Runnable{
             jdaBuilder.setActivity(Activity.of(Activity.ActivityType.DEFAULT, config.load("bot_status")));
             jdaBuilder.setAutoReconnect(true);
             jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB); // is set to online after BTM finished init of components
+            jdaBuilder.setAudioSendFactory(new NativeAudioSendFactory());
             addListeners();
             jda = jdaBuilder.build();
             jda.awaitReady();

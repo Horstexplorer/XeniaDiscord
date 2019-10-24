@@ -5,16 +5,19 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
+import java.time.temporal.ChronoUnit;
 
 public class Ping implements GuildCommand {
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("ping")){
-            long ping = event.getJDA().getGatewayPing();
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setColor(getColorByPing(ping));
-            eb.setDescription("Pong! "+ping+"ms");
-            event.getChannel().sendMessage(eb.build()).queue();
+            event.getChannel().sendMessage("ping").queue(m -> {
+                long ping = event.getMessage().getTimeCreated().until(m.getTimeCreated(), ChronoUnit.MILLIS);
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setColor(getColorByPing(ping));
+                eb.setDescription("Pong! "+ping+"ms");
+                m.editMessage(eb.build()).queue();
+            });
         }
     }
 
