@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.tools.PlayerLibrary;
 import de.netbeacon.xeniadiscord.util.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDAInfo;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
@@ -40,17 +41,19 @@ public class Help implements GuildCommand {
             String default_commands = "**Default Commands:** \n" +
                     "Command                                                   // Description\n" +
                     "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n" +
+                    "guide                                                     // Introduction to functions \n"+
+                    "permission                                                // Get information about permissions\n"+
                     "ping                                                      // Pong! \n"+
                     "kick <user>                                               // Kicks the user from the server\n" +
                     "ban <user>                                                // Bans the user from the server\n" +
                     "music <command>                                           // See 'Music Commands'\n" +
                     "ghost <channel> <msg>                                     // Send <msg> as bot to <channel>\n"+
-                    "blacklist <add/remove> <channel>                          // Add <channel> to blacklist so that Xenia neither listen nor respond there\n"+
+                    "blacklist <add/remove> <channel>                          // Add <channel> to blacklist so that Xenia neither listen nor respond there\n";
+            String default_commands_2 =
                     "twitchhook <>                                             // \n"+
                     "           list                                           // Shows all twitchhooks in the current channel \n"+
                     "           add <username> <@everyone> [msg]               // Add twitchhook for channel <username> to current channel; using <@everyone> has to be true or false; [msg] is optional, for custom notification \n"+
-                    "           remove <username>                              // Remove twitchhook for <username> from the current channel \n";
-            String default_commands_2 =
+                    "           remove <username>                              // Remove twitchhook for <username> from the current channel \n"+
                     "extperm <>                                                // \n"+
                     "        add <@role/roleid> <permission1> <permission2> .. // Add permissions to specified role \n"+
                     "        remove <@role/roleid> <permission1> <permi..   .. // Remove permissions from specified role \n"+
@@ -83,6 +86,22 @@ public class Help implements GuildCommand {
             if (!external_commands.equals("")) {
                 event.getChannel().sendMessage("```" + external_commands + "```").queue();
             }
+        }
+        //permission
+        if(args[0].toLowerCase().equals("permission")) {
+            event.getChannel().sendMessage("An overview of the required permissions for the commands can be found here: https://github.com/Horstexplorer/XeniaDiscord#commands").queue();
+        }
+        //setup
+        if(args[0].toLowerCase().equals("guide") && (member.hasPermission(Permission.ADMINISTRATOR) || member.hasPermission(Permission.MANAGE_SERVER))){
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle("Xenia - Instruction");
+            embedBuilder.setDescription("Quick guide to features of Xenia");
+            embedBuilder.addField("Features","Xenia is a chat and music bot which can be extended via plugins",false);
+            embedBuilder.addField("Commands","The bot is controlled by commands. An overview can be found with the command "+new Config().load("bot_command_indicator")+"commands or under -further information-",false);
+            embedBuilder.addField("Permission","Every command requires certain permissions a user must have in order to be able to use it. These can be assigned individually for each role. Nn overview of all permissions can be found under -further information-",false);
+            embedBuilder.addField("Further information","Check out the git: https://github.com/Horstexplorer/XeniaDiscord",false);
+
+            event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
     }
 }
