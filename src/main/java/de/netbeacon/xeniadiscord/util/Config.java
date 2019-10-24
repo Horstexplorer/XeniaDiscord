@@ -135,7 +135,7 @@ public class Config {
 
     public String version() {
         String vers= "1.1.5.2";
-        String build = "1910242154";
+        String build = "1910242322";
         return vers+"-"+build;
     }
 }

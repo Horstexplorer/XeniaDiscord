@@ -193,6 +193,8 @@ Scheduled tasks (sorted by priority) (Target: none)
 - updated JDA
 - various improvements
 - added quick guide (x!guide)
+- added jda-nas
+    fixing some audio lag; you may you may want to change the server region to something less used - helps a lot
 ```
 ##### 1.1.5.1
 ```
