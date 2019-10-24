@@ -1,40 +1,37 @@
 package de.netbeacon.xeniadiscord.audio;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
+import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 
 import java.nio.ByteBuffer;
 
 public class PlayerSendHandler implements AudioSendHandler {
 
+    // example from https://github.com/sedmelluq/lavaplayer/blob/master/demo-jda/src/main/java/com/sedmelluq/discord/lavaplayer/demo/jda/AudioPlayerSendHandler.java
 
     private final AudioPlayer audioPlayer;
-    private AudioFrame lastFrame;
+    private final ByteBuffer buffer;
+    private final MutableAudioFrame frame;
 
     public PlayerSendHandler(AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
+        this.buffer = ByteBuffer.allocate(1024);
+        this.frame = new MutableAudioFrame();
+        this.frame.setBuffer(buffer);
     }
 
     @Override
     public boolean canProvide() {
-        if (lastFrame == null) {
-            lastFrame = audioPlayer.provide();
-        }
-
-        return lastFrame != null;
+        // returns true if audio was provided
+        return audioPlayer.provide(frame);
     }
 
     @Override
     public ByteBuffer provide20MsAudio() {
-        if (lastFrame == null) {
-            lastFrame = audioPlayer.provide();
-        }
-
-        byte[] data = lastFrame != null ? lastFrame.getData() : null;
-        lastFrame = null;
-
-        return ByteBuffer.wrap(data);
+        // flip to make it a read buffer
+        buffer.flip();
+        return buffer;
     }
 
     @Override
