@@ -69,17 +69,20 @@ public class TwitchWorker implements Runnable{
     }
 
     private void checkKey(){
-        if(!twitchKey.get().isvalid()){ // if the key is not valid - if this dont exit our application here, it should be valid or not
-            if(!keyLock.get()){
-                System.out.println("[INFO][TW] TwitchWorker #"+id+" created a lock: key_isinvalid");
-                new Log().addEntry("TW", "[INFO][TW] TwitchWorker #"+id+" created a lock: key_isinvalid", 1);
-                lock(1);
-            }
-            if(isMaster){
-                twitchKey.get().update(); // try updating it - if this dont exit our application here, it could be renewed successfully
-                System.out.println("[INFO][TW] TwitchWorker #"+id+" removed a lock: key_renewed");
-                new Log().addEntry("TW", "[INFO][TW] TwitchWorker #"+id+" removed a lock: key_renewed", 0);
-                unlock(1);
+
+        if(twitchKey.get().isvalid() != null){ // we should be able to check the key, if not - ignore; request may fail but that's fine
+            if(!twitchKey.get().isvalid()){ // if the key is not valid - if this dont exit our application here, it should be valid or not
+                if(!keyLock.get()){
+                    System.out.println("[INFO][TW] TwitchWorker #"+id+" created a lock: key_isinvalid");
+                    new Log().addEntry("TW", "[INFO][TW] TwitchWorker #"+id+" created a lock: key_isinvalid", 1);
+                    lock(1);
+                }
+                if(isMaster){
+                    twitchKey.get().update(); // try updating it - if this dont exit our application here, it could be renewed successfully
+                    System.out.println("[INFO][TW] TwitchWorker #"+id+" removed a lock: key_renewed");
+                    new Log().addEntry("TW", "[INFO][TW] TwitchWorker #"+id+" removed a lock: key_renewed", 0);
+                    unlock(1);
+                }
             }
         }
     }

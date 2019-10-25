@@ -142,12 +142,11 @@ public class TwitchKey {
             }
         }
         new Log().addEntry("TK", "Failed to check whether the bearer is valid or not.", 5);
-        System.exit(0); // exit will prevent undefined errors
-        return null; // we dont get here, for obvious reasons
+        return null; // not able to check the key
     }
 
     public void update(){
-        if((((System.currentTimeMillis()/1000L)+86400) > valid_until) || !isvalid()){   // update if it will be invalid in the next 24h or if we KNOW it is invalid
+        if((((System.currentTimeMillis()/1000L)+86400) > valid_until) || (isvalid() != null && !isvalid())){   // update if it will be invalid in the next 24h or if we KNOW it is invalid
             new Log().addEntry("TK", "Updating bearer token", 0);
             revokebearer(); // it may still be valid so we try to revoke it
             if(requestbearer()){ // request a new one
