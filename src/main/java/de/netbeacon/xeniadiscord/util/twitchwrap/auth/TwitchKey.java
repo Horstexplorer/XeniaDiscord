@@ -75,7 +75,7 @@ public class TwitchKey {
     }
 
     private void revokebearer(){
-        // try up to 5 times to revoke the bearer
+        // try up to 10 times to revoke the bearer
         boolean revoked = false;
         for(int i = 1; i <= 10; i++){
             try{
@@ -100,8 +100,8 @@ public class TwitchKey {
                 new Log().addEntry("TK", "An error occured revoking the bearer token: "+e.toString()+" - Attempt "+i, 4);
             }
             try{
-                // sleep for some time if check failed
-                TimeUnit.MILLISECONDS.sleep(1000+new Random().nextInt(1000));
+                // sleep for some time if failed
+                TimeUnit.MILLISECONDS.sleep(1000+new Random().nextInt(500));
             }catch (Exception ignore){}
         }
         // exit if we couldn't revoke the token
@@ -112,8 +112,8 @@ public class TwitchKey {
     }
 
     public Boolean isvalid(){ // takes ~600ms :o
-        // try checking up to 5 times whether the bearer is valid or not
-        for(int i = 0; i <=4; i++){
+        // try checking up to 30 times whether the bearer is valid or not
+        for(int i = 1; i <=30; i++){
             try{
                 // build connection
                 URL url = new URL("https://id.twitch.tv/oauth2/validate");
@@ -140,6 +140,10 @@ public class TwitchKey {
             }catch (Exception e){
                 new Log().addEntry("TK", "An error occured checking if key is valid: "+e.toString()+" - Attempt "+i, 4);
             }
+            try{
+                // sleep for some time if check failed
+                TimeUnit.MILLISECONDS.sleep(1000+new Random().nextInt(500));
+            }catch (Exception ignore){}
         }
         new Log().addEntry("TK", "Failed to check whether the bearer is valid or not.", 5);
         return null; // not able to check the key
