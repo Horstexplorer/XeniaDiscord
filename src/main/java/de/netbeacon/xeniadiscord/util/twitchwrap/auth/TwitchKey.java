@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class TwitchKey {
 
@@ -75,7 +77,7 @@ public class TwitchKey {
     private void revokebearer(){
         // try up to 5 times to revoke the bearer
         boolean revoked = false;
-        for(int i = 0; i <= 4; i++){
+        for(int i = 1; i <= 10; i++){
             try{
                 URL url = new URL("https://id.twitch.tv/oauth2/revoke?client_id="+twitchConfig.get("twitch_client_id")+"&token="+bearer_token);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -97,6 +99,10 @@ public class TwitchKey {
             }catch (Exception e){
                 new Log().addEntry("TK", "An error occured revoking the bearer token: "+e.toString()+" - Attempt "+i, 4);
             }
+            try{
+                // sleep for some time if check failed
+                TimeUnit.MILLISECONDS.sleep(1000+new Random().nextInt(1000));
+            }catch (Exception ignore){}
         }
         // exit if we couldn't revoke the token
         if(!revoked){
