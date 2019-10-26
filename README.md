@@ -191,6 +191,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 ##### 1.1.5.4
 ```
 - some improvements
+- code for music-bot rewritten
 ```
 ##### 1.1.5.3
 ```
