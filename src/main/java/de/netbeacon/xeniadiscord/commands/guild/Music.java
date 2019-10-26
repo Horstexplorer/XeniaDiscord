@@ -175,16 +175,24 @@ public class Music implements GuildCommand {
             }
             if(args[1].toLowerCase().equals("connect") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_off})){
                 if(!event.getGuild().getAudioManager().isConnected()){
-                    if(args.length > 2){
-                        if(event.getGuild().getVoiceChannelById(args[2]) != null){
-                            event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(args[2]));
-                            getAudioPlayer(event.getGuild());
+                    try{
+                        if(args.length > 2){
+                            if(event.getGuild().getVoiceChannelById(args[2]) != null){
+                                event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(args[2]));
+                                getAudioPlayer(event.getGuild());
+                            }
+                        }else{
+                            if(member.getVoiceState().getChannel() != null){
+                                event.getGuild().getAudioManager().openAudioConnection(member.getVoiceState().getChannel());
+                                getAudioPlayer(event.getGuild());
+                            }
                         }
-                    }else{
-                        if(member.getVoiceState().getChannel() != null){
-                            event.getGuild().getAudioManager().openAudioConnection(member.getVoiceState().getChannel());
-                            getAudioPlayer(event.getGuild());
-                        }
+                    }catch (Exception e){
+                        Random random = new Random();
+                        event.getChannel().sendMessage(new EmbedBuilder()
+                                .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                                .setDescription("Could not connect to voice. Make sure you are connected to a voice channel where I can join (or try connecting me manually)")
+                                .build()).queue();
                     }
                 }
             }
@@ -210,7 +218,6 @@ public class Music implements GuildCommand {
         p.addListener(m);
         guild.getAudioManager().setSendingHandler(new PlayerSendHandler(p));
         PLAYERS.get().put(guild, new AudioPackage(p, m, guild));
-        System.out.println(PLAYERS.get().size());
 
         return p;
     }
