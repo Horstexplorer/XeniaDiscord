@@ -29,7 +29,7 @@ public class XCore implements Runnable{
             jdaBuilder.setActivity(Activity.of(Activity.ActivityType.DEFAULT, config.load("bot_status")));
             jdaBuilder.setAutoReconnect(true);
             jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB); // is set to online after BTM finished init of components
-            jdaBuilder.setAudioSendFactory(new NativeAudioSendFactory());
+            jdaBuilder.setAudioSendFactory(new NativeAudioSendFactory(2000));
             addListeners();
             jda = jdaBuilder.build();
             jda.awaitReady();
