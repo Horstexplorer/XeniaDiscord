@@ -269,6 +269,7 @@ public class TwitchHookManagement {
                                             message = message.replace("%lname%", thos.getChannelName());
                                             message = message.replace("%game%", game);
                                             message = message.replace("%title%", thos.getTitle());
+                                            message = message.replace("\\n", "\n");
                                             message += "["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")"; // add link to stream
                                             eb.setDescription(message);
 

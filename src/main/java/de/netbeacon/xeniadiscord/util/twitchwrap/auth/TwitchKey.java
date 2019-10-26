@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class TwitchKey {
 
@@ -73,9 +75,9 @@ public class TwitchKey {
     }
 
     private void revokebearer(){
-        // try up to 5 times to revoke the bearer
+        // try up to 10 times to revoke the bearer
         boolean revoked = false;
-        for(int i = 0; i <= 4; i++){
+        for(int i = 1; i <= 10; i++){
             try{
                 URL url = new URL("https://id.twitch.tv/oauth2/revoke?client_id="+twitchConfig.get("twitch_client_id")+"&token="+bearer_token);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -97,6 +99,10 @@ public class TwitchKey {
             }catch (Exception e){
                 new Log().addEntry("TK", "An error occured revoking the bearer token: "+e.toString()+" - Attempt "+i, 4);
             }
+            try{
+                // sleep for some time if failed
+                TimeUnit.MILLISECONDS.sleep(1000+new Random().nextInt(500));
+            }catch (Exception ignore){}
         }
         // exit if we couldn't revoke the token
         if(!revoked){
@@ -106,8 +112,8 @@ public class TwitchKey {
     }
 
     public Boolean isvalid(){ // takes ~600ms :o
-        // try checking up to 5 times whether the bearer is valid or not
-        for(int i = 0; i <=4; i++){
+        // try checking up to 30 times whether the bearer is valid or not
+        for(int i = 1; i <=30; i++){
             try{
                 // build connection
                 URL url = new URL("https://id.twitch.tv/oauth2/validate");
@@ -134,14 +140,17 @@ public class TwitchKey {
             }catch (Exception e){
                 new Log().addEntry("TK", "An error occured checking if key is valid: "+e.toString()+" - Attempt "+i, 4);
             }
+            try{
+                // sleep for some time if check failed
+                TimeUnit.MILLISECONDS.sleep(1000+new Random().nextInt(500));
+            }catch (Exception ignore){}
         }
         new Log().addEntry("TK", "Failed to check whether the bearer is valid or not.", 5);
-        System.exit(0); // exit will prevent undefined errors
-        return null; // we dont get here, for obvious reasons
+        return null; // not able to check the key
     }
 
     public void update(){
-        if((((System.currentTimeMillis()/1000L)+86400) > valid_until) || !isvalid()){   // update if it will be invalid in the next 24h or if we KNOW it is invalid
+        if((((System.currentTimeMillis()/1000L)+86400) > valid_until) || (isvalid() != null && !isvalid())){   // update if it will be invalid in the next 24h or if we KNOW it is invalid
             new Log().addEntry("TK", "Updating bearer token", 0);
             revokebearer(); // it may still be valid so we try to revoke it
             if(requestbearer()){ // request a new one

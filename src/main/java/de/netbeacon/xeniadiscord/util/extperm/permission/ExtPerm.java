@@ -12,7 +12,7 @@ public class ExtPerm {
     public static ExtPerm music_stop = new ExtPerm(12);                   // stop
     public static ExtPerm music_manage_queue = new ExtPerm(13);           // skip, shuffle etc
     public static ExtPerm music_manage_off = new ExtPerm(14);             // off
-    // mamber
+    // member
     public static ExtPerm membermanagement_all = new ExtPerm(20);             // all membermanagement permission
     public static ExtPerm membermanagement_kick = new ExtPerm(21);        // kick member
     public static ExtPerm membermanagement_ban = new ExtPerm(22);         // ban member
