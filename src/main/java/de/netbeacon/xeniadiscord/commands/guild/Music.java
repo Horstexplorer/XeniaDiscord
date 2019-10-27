@@ -47,34 +47,43 @@ public class Music implements GuildCommand {
             if(args[1].toLowerCase().equals("play") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_play})){
                 if(!event.getGuild().getAudioManager().isConnected()){
                     // try connect
-                    if(member.getVoiceState().getChannel() != null){
-                        try{
-                            event.getGuild().getAudioManager().openAudioConnection(member.getVoiceState().getChannel());
-                            getAudioPlayer(event.getGuild());
+                    if(new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_play})){
+                        if(member.getVoiceState().getChannel() != null){
+                            try{
+                                event.getGuild().getAudioManager().openAudioConnection(member.getVoiceState().getChannel());
+                                getAudioPlayer(event.getGuild());
 
-                            String input = Arrays.stream(args).skip(2).map(s -> " " + s).collect(Collectors.joining()).substring(1);
-                            if (!(input.startsWith("http://") || input.startsWith("https://")))
-                                input = "ytsearch: " + input;
-                            loadTrack(input, event.getGuild());
+                                String input = Arrays.stream(args).skip(2).map(s -> " " + s).collect(Collectors.joining()).substring(1);
+                                if (!(input.startsWith("http://") || input.startsWith("https://")))
+                                    input = "ytsearch: " + input;
+                                loadTrack(input, event.getGuild());
+                                Random random = new Random();
+                                event.getChannel().sendMessage(new EmbedBuilder()
+                                        .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                                        .setDescription("Added to queue.")
+                                        .build()).queue();
+                            }catch (Exception e){
+                                Random random = new Random();
+                                event.getChannel().sendMessage(new EmbedBuilder()
+                                        .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
+                                        .setDescription("Could not connect to voice. Please check my permissions.")
+                                        .build()).queue();
+                            }
+                        }else{
                             Random random = new Random();
                             event.getChannel().sendMessage(new EmbedBuilder()
                                     .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
-                                    .setDescription("Added to queue.")
-                                    .build()).queue();
-                        }catch (Exception e){
-                            Random random = new Random();
-                            event.getChannel().sendMessage(new EmbedBuilder()
-                                    .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
-                                    .setDescription("Could not connect to voice. Please check my permissions.")
+                                    .setDescription("Could not connect to voice. Make sure you are connected to a voice channel where I can join (or try connecting me manually)")
                                     .build()).queue();
                         }
                     }else{
                         Random random = new Random();
                         event.getChannel().sendMessage(new EmbedBuilder()
                                 .setColor(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()).brighter())
-                                .setDescription("Could not connect to voice. Make sure you are connected to a voice channel where I can join (or try connecting me manually)")
+                                .setDescription("Could not connect to voice. You don't have the necessary permissions to connect me to a voice channel.")
                                 .build()).queue();
                     }
+
                 }else{
                     String input = Arrays.stream(args).skip(2).map(s -> " " + s).collect(Collectors.joining()).substring(1);
                     if (!(input.startsWith("http://") || input.startsWith("https://")))
@@ -173,7 +182,7 @@ public class Music implements GuildCommand {
                         .setDescription("Music stopped")
                         .build()).queue();
             }
-            if(args[1].toLowerCase().equals("connect") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_off})){
+            if(args[1].toLowerCase().equals("connect") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_connection})){
                 if(!event.getGuild().getAudioManager().isConnected()){
                     try{
                         if(args.length > 2){
@@ -196,7 +205,7 @@ public class Music implements GuildCommand {
                     }
                 }
             }
-            if(args[1].toLowerCase().equals("disconnect") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_off})){
+            if(args[1].toLowerCase().equals("disconnect") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_connection})){
                 getTrackManager(event.getGuild()).purgeQueue();
                 skip(event.getGuild());
                 event.getGuild().getAudioManager().closeAudioConnection();
