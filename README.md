@@ -192,6 +192,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 ##### 1.1.5.5
 ```
 - minor improvements
+- improved music handling
 ```
 ##### 1.1.5.4
 ```
