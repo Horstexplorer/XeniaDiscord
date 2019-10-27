@@ -94,7 +94,7 @@ public class ExtPermManager {
             case "music_manage_queue":
                 return ExtPerm.music_manage_queue;
             case "music_manage_off":
-                return ExtPerm.music_manage_off;
+                return ExtPerm.music_manage_connection;
             case "membermanagement_all":
                 return ExtPerm.membermanagement_all;
             case "membermanagement_kick":
@@ -126,7 +126,7 @@ public class ExtPermManager {
             case 13:
                 return "music_manage_queue";
             case 14:
-                return "music_manage_off";
+                return "music_manage_connection";
             case 20:
                 return "membermanagement_all";
             case 21:
@@ -158,7 +158,7 @@ public class ExtPermManager {
             case 13:
                 return ExtPerm.music_manage_queue;
             case 14:
-                return ExtPerm.music_manage_off;
+                return ExtPerm.music_manage_connection;
             case 20:
                 return ExtPerm.membermanagement_all;
             case 21:

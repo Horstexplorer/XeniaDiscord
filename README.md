@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.5.4
+> Current Version: 1.1.5.5
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_54
@@ -77,16 +77,17 @@ extperm <add/remove/list> <permission1> <permission2> ... || permission_manage  
 ```
 Commands to control music functions:
 ```
-play <url>                                  || music_play         || Add the song to the queue
-stop                                        || music_stop         || Stops the playback and deletes the queue
-list                                        || music_play         || Display songs in queue
-queue                                       || music_play         || Same as list
-next                                        || music_manage_queue || Play next song in queue
-skip                                        || music_manage_queue || Same as next
-shuffle                                     || music_manage_queue || Shuffle queue
-volume 0-100                                || music_manage_queue || Adjust the volume
-info                                        || music_play         || Displaying information about the current song
-off                                         || music_manage_off   || Disconnect from voice channel
+play <url>                                  || music_play              || Add the song to the queue
+stop                                        || music_stop              || Stops the playback and deletes the queue
+list                                        || music_play              || Display songs in queue
+queue                                       || music_play              || Same as list
+next                                        || music_manage_queue      || Play next song in queue
+skip                                        || music_manage_queue      || Same as next
+shuffle                                     || music_manage_queue      || Shuffle queue
+volume 0-100                                || music_manage_queue      || Adjust the volume
+info                                        || music_play              || Displaying information about the current song
+connect <channelid>                         || music_manage_connection || Connect to your current voice channel or the channel specified by id
+disconnect                                  || music_manage_connection || Disconnect from voice
 ```
 Commands limited to admin user (bot_admin_id) (type: private)
 ```
@@ -188,6 +189,11 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.5.5
+```
+- minor improvements
+- improved music handling
+```
 ##### 1.1.5.4
 ```
 - some improvements
