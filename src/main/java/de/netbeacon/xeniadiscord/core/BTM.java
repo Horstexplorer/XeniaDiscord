@@ -1,5 +1,6 @@
 package de.netbeacon.xeniadiscord.core;
 
+import de.netbeacon.xeniadiscord.audio.MusicManager;
 import de.netbeacon.xeniadiscord.modulemanagement.loader.CoreModuleLoader;
 import de.netbeacon.xeniadiscord.modulemanagement.loader.ModuleLoader;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
@@ -57,6 +58,8 @@ public class BTM implements Runnable{
             new TwitchGameCache();
             // init twitchhooks
             new TwitchHookManagement(jda);
+            // init music manager
+            new MusicManager();
         }catch (Exception e){
             e.printStackTrace();
             new Log().addEntry("BTM", "Init failed: "+e, 5);
