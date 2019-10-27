@@ -19,12 +19,24 @@ public class MusicManager {
     private static final AudioPlayerManager MANAGER = new DefaultAudioPlayerManager();
     private static AtomicReference<HashMap<Guild, AudioPackage>> PLAYERS = new AtomicReference<HashMap<Guild, AudioPackage>>();
 
-    public MusicManager(){
-        if(PLAYERS.get() == null){
+    public MusicManager(){}
+
+    public MusicManager(boolean init){
+        if(init && PLAYERS.get() == null){
             System.out.println("[INFO] Init MusicManager");
             AudioSourceManagers.registerRemoteSources(MANAGER);
             PLAYERS.set(new HashMap<Guild, AudioPackage>());
         }
+    }
+
+    public void createAudioPlayer(Guild guild){
+        // create new
+        AudioPlayer p = MANAGER.createPlayer();
+        p.setFrameBufferDuration(2000);
+        TrackManager m = new TrackManager(p);
+        p.addListener(m);
+        guild.getAudioManager().setSendingHandler(new PlayerSendHandler(p));
+        PLAYERS.get().put(guild, new AudioPackage(p, m, guild));
     }
 
     public AudioPlayer getAudioPlayer(Guild guild){
@@ -32,15 +44,7 @@ public class MusicManager {
         if(PLAYERS.get().containsKey(guild)){
             return PLAYERS.get().get(guild).getAudioPlayer();
         }
-        // create new
-        AudioPlayer p = MANAGER.createPlayer();
-        p.setFrameBufferDuration(2000);
-        TrackManager m = new TrackManager(p, guild);
-        p.addListener(m);
-        guild.getAudioManager().setSendingHandler(new PlayerSendHandler(p));
-        PLAYERS.get().put(guild, new AudioPackage(p, m, guild));
-
-        return p;
+        return null;
     }
 
     public boolean hasAudioPlayer(Guild guild){

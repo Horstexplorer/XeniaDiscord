@@ -59,7 +59,7 @@ public class BTM implements Runnable{
             // init twitchhooks
             new TwitchHookManagement(jda);
             // init music manager
-            new MusicManager();
+            new MusicManager(true);
         }catch (Exception e){
             e.printStackTrace();
             new Log().addEntry("BTM", "Init failed: "+e, 5);

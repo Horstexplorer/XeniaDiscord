@@ -36,7 +36,6 @@ public class Music implements GuildCommand {
                         if(member.getVoiceState().getChannel() != null){
                             try{
                                 event.getGuild().getAudioManager().openAudioConnection(member.getVoiceState().getChannel());
-                                musicManager.getAudioPlayer(event.getGuild());
 
                                 String input = Arrays.stream(args).skip(2).map(s -> " " + s).collect(Collectors.joining()).substring(1);
                                 if (!(input.startsWith("http://") || input.startsWith("https://")))
@@ -173,12 +172,10 @@ public class Music implements GuildCommand {
                         if(args.length > 2){
                             if(event.getGuild().getVoiceChannelById(args[2]) != null){
                                 event.getGuild().getAudioManager().openAudioConnection(event.getGuild().getVoiceChannelById(args[2]));
-                                musicManager.getAudioPlayer(event.getGuild());
                             }
                         }else{
                             if(member.getVoiceState().getChannel() != null){
                                 event.getGuild().getAudioManager().openAudioConnection(member.getVoiceState().getChannel());
-                                musicManager.getAudioPlayer(event.getGuild());
                             }
                         }
                     }catch (Exception e){
@@ -191,8 +188,6 @@ public class Music implements GuildCommand {
                 }
             }
             if(args[1].toLowerCase().equals("disconnect") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_manage_connection})){
-                musicManager.getTrackManager(event.getGuild()).purgeQueue();
-                musicManager.skip(event.getGuild());
                 event.getGuild().getAudioManager().closeAudioConnection();
             }
         }

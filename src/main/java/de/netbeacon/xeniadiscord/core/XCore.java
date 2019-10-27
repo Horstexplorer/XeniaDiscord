@@ -2,6 +2,7 @@ package de.netbeacon.xeniadiscord.core;
 
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import de.netbeacon.xeniadiscord.listeners.*;
+import de.netbeacon.xeniadiscord.listeners.VoiceListener;
 import de.netbeacon.xeniadiscord.util.Config;
 import de.netbeacon.xeniadiscord.util.log.Log;
 import net.dv8tion.jda.api.AccountType;
@@ -55,6 +56,7 @@ public class XCore implements Runnable{
         jdaBuilder.addEventListeners(new GuildMessageListener());
         jdaBuilder.addEventListeners(new GuildCommandListener());
         jdaBuilder.addEventListeners(new GuildMemberJoinListener());
+        jdaBuilder.addEventListeners(new VoiceListener()); // !not! initializing MusicManager
     }
 
     private void startBTM(){
