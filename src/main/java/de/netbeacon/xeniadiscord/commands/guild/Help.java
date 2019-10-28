@@ -76,7 +76,8 @@ public class Help implements GuildCommand {
                     "shuffle                                     // Shuffle queue\n" +
                     "volume <0-100>                              // Adjust the volume\n" +
                     "info                                        // Display information about the current song\n" +
-                    "off                                         // Disconnect from voice channel\n";
+                    "connect <channelid>                         // Connect to your current voice channel or the channel specified by id\n" +
+                    "disconnect                                  // Disconnect from voice channel\n";
 
             String external_commands = "";
             try {
