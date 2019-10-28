@@ -93,9 +93,8 @@ Commands limited to admin user (bot_admin_id) (type: private)
 ```
 admin status                                || advanced status
 admin shutdown                              || shutdown bot
+admin broadcast <msg>                       || broadcast message to all avaible default text channels
 admin onlinestatus <idle/on>                || set onlinestatus to dnd, idle or online
-admin blacklistforcesave                    || force saving the blacklist
-admin twitchhookforcesave                   || force saving the twitchhooks
 admin updateconfig <prop> <val>             || update config property to value
 admin log <listerrors/export/reset>         || list last 10 errors; export the log; reset log
 ```
@@ -192,6 +191,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 ##### 1.1.6.1
 ```
 - minor permission improvement
+- removed unnecessary admin commands
 ```
 ##### 1.1.6.0
 ```

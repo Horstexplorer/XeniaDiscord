@@ -41,22 +41,6 @@ public class Admin implements PrivateCommand {
                         }
                     }
                 }
-                // force blacklist save
-                if(args[1].toLowerCase().equals("blacklistforcesave")){
-                    if(!new BlackListUtility().writetofile()){
-                        event.getChannel().sendMessage("Saving blacklist failed.").queue();
-                    }else{
-                        event.getChannel().sendMessage("Blacklist saved successfully.").queue();
-                    }
-                }
-                // force webhooks save
-                if(args[1].toLowerCase().equals("twitchhookforcesave")){
-                    if(!new TwitchHookManagement(event.getJDA()).writetofile()){
-                        event.getChannel().sendMessage("Saving TwitchHooks failed.").queue();
-                    }else{
-                        event.getChannel().sendMessage("TwitchHooks saved successfully.").queue();
-                    }
-                }
                 // update config property values
                 if(args[1].toLowerCase().equals("config")){
                     if (args.length>3){
