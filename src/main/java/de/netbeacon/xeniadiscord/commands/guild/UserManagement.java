@@ -25,11 +25,7 @@ public class UserManagement implements GuildCommand {
                 if(event.getMessage().getMentionedUsers().size() > 0){
                     args[1] = event.getMessage().getMentionedUsers().get(0).getId();
                 }
-                if(event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)){    // bot needs permission
-                    event.getGuild().kick(args[1]).queue();
-                }else{
-                    event.getChannel().sendMessage("I can't do that.").queue();
-                }
+                event.getGuild().kick(args[1]).queue();
             }else{
                 event.getChannel().sendMessage("Command requires 1 argument (user)").queue();
             }
@@ -44,11 +40,7 @@ public class UserManagement implements GuildCommand {
                 try{
                     deldays = Integer.parseInt(args[2]);
                 }catch (Exception ignore){}
-                if(event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)){
-                    event.getGuild().ban(args[1], deldays).queue();
-                }else{
-                    event.getChannel().sendMessage("I can't do that.").queue();
-                }
+                event.getGuild().ban(args[1], deldays).queue();
             }else{
                 event.getChannel().sendMessage("Command requires 2 arguments (user, deletetime)").queue();
             }
