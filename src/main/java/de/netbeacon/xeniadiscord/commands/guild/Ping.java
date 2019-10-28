@@ -25,25 +25,25 @@ public class Ping implements GuildCommand {
     }
 
     private Color getColorByPing(long ping) {
-        if (ping < 25)
+        if (ping < 50)
             return new Color( 0,  239,  255);
-        else if (ping < 50)
-            return new Color( 0,  255,  200);
-        else if (ping < 75)
-            return new Color( 0,  255,  128);
         else if (ping < 100)
-            return new Color( 0,  255,  0);
+            return new Color( 0,  255,  200);
         else if (ping < 125)
-            return new Color( 128,  255,  0);
+            return new Color( 0,  255,  128);
         else if (ping < 150)
-            return new Color( 180,  255,  0);
+            return new Color( 0,  255,  0);
         else if (ping < 175)
-            return new Color( 255,  255,  0);
+            return new Color( 128,  255,  0);
         else if (ping < 200)
-            return new Color( 255,  200,  0);
+            return new Color( 180,  255,  0);
         else if (ping < 250)
-            return new Color( 255,  175,  0);
+            return new Color( 255,  255,  0);
         else if (ping < 300)
+            return new Color( 255,  200,  0);
+        else if (ping < 350)
+            return new Color( 255,  175,  0);
+        else if (ping < 400)
             return new Color( 255,  150,  0);
         else if (ping < 500)
             return new Color( 255,  100,  0);
