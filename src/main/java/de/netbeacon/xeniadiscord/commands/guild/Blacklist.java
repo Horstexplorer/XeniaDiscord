@@ -7,16 +7,13 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.util.Objects;
+
 public class Blacklist implements GuildCommand{
 
     @Override
     public Permission[] bot_getReqPermissions() {
         return new Permission[]{Permission.MESSAGE_WRITE};
-    }
-
-    @Override
-    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
-        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
     }
 
     @Override
@@ -29,7 +26,7 @@ public class Blacklist implements GuildCommand{
                 switch(args[1].toLowerCase()){
                     case "remove":
                         // check if user is allowed to modify this channel (and is currently in the specific guild)
-                        if(member.hasPermission(member.getGuild().getTextChannelById(channel), Permission.MANAGE_CHANNEL)){
+                        if(member.hasPermission(Objects.requireNonNull(member.getGuild().getTextChannelById(channel)), Permission.MANAGE_CHANNEL)){
                             // remove channel from blacklist
                             if(new BlackListUtility().remove(channel)){
                                 event.getChannel().sendMessage("Channel removed from blacklist.").queue();
@@ -40,7 +37,7 @@ public class Blacklist implements GuildCommand{
                         break;
                     case  "add":
                         // check if user is allowed to modify this channel (and is currently in the specific guild)
-                        if(member.hasPermission(member.getGuild().getTextChannelById(channel), Permission.MANAGE_CHANNEL)){
+                        if(member.hasPermission(Objects.requireNonNull(member.getGuild().getTextChannelById(channel)), Permission.MANAGE_CHANNEL)){
                             // add channel to blacklist
                             if(new BlackListUtility().add(channel)){
                                 event.getChannel().sendMessage("Channel added to blacklist.").queue();

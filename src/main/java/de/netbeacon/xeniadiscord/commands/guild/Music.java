@@ -33,11 +33,6 @@ public class Music implements GuildCommand {
     }
 
     @Override
-    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
-        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args.length > 2){
             if(args[1].toLowerCase().equals("play") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.music_all, ExtPerm.music_play})){

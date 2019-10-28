@@ -15,11 +15,6 @@ public class TwitchHook implements GuildCommand {
     }
 
     @Override
-    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
-        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("twitchhook") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.twitchhooks_manage})){
             if(args.length > 1){

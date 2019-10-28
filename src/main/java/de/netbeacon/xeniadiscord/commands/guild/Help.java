@@ -19,11 +19,6 @@ public class Help implements GuildCommand {
     }
 
     @Override
-    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
-        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         //help
         if(args[0].toLowerCase().equals("help")){

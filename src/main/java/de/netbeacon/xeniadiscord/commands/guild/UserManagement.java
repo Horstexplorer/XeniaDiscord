@@ -14,11 +14,6 @@ public class UserManagement implements GuildCommand {
     }
 
     @Override
-    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
-        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("kick") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.membermanagement_all, ExtPerm.membermanagement_kick})){  // user needs one of those permission
             if(args.length > 1){

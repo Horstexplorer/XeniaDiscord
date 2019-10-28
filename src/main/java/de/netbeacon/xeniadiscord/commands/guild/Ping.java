@@ -16,11 +16,6 @@ public class Ping implements GuildCommand {
     }
 
     @Override
-    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
-        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
-    }
-
-    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("ping")){
             EmbedBuilder ebx = new EmbedBuilder();
