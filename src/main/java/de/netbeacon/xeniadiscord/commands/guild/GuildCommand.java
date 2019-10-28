@@ -8,7 +8,7 @@ public interface GuildCommand {
 
     Permission[] bot_getReqPermissions();
 
-    boolean bot_hasPermissions(GuildMessageReceivedEvent event);
+    default boolean bot_hasPermissions(GuildMessageReceivedEvent event){ return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions()); };
 
     void execute(GuildMessageReceivedEvent event, Member member, String[] args);
 
