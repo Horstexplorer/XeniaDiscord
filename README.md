@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.5.5
+> Current Version: 1.1.5.6
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_54
@@ -189,6 +189,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.5.6
+```
+- changed color - ping ratio
+```
 ##### 1.1.5.5
 ```
 - minor improvements
