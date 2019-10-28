@@ -10,6 +10,11 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class TwitchHook implements GuildCommand {
 
     @Override
+    public Permission[] bot_getReqPermissions() {
+        return new Permission[]{Permission.MESSAGE_WRITE};
+    }
+
+    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("twitchhook") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.twitchhooks_manage})){
             if(args.length > 1){
@@ -60,7 +65,7 @@ public class TwitchHook implements GuildCommand {
                         }
                     }
                 }else {
-                    event.getChannel().sendMessage("Command requires 3 arguments (<add> <twitchchannelname> <boolean for @everyone> [notification] OR <remove> <twitchchannelname>K)").queue();
+                    event.getChannel().sendMessage("Command requires 3 arguments (<add> <twitchchannelname> <boolean for @everyone> [notification] OR <remove> <twitchchannelname>)").queue();
                 }
             }else {
                 event.getChannel().sendMessage("Command requires more arguments (<add/remove/list>)").queue();
