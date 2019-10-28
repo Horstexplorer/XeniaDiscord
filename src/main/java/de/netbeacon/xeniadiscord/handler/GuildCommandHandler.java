@@ -40,7 +40,7 @@ public class GuildCommandHandler implements Runnable {
                     commands.get(args[0]).execute(event,member,args);
                 }else{
                     // missing permissions
-                    event.getChannel().sendMessage("Missing permissions. Required: "+Arrays.toString(commands.get(args[0]).bot_getReqPermissions())).queue();
+                    event.getChannel().sendMessage("I am missing some permissions to execute a command from this command group. I need these permissions: "+Arrays.toString(commands.get(args[0]).bot_getReqPermissions())).queue();
                 }
             }else{
                 // unknown command
