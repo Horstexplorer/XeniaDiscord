@@ -198,7 +198,6 @@ public class Music implements GuildCommand {
             }
         }
 
-        event.getMessage().delete().queueAfter(10, TimeUnit.SECONDS);
     }
 
 }
