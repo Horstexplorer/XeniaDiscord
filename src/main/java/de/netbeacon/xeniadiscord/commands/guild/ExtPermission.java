@@ -33,7 +33,7 @@ public class ExtPermission implements GuildCommand {
                     }
                     if(role != null){
                         // check permission (same guild, admin or manage_perm permission in this guild)
-                        if((role.getGuild().getId().equals(member.getGuild().getId()))&&(member.hasPermission(Permission.MANAGE_PERMISSIONS) || member.hasPermission(Permission.ADMINISTRATOR))){
+                        if((role.getGuild().getId().equals(member.getGuild().getId()))){
                             // add values to role
                             ExtPerm[] epa = new ExtPerm[args.length-3];
                             for(int i = 0; i < args.length-3; i++){
@@ -58,7 +58,7 @@ public class ExtPermission implements GuildCommand {
                     }
                     if(role != null){
                         // check permission (same guild, admin or manage_perm permission in this guild)
-                        if((role.getGuild().getId().equals(member.getGuild().getId()))&&(member.hasPermission(Permission.MANAGE_PERMISSIONS) || member.hasPermission(Permission.ADMINISTRATOR))){
+                        if((role.getGuild().getId().equals(member.getGuild().getId()))){
                             // add remove values from role
                             ExtPerm[] epa = new ExtPerm[args.length-3];
                             for(int i = 0; i < args.length-3; i++){
@@ -89,7 +89,7 @@ public class ExtPermission implements GuildCommand {
                     }
                     if(role != null){
                         // check permission (same guild, admin or manage_perm permission in this guild)
-                        if((role.getGuild().getId().equals(member.getGuild().getId()))&&(member.hasPermission(Permission.MANAGE_PERMISSIONS) || member.hasPermission(Permission.ADMINISTRATOR))){
+                        if((role.getGuild().getId().equals(member.getGuild().getId()))){
                             // list permission
                             event.getChannel().sendMessage("Permissions for role "+role.getName()+" : "+new ExtPermManager().listPermission(role)).queue();
                         }else{
