@@ -9,6 +9,16 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class UserManagement implements GuildCommand {
 
     @Override
+    public Permission[] bot_getReqPermissions() {
+        return new Permission[]{Permission.KICK_MEMBERS, Permission.BAN_MEMBERS};
+    }
+
+    @Override
+    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
+        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
+    }
+
+    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("kick") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.membermanagement_all, ExtPerm.membermanagement_kick})){  // user needs one of those permission
             if(args.length > 1){
@@ -18,7 +28,7 @@ public class UserManagement implements GuildCommand {
                 if(event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)){    // bot needs permission
                     event.getGuild().kick(args[1]).queue();
                 }else{
-                    event.getChannel().sendMessage("I can't do that.");
+                    event.getChannel().sendMessage("I can't do that.").queue();
                 }
             }else{
                 event.getChannel().sendMessage("Command requires 1 argument (user)").queue();
@@ -37,7 +47,7 @@ public class UserManagement implements GuildCommand {
                 if(event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)){
                     event.getGuild().ban(args[1], deldays).queue();
                 }else{
-                    event.getChannel().sendMessage("I can't do that.");
+                    event.getChannel().sendMessage("I can't do that.").queue();
                 }
             }else{
                 event.getChannel().sendMessage("Command requires 2 arguments (user, deletetime)").queue();

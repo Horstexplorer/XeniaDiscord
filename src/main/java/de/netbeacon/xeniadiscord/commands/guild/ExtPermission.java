@@ -11,6 +11,16 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class ExtPermission implements GuildCommand {
 
     @Override
+    public Permission[] bot_getReqPermissions() {
+        return new Permission[]{Permission.MESSAGE_WRITE};
+    }
+
+    @Override
+    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
+        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
+    }
+
+    @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("extperm") && (new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.permission_manage}) || member.hasPermission(Permission.MANAGE_PERMISSIONS) || member.hasPermission(Permission.ADMINISTRATOR))){
 

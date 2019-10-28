@@ -5,6 +5,8 @@ import de.netbeacon.xeniadiscord.util.Config;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class GuildCommandHandler implements Runnable {
@@ -32,8 +34,14 @@ public class GuildCommandHandler implements Runnable {
             registercommands();
             // check if requested command exists
             if(commands.containsKey(args[0])){
-                //execute command
-                commands.get(args[0]).execute(event,member,args);
+                // check permissions
+                if(commands.get(args[0]).bot_hasPermissions(event)){
+                    //execute command
+                    commands.get(args[0]).execute(event,member,args);
+                }else{
+                    // missing permissions
+                    event.getChannel().sendMessage("Missing permissions. Required: "+Arrays.toString(commands.get(args[0]).bot_getReqPermissions())).queue();
+                }
             }else{
                 // unknown command
                 event.getChannel().sendMessage("Unknown command. \n Try "+config.load("bot_command_indicator")+"commands for a list of some commands.").queue();

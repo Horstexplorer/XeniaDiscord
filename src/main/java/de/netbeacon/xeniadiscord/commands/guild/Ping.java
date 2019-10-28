@@ -1,6 +1,7 @@
 package de.netbeacon.xeniadiscord.commands.guild;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -8,6 +9,17 @@ import java.awt.*;
 import java.time.temporal.ChronoUnit;
 
 public class Ping implements GuildCommand {
+
+    @Override
+    public Permission[] bot_getReqPermissions() {
+        return new Permission[]{Permission.MESSAGE_WRITE};
+    }
+
+    @Override
+    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
+        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
+    }
+
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
         if(args[0].toLowerCase().equals("ping")){

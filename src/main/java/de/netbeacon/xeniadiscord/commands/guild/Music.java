@@ -6,6 +6,7 @@ import de.netbeacon.xeniadiscord.audio.MusicManager;
 import de.netbeacon.xeniadiscord.util.extperm.ExtPermManager;
 import de.netbeacon.xeniadiscord.util.extperm.permission.ExtPerm;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -24,6 +25,16 @@ public class Music implements GuildCommand {
         if(musicManager == null){
             musicManager = new MusicManager();
         }
+    }
+
+    @Override
+    public Permission[] bot_getReqPermissions() {
+        return new Permission[]{Permission.VOICE_CONNECT, Permission.MESSAGE_MANAGE};
+    }
+
+    @Override
+    public boolean bot_hasPermissions(GuildMessageReceivedEvent event) {
+        return event.getGuild().getSelfMember().hasPermission(bot_getReqPermissions());
     }
 
     @Override
