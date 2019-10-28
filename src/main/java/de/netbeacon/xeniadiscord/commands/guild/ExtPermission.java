@@ -17,7 +17,7 @@ public class ExtPermission implements GuildCommand {
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
-        if(args[0].toLowerCase().equals("extperm") && (new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.permission_manage}) || member.hasPermission(Permission.MANAGE_PERMISSIONS) || member.hasPermission(Permission.ADMINISTRATOR))){
+        if(new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.permission_manage}) || member.hasPermission(Permission.MANAGE_PERMISSIONS) || member.hasPermission(Permission.ADMINISTRATOR)){
             if(args.length > 3){
                 if(event.getMessage().getMentionedRoles().size() > 0){
                     args[2] = event.getMessage().getMentionedRoles().get(0).getId();

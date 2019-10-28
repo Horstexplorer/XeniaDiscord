@@ -18,7 +18,7 @@ public class Blacklist implements GuildCommand{
 
     @Override
     public void execute(GuildMessageReceivedEvent event, Member member, String[] args) {
-        if(args[0].toLowerCase().equals("blacklist") && new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.blacklist_manage})){
+        if(new ExtPermManager().hasPermission(member, new ExtPerm[]{ExtPerm.admin, ExtPerm.blacklist_manage})){
             if(args.length > 2){
                 // get channel id
                 String channel = args[2].replaceAll("[^0-9]", "").trim();
