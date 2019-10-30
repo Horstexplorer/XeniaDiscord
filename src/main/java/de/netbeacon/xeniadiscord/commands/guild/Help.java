@@ -57,8 +57,9 @@ public class Help implements GuildCommand {
             String default_commands_2 =
                     "twitchhook <>                                             // \n"+
                     "           list                                           // Shows all twitchhooks in the current channel \n"+
-                    "           add <username> <@everyone> [msg]               // Add twitchhook for channel <username> to current channel; using <@everyone> has to be true or false; [msg] is optional, for custom notification \n"+
+                    "           add <username>                                 // Add twitchhook for channel <username> to current channel \n"+
                     "           remove <username>                              // Remove twitchhook for <username> from the current channel \n"+
+                    "           update <username> <setting> <value>            // Update <setting> to <value> for a specific twitchhook [setting value combinations: custom_message <String> | notify_everyone <boolean>]\n"+
                     "extperm <>                                                // \n"+
                     "        add <@role/roleid> <permission1> <permission2> .. // Add permissions to specified role \n"+
                     "        remove <@role/roleid> <permission1> <permi..   .. // Remove permissions from specified role \n"+

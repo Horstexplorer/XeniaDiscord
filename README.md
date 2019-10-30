@@ -71,7 +71,10 @@ ban <user>                                                || membermanagement_ba
 music <command>                                           || See 'Music Commands          || Guild   || See 'Music Commands
 ghost <channel> <msg>                                     || ghost                        || Guild   || Send <msg> as bot to <channel>
 blacklist <add/remove> <channel>                          || blacklist_manage             || Guild   || Add <channel> to blacklist so that Xenia neither listen nor respond there
-twitchhook <list|add/remove> <username> <boolean> [msg]   || twitchhooks_manage           || Guild   || Add a webhook for a specific twitch channel to your textchannel; <boolean> true or false - use @everyone; If [msg] is set it is used as alternative notification (supports placeholders, see changelog 1.1.1.0)
+twitchhook <>                                             || twitchhooks_manage           || Guild   || -
+           <add/remove> <channelname>                     || ~                            || ~       || Add or remove a webhook for a specific twitch channel to your textchannel
+           <update> <channelname> <setting> <value>       || ~                            || ~       || Update settings from a specific twitchhook to (new)value; avalible setting value combinations: custom_message <String> | notify_everyone <boolean>
+           <list>                                         || ~                            || ~       || List all twitchhooks registered to the current channel
 extperm <add/remove/list> <permission1> <permission2> ... || permission_manage            || Guild   || Manage permissions of a given role
 
 ```
@@ -188,9 +191,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
-##### 1.1.6.1
+##### 1.1.6.2
 ```
 - updated JDA
+- improved TwitchHook creation process
 ```
 ##### 1.1.6.1
 ```
