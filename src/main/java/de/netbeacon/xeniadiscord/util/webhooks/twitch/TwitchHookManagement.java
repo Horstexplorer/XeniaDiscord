@@ -189,15 +189,30 @@ public class TwitchHookManagement {
         return false;
     }
 
-    public String list(String guildchannelid){
-        String list = "";
+    public boolean updatevalues(String guildchannelid, String twitchname, String setting, String newvalue){
         for(TwitchHookObjekt tho : twitchHookObjekts.get()){
-            if(tho.getGuildChannel().equals(guildchannelid)){
-                list += "> "+tho.getChannelName().substring(0, 1).toUpperCase() + tho.getChannelName().substring(1)+"\n";
+            if(tho.getGuildChannel().equals(guildchannelid) && tho.getChannelName().equals(twitchname)){
+                switch(setting){
+                    case "custom_message":
+                        tho.setCustomNotification(newvalue);
+                        return true;
+                    case "notify_everyone":
+                        tho.setNotifyEveryone(Boolean.parseBoolean(newvalue));
+                        return true;
+                    default:
+                        return false;
+                }
             }
         }
-        if(list.equals("")){
-            list = "No webhooks found here!";
+        return false;
+    }
+
+    public List<TwitchHookObjekt> list(String guildchannelid){
+        List<TwitchHookObjekt> list = new ArrayList<>();
+        for(TwitchHookObjekt tho : twitchHookObjekts.get()){
+            if(tho.getGuildChannel().equals(guildchannelid)){
+                list.add(tho);
+            }
         }
         return list;
     }
@@ -256,7 +271,7 @@ public class TwitchHookManagement {
                                         TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                         haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
                                         if(haspermission){
-                                            if(thos.allownotifyeveryone()){
+                                            if(thos.notifyEveryone()){
                                                 jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
                                             }
 
@@ -264,7 +279,7 @@ public class TwitchHookManagement {
                                             eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
                                             eb.setColor(Color.MAGENTA);
                                             // build custom message
-                                            String message = thos.getNotification();
+                                            String message = thos.getCustomNotification();
                                             message = message.replace("%uname%", thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1));
                                             message = message.replace("%lname%", thos.getChannelName());
                                             message = message.replace("%game%", game);

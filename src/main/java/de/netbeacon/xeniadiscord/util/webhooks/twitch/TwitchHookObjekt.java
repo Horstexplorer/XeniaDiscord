@@ -9,6 +9,7 @@ public class TwitchHookObjekt {
     private String title;
     private String thumbnailurl;
     private String gameid;
+
     private String customnotification;
     private boolean notifyeveryone;
 
@@ -34,9 +35,11 @@ public class TwitchHookObjekt {
         return this.channelid;
     }
 
-    String getNotification(){ return this.customnotification; }
+    public String getCustomNotification(){ return this.customnotification; }
+    void setCustomNotification(String newvalue){ this.customnotification = newvalue; }
 
-    boolean allownotifyeveryone(){ return this.notifyeveryone; }
+    public boolean notifyEveryone(){ return this.notifyeveryone; }
+    void setNotifyEveryone(boolean newvalue){ this.notifyeveryone = newvalue; }
 
     public String getStatus(){
         return this.status;
