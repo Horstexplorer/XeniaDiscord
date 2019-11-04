@@ -2,10 +2,7 @@ package de.netbeacon.xeniadiscord.listeners;
 
 import de.netbeacon.xeniadiscord.audio.MusicManager;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceDeafenEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMuteEvent;
+import net.dv8tion.jda.api.events.guild.voice.*;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class VoiceListener extends ListenerAdapter {
@@ -31,6 +28,21 @@ public class VoiceListener extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(GuildVoiceLeaveEvent event){
         if(event.getMember().getUser().equals(event.getJDA().getSelfUser())){
+            // stop music
+            musicManager.getTrackManager(event.getGuild()).purgeQueue();
+            musicManager.getAudioPlayer(event.getGuild()).stopTrack();
+        }else{
+            if(event.getGuild().getAudioManager().getConnectedChannel().getMembers().size() <= 1){ // only the bot left
+                // stop music
+                musicManager.getTrackManager(event.getGuild()).purgeQueue();
+                musicManager.getAudioPlayer(event.getGuild()).stopTrack();
+            }
+        }
+    }
+
+    @Override
+    public void onGuildVoiceMove(GuildVoiceMoveEvent event){
+        if(event.getGuild().getAudioManager().getConnectedChannel().getMembers().size() <= 1){ // only the bot left
             // stop music
             musicManager.getTrackManager(event.getGuild()).purgeQueue();
             musicManager.getAudioPlayer(event.getGuild()).stopTrack();
