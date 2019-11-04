@@ -10,6 +10,7 @@ gradlew.bat
 /modules/
 /coremodule/
 /logs/
+/data/
 /*.config
 /*.storage
 /*.txt
