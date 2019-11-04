@@ -28,8 +28,12 @@ public class TwitchConfig {
 
 
     private boolean initproperties(){
+        File path = new File("./data/config/");
+        if(!path.exists()){
+            path.mkdirs();
+        }
         //Check if config file exist
-        File configfile = new File("twitch.config");
+        File configfile = new File("./data/config/twitch.config");
         if (!configfile.exists()) {
             //Create the file
             createconfigfile();
@@ -38,7 +42,7 @@ public class TwitchConfig {
         properties = new Properties();
         InputStream input;
         try {
-            input = new FileInputStream("twitch.config");
+            input = new FileInputStream("./data/config/twitch.config");
             properties.load(input);
             input.close();
         }catch (Exception e){

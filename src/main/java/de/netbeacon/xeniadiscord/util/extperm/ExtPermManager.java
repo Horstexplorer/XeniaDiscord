@@ -190,8 +190,12 @@ public class ExtPermManager {
     }
     private void loadfromfile(){
         try{
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
             // check if file exists
-            File permfile = new File("extperm.storage");
+            File permfile = new File("./data/storage/extperm.storage");
             if (!permfile.exists()) {
                 //Create the file
                 permfile.createNewFile();
@@ -223,7 +227,11 @@ public class ExtPermManager {
     }
     public void writetofile(){
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("extperm.storage"));
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./data/storage/extperm.storage"));
             for(Map.Entry<String, List<ExtPerm>> entry : data.get().entrySet()) {
                 String roleid = entry.getKey();
                 String perm = "";

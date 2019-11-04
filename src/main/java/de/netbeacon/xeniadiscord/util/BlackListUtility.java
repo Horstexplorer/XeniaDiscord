@@ -21,8 +21,12 @@ public class BlackListUtility {
 
     private void initblacklist(){
         try{
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
             // check if blackist.txt exists
-            File blacklistfile = new File("blacklist.storage");
+            File blacklistfile = new File("./data/storage/blacklist.storage");
             if (!blacklistfile.exists()) {
                 //Create the file
                 blacklistfile.createNewFile();

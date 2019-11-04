@@ -42,8 +42,12 @@ public class TwitchHookManagement {
 
     private boolean loadfromfile(){
         try{
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
             // check if file exists
-            File twitchhookfile = new File("twitchhooks.storage");
+            File twitchhookfile = new File("./data/storage/twitchhooks.storage");
             if (!twitchhookfile.exists()) {
                 //Create the file
                 twitchhookfile.createNewFile();
@@ -91,8 +95,12 @@ public class TwitchHookManagement {
 
     public boolean writetofile(){
         try{
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
             // write new content
-            BufferedWriter writer = new BufferedWriter(new FileWriter("twitchhooks.storage"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./data/storage/twitchhooks.storage"));
             for(TwitchHookObjekt tho : twitchHookObjekts.get()){
                 writer.write(tho.toJSONString());
                 writer.newLine();

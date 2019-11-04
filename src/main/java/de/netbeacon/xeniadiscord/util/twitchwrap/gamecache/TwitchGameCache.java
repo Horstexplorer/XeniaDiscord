@@ -26,8 +26,12 @@ public class TwitchGameCache {
 
     private boolean init(){
         try{
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
             // check if twitchgamecache.storage exists
-            File gcfile = new File("twitchgamecache.storage");
+            File gcfile = new File("./data/storage/twitchgamecache.storage");
             if (!gcfile.exists()) {
                 //Create the file
                 gcfile.createNewFile();
@@ -55,7 +59,11 @@ public class TwitchGameCache {
 
     private boolean writetofile(){
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("twitchgamecache.storage"));
+            File path = new File("./data/storage/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./data/storage/twitchgamecache.storage"));
             for(Map.Entry<String, String> entry : gamecache.entrySet()){
                 writer.write(entry.getKey()+" "+entry.getValue());
                 writer.newLine();
