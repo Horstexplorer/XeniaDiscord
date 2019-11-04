@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.6.3
+> Current Version: 1.1.6.4
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_56
@@ -191,6 +191,10 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.6.4
+```
+- improved voice event handling
+```
 ##### 1.1.6.3
 ```
 - moved config & storage files to /data
