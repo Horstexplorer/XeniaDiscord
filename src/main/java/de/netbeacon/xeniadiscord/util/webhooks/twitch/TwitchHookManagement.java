@@ -279,30 +279,36 @@ public class TwitchHookManagement {
                                         TextChannel textChannel = guild.getTextChannelById(thos.getGuildChannel());
                                         haspermission = guild.getSelfMember().hasPermission(textChannel, Permission.MESSAGE_WRITE);
                                         if(haspermission){
-                                            if(thos.notifyEveryone()){
-                                                jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
+                                            try{
+                                                EmbedBuilder eb = new EmbedBuilder();
+                                                eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
+                                                eb.setColor(Color.MAGENTA);
+                                                // build custom message
+                                                String message = thos.getCustomNotification();
+                                                message = message.replace("%uname%", thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1));
+                                                message = message.replace("%lname%", thos.getChannelName());
+                                                message = message.replace("%game%", game);
+                                                message = message.replace("%title%", thos.getTitle());
+                                                message = message.replace("%n", "\n");
+                                                message += "["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")"; // add link to stream
+                                                eb.setDescription(message);
+                                                eb.setImage(thos.getThumbnailurl());
+
+                                                if(thos.notifyEveryone()){
+                                                    jda.getTextChannelById(textChannel.getId()).sendMessage("@everyone").queue();
+                                                }
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
+                                            }catch (Exception e){
+                                                new Log().addEntry("THM", "An error occurred while sending notification for TwitchHooks: "+e.toString(), 4);
+                                                toremove.add(thos);
+                                                jda.getTextChannelById(textChannel.getId()).sendMessage("An unknown error occured sending stream notification for user "+thos.getChannelName()+"; Removing notifications for this user.").queue();
                                             }
-
-                                            EmbedBuilder eb = new EmbedBuilder();
-                                            eb.setTitle(thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1), null);    //username
-                                            eb.setColor(Color.MAGENTA);
-                                            // build custom message
-                                            String message = thos.getCustomNotification();
-                                            message = message.replace("%uname%", thos.getChannelName().substring(0, 1).toUpperCase() + thos.getChannelName().substring(1));
-                                            message = message.replace("%lname%", thos.getChannelName());
-                                            message = message.replace("%game%", game);
-                                            message = message.replace("%title%", thos.getTitle());
-                                            message = message.replace("\\n", "\n");
-                                            message += "["+thos.getTitle()+"](https://twitch.tv/"+thos.getChannelName()+")"; // add link to stream
-                                            eb.setDescription(message);
-
-                                            eb.setImage(thos.getThumbnailurl());
-                                            jda.getTextChannelById(textChannel.getId()).sendMessage(eb.build()).queue();
                                         }else{
                                             toremove.add(thos);
                                         }
                                     }catch (Exception e){
-                                        new Log().addEntry("THM", "An error occurred while sending notification for TwitchHooks: "+e.toString(), 3);
+                                        new Log().addEntry("THM", "An error occurred while sending notification for TwitchHooks: "+e, 3);
+                                        toremove.add(thos);
                                     }
                                 }// nothing to do
                             }
