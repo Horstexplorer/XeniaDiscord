@@ -28,8 +28,12 @@ public class Config {
     }
 
     private boolean initproperties(){
+        File path = new File("./data/config/");
+        if(!path.exists()){
+            path.mkdirs();
+        }
         //Check if config file exist
-        File configfile = new File("sys.config");
+        File configfile = new File("./data/config/sys.config");
         if (!configfile.exists()) {
             //Create the file
             createconfigfile();
@@ -38,7 +42,7 @@ public class Config {
         properties = new Properties();
         InputStream input;
         try {
-            input = new FileInputStream("sys.config");
+            input = new FileInputStream("./data/config/sys.config");
             properties.load(input);
             input.close();
         }catch (Exception e){
@@ -113,7 +117,11 @@ public class Config {
 
     private void writetofile(){
         try{
-            properties.store(new FileOutputStream("sys.config"), null);
+            File path = new File("./data/config/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
+            properties.store(new FileOutputStream("./data/config/sys.config"), null);
         }catch (Exception e){
             e.printStackTrace();
             new Log().addEntry("Config", "Could not write properties to sys.config "+e.toString(), 5);
@@ -134,8 +142,8 @@ public class Config {
     }
 
     public String version() {
-        String vers= "1.1.6.2";
-        String build = "1910301053";
+        String vers= "1.1.6.3";
+        String build = "1911042107";
         return vers+"-"+build;
     }
 }

@@ -1,5 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 /.gradle/
+/gradle/
+gradlew
+gradlew.bat
 /.idea/
 /build/
 /out/
@@ -7,6 +10,7 @@
 /modules/
 /coremodule/
 /logs/
+/data/
 /*.config
 /*.storage
 /*.txt
