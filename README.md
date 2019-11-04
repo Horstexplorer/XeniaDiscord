@@ -1,10 +1,10 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.6.2
+> Current Version: 1.1.6.3
 
 > Using  
-> - net.dv8tion JDA -  4.0.0_55
-> - lavaplayer - 1.3.22
+> - net.dv8tion JDA -  4.0.0_56
+> - lavaplayer - 1.3.23
 > - jda-nas - 1.1.0
 > - slf4j-simple - 1.7.28
 
@@ -21,7 +21,7 @@
 
 
 ### Configuration
-All basic settings are stored in the file sys.config. This file will be created automatically at first start. You then need to add your Discord bot token and your discord id. 
+All basic settings are stored in the file sys.config (./data/config/). This file will be created automatically at first start. You then need to add your Discord bot token and your discord id. 
 A new application must be created for the bot token (bot_token): https://discordapp.com/developers/applications/ The token can then be found under the page "bot".
 You can get your Discord user id (bot_admin_id) by right-clicking your username on your discord guild and select "copy id".
 Finally (activated) has to be set to true, otherwise the bot won't start.
@@ -37,7 +37,7 @@ bot_sayhellotonew=true                      // bot welcomes every user who joins
 bot_gui_activate=false                      // activate gui
 bot_gui_exitonclose=true                    // quit application when the gui is closed
 ```
-The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config should be modified now. It should look something like this:
+The application should now be restarted. At this point the bot will stop again with a note that no client token or client secret has been set. The now existing twitch.config (./data/config/) should be modified now. It should look something like this:
 Now you have to specify a Twitch application which can be created here: https://dev.twitch.tv/console/apps
 ```
 twitch_client_id=                           // your application client id
@@ -191,6 +191,13 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.6.3
+```
+- moved config & storage files to /data
+- updated jda
+- updated lavaplayer
+- improved error handling for twitchhooks
+```
 ##### 1.1.6.2
 ```
 - updated JDA
