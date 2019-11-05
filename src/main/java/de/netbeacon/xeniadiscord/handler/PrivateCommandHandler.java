@@ -28,9 +28,9 @@ public class PrivateCommandHandler implements Runnable {
         // parse arguments from message
         String[] args = getargs(message);
         // check if requested command exists
-        if(commands.containsKey(args[0])){
+        if(commands.containsKey(args[0].toLowerCase())){
             //execute command
-            commands.get(args[0]).execute(event,args);
+            commands.get(args[0].toLowerCase()).execute(event,args);
         }else{
             // show error
             event.getChannel().sendMessage("Unknown command.").queue();
@@ -48,7 +48,7 @@ public class PrivateCommandHandler implements Runnable {
     }
 
     public boolean containsCommand(String command){
-        return commands.containsKey(command);
+        return commands.containsKey(command.toLowerCase());
     }
 
     private String[] getargs(String raw){
