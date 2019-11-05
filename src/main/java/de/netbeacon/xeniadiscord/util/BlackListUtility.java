@@ -76,7 +76,7 @@ public class BlackListUtility {
     public boolean writetofile(){
         // this should be called every couple minutes to write modifications to the file (reduces file modifications)
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("blacklist.storage"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./data/storage/blacklist.storage"));
             for(String line : blacklist){
                 writer.write(line);
                 writer.newLine();
