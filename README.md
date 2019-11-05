@@ -193,6 +193,7 @@ Scheduled tasks (sorted by priority) (Target: none)
 ### Changelog
 ##### 1.1.6.5
 ```
+- minor improvements
 - improved module handling
     - can use the same command indicator as default Discord commands
 ```
