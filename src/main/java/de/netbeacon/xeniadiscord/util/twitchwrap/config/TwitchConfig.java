@@ -87,7 +87,11 @@ public class TwitchConfig {
 
     private void writetofile(){
         try{
-            properties.store(new FileOutputStream("twitch.config"), null);
+            File path = new File("./data/config/");
+            if(!path.exists()){
+                path.mkdirs();
+            }
+            properties.store(new FileOutputStream("./data/config/twitch.config"), null);
         }catch (Exception e){
             new Log().addEntry("TC", "Could not write twitch config to file: "+e.toString(), 5);
             e.printStackTrace();
