@@ -36,7 +36,7 @@ public class TwitchHook implements GuildCommand {
                     }else if(args.length > 2){
                     // add
                     if(args[1].toLowerCase().equals("add")){
-                        String notification = "Hey everyone! \\n %uname% is now live on twitch playing %game%! \\n Let's drop in! \\n";
+                        String notification = "Hey everyone! %n %uname% is now live on twitch playing %game%! %n Let's drop in! %n";
                         // add hook to this channel
                         if(!new TwitchHookManagement(event.getJDA()).add(event.getChannel().getId(),args[2].toLowerCase(), notification, true)){
                             event.getChannel().sendMessage("Failed to add! This error may result due to an incorrect username (or us reaching the rate limit - try again in a few moments).").queue();
@@ -63,8 +63,8 @@ public class TwitchHook implements GuildCommand {
                                         args[4] += " ";
                                     }
                                 }
-                                // replace escape sequences
-                                args[4] = args[4].replaceAll("\\\\[^n]", "");
+                                // replace \ to remove escape sequences
+                                args[4] = args[4].replaceAll("[\\\\]", "");
                             }
                             if(!new TwitchHookManagement(event.getJDA()).updatevalues(event.getChannel().getId(),args[2].toLowerCase(), args[3], args[4])){
                                 event.getChannel().sendMessage("Failed to update! This error may result due to an incorrect username, invalid setting or invalid value. Avaible settings: notify_everyone, custom_message").queue();
