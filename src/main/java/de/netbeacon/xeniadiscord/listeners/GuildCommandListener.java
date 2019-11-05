@@ -1,6 +1,7 @@
 package de.netbeacon.xeniadiscord.listeners;
 
 import de.netbeacon.xeniadiscord.handler.GuildCommandHandler;
+import de.netbeacon.xeniadiscord.handler.PrivateCommandHandler;
 import de.netbeacon.xeniadiscord.listeners.cooldown.CooldownManager;
 import de.netbeacon.xeniadiscord.util.BlackListUtility;
 import de.netbeacon.xeniadiscord.util.Config;
@@ -23,7 +24,7 @@ public class GuildCommandListener extends ListenerAdapter {
         // see if bot is "online"
         if(event.getJDA().getPresence().getStatus().equals(OnlineStatus.ONLINE)){
             // modules should not interfere with default commands nor should the channel be included on the blacklist
-            if(!event.getAuthor().isBot() && event.getMessage().getContentRaw().startsWith(config.load("bot_command_indicator")) && !new BlackListUtility().isincluded(event.getChannel().getId())){
+            if(!event.getAuthor().isBot() && new GuildCommandHandler(null).containsCommand(event.getMessage().getContentRaw().split(" ")[0].replace(new Config().load("bot_command_indicator"),"")) && !new BlackListUtility().isincluded(event.getChannel().getId())){
                 // check for cooldown
                 if(!new CooldownManager().cooldown_isactive(event.getAuthor().getId())){
                     // add cooldown & execute

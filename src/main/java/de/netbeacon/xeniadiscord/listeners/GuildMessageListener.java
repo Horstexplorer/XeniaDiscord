@@ -9,8 +9,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.util.concurrent.TimeUnit;
-
 public class GuildMessageListener extends ListenerAdapter {
 
     private Config config;
@@ -24,7 +22,7 @@ public class GuildMessageListener extends ListenerAdapter {
         // see if bot is "online"
         if(event.getJDA().getPresence().getStatus().equals(OnlineStatus.ONLINE)){
             // modules should not interfere with default commands nor whould the channel be listen on the blacklist
-            if(!event.getAuthor().isBot() && !event.getMessage().getContentRaw().startsWith(config.load("bot_command_indicator")) && !new BlackListUtility().isincluded(event.getChannel().getId())){
+            if(!event.getAuthor().isBot() && !new GuildCommandHandler(null).containsCommand(event.getMessage().getContentRaw().split(" ")[0].replace(new Config().load("bot_command_indicator"),"")) && !new BlackListUtility().isincluded(event.getChannel().getId())){
                 // check for cooldown
                 if(!new CooldownManager().cooldown_isactive(event.getAuthor().getId())){
                     // add cooldown & execute
