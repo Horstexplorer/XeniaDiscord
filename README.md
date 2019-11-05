@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.6.4
+> Current Version: 1.1.6.5
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_56
@@ -147,7 +147,7 @@ twitchhooks_manage              || can create & edit twitch hooks
 
 
 ### Modules
-The functionality of the bot can be extended with modules. These can react to any interactions as long as they do not start with "bot_command_indicator"  
+The functionality of the bot can be extended with modules. These can react to any user action as long as they are not already occupied by Discord commands.
 Modules can be used in two ways: as normal module or as core module. Both are built in the same way, but the core module is executed before all other modules.
 
 ##### Create your own module:
@@ -191,6 +191,11 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.6.5
+```
+- improved module handling
+    - can use the same command indicator as default Discord commands
+```
 ##### 1.1.6.4
 ```
 - improved voice event handling
