@@ -1,6 +1,6 @@
 # XeniaDiscord
 #### Chat- and Music-Bot for Discord
-> Current Version: 1.1.6.5
+> Current Version: 1.1.6.6
 
 > Using  
 > - net.dv8tion JDA -  4.0.0_56
@@ -191,6 +191,11 @@ Scheduled tasks (sorted by priority) (Target: none)
 
 
 ### Changelog
+##### 1.1.6.6
+```
+- fixed wrong storage path for twitch.config & blacklist.storage
+- removing escape sequences from custom messages; replaced newline indicator with %n
+```
 ##### 1.1.6.5
 ```
 - minor improvements
