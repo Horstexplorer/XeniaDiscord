@@ -12,12 +12,13 @@ import java.util.HashMap;
 public class GuildCommandHandler implements Runnable {
 
     private GuildMessageReceivedEvent event;
-    private Config config;
-    private HashMap<String, GuildCommand> commands = new HashMap<>();
+    private static HashMap<String, GuildCommand> commands = new HashMap<>();
 
     public GuildCommandHandler(GuildMessageReceivedEvent event){
         this.event = event;
-        this.config = new Config();
+        if(commands.isEmpty()){
+            registercommands();
+        }
     }
 
     @Override
@@ -30,8 +31,6 @@ public class GuildCommandHandler implements Runnable {
             String[] args = getargs(message);
             // get member of author
             Member member = event.getMember();
-            // register commands
-            registercommands();
             // check if requested command exists
             if(commands.containsKey(args[0])){
                 // check permissions
@@ -44,7 +43,7 @@ public class GuildCommandHandler implements Runnable {
                 }
             }else{
                 // unknown command
-                event.getChannel().sendMessage("Unknown command. \n Try "+config.load("bot_command_indicator")+"commands for a list of some commands.").queue();
+                event.getChannel().sendMessage("Unknown command. \n Try "+new Config().load("bot_command_indicator")+"commands for a list of some commands.").queue();
             }
         }
     }
@@ -67,9 +66,13 @@ public class GuildCommandHandler implements Runnable {
 
     }
 
+    public boolean containsCommand(String command){
+        return commands.containsKey(command);
+    }
+
     private String[] getargs(String raw){
         // remove bot_command_indicator from string
-        raw = raw.replace(config.load("bot_command_indicator"), "").trim();
+        raw = raw.replace(new Config().load("bot_command_indicator"), "").trim();
         // split string to args
         return raw.split(" ");
     }

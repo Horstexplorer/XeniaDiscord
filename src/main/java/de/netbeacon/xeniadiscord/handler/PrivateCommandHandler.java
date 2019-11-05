@@ -12,12 +12,13 @@ import java.util.HashMap;
 public class PrivateCommandHandler implements Runnable {
 
     private PrivateMessageReceivedEvent event;
-    private Config config;
-    private HashMap<String, PrivateCommand> commands = new HashMap<>();
+    private static HashMap<String, PrivateCommand> commands = new HashMap<>();
 
     public PrivateCommandHandler(PrivateMessageReceivedEvent event){
         this.event = event;
-        this.config = new Config();
+        if(commands.isEmpty()){
+            registercommands();
+        }
     }
 
     @Override
@@ -26,8 +27,6 @@ public class PrivateCommandHandler implements Runnable {
         String message = event.getMessage().getContentRaw();
         // parse arguments from message
         String[] args = getargs(message);
-        // register commands
-        registercommands();
         // check if requested command exists
         if(commands.containsKey(args[0])){
             //execute command
@@ -48,9 +47,13 @@ public class PrivateCommandHandler implements Runnable {
 
     }
 
+    public boolean containsCommand(String command){
+        return commands.containsKey(command);
+    }
+
     private String[] getargs(String raw){
         // remove bot_command_indicator from string
-        raw = raw.replace(config.load("bot_command_indicator"), "").trim();
+        raw = raw.replace(new Config().load("bot_command_indicator"), "").trim();
         // split string to args
         return raw.split(" ");
     }
